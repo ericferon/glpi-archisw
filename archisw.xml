@@ -1,5 +1,5 @@
          <root>
-            <name>Apps structure</name>
+            <name>Apps structure inventory</name>
             <key>archisw</key>
             <state>stable</state> <!-- stable | unstable | beta | alpha -->
             <logo>https://github.com/ericferon/glpi-archisw/blob/master/swcomponent.png</logo>
@@ -36,13 +36,13 @@
                <en>
                   <tag>Inventory</tag>
                   <tag>Architecture</tag>
-                  <tag>Application</tag>
+                  <tag>Applications</tag>
                   <tag>Appliances</tag>
                </en>
                <fr>
                   <tag>Inventaire</tag>
                   <tag>Architecture</tag>
-                  <tag>Application</tag>
+                  <tag>Applications</tag>
                   <tag>Applicatifs</tag>
               </fr>
             </tags>
