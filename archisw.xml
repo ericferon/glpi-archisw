@@ -1,0 +1,49 @@
+         <root>
+            <name>Apps structure</name>
+            <key>archisw</key>
+            <state>stable</state> <!-- stable | unstable | beta | alpha -->
+            <logo>https://github.com/ericferon/glpi-archisw/blob/master/swcomponent.png</logo>
+            <description>
+               <short>
+                  <en>Inventory of your applications. An application can be composed by several software components.</en>
+                  <fr>Inventaire de vos applications. Une application peut être formée de plusieurs composants logiciels.</fr>
+               </short>
+               <long>
+                  <en>Inventory of your applications.<br/>An application can be composed by a tree with several levels of software components.<br/>You can associate these software components with other inventory elements (servers, databases, dataflows, ...)</en>
+                  <fr>Inventaire de vos applications.<br/>Une application peut être formée par une arborescence à plusieurs niveaux de composants logiciels.<br/>Ces composants logiciels peuvent être associés à d'autres éléments d'inventaire (serveurs, bases de données, flux de données, ...)</fr>
+               </long>
+            </description>
+            <homepage>https://github.com/ericferon/glpi-archisw</homepage>
+            <download>https://github.com/ericferon/glpi-archisw/releases</download>
+            <issues>https://github.com/ericferon/glpi-archisw/issues</issues>
+            <readme>https://github.com/ericferon/glpi-archisw/blob/master/README.md</readme>
+            <authors>
+               <author>Eric Feron</author>
+            </authors>
+            <versions>
+               <version>
+                  <num>2.0.1</num>
+                  <compatibility>0.90</compatibility>
+                  <compatibility>9.1</compatibility>
+                  <compatibility>9.2</compatibility>
+               </version>
+            </versions>
+            <langs>
+               <lang>en_GB</lang>
+            </langs>
+            <license>GPL v2+</license>
+            <tags>
+               <en>
+                  <tag>Inventory</tag>
+                  <tag>Architecture</tag>
+                  <tag>Application</tag>
+                  <tag>Appliances</tag>
+               </en>
+               <fr>
+                  <tag>Inventaire</tag>
+                  <tag>Architecture</tag>
+                  <tag>Application</tag>
+                  <tag>Applicatifs</tag>
+              </fr>
+            </tags>
+         </root>
