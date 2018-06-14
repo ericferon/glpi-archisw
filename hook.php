@@ -221,6 +221,7 @@ function plugin_archisw_getAddSearchOptions($itemtype) {
    if (in_array($itemtype, PluginArchiswSwcomponent::getTypes(true))) {
       if (Session::haveRight("plugin_archisw", READ)) {
 
+// Add search entry on app name from other plugins (f.i archimap)
          $sopt[2410]['table']         ='glpi_plugin_archisw_swcomponents';
          $sopt[2410]['field']         ='name';
          $sopt[2410]['name']          = PluginArchiswSwcomponent::getTypeName(2)." - ".__('Name');
@@ -232,6 +233,17 @@ function plugin_archisw_getAddSearchOptions($itemtype) {
                                                 => array('table'      => 'glpi_plugin_archisw_swcomponents_items',
                                                          'joinparams' => array('jointype' => 'itemtype_item')));
 
+/*         $sopt[2420]['table']         ='glpi_plugin_archisw_types';
+         $sopt[2420]['field']         ='name';
+         $sopt[2420]['name']          = PluginArchiswSwcomponent::getTypeName(2)." - ".PluginArchiswSwcomponentType::getTypeName(1);
+         $sopt[2420]['forcegroupby']  = true;
+         $sopt[2420]['datatype']      = 'dropdown';
+         $sopt[2420]['massiveaction'] = false;
+         $sopt[2420]['itemlink_type'] = 'PluginArchiswSwcomponent';
+         $sopt[2420]['joinparams']    = array('beforejoin' => array(
+                                                   array('table'      => 'glpi_plugin_archisw_swcomponents_items',
+                                                         'joinparams' => array('jointype' => 'itemtype_item'))));
+*/
      }
    }
    return $sopt;
