@@ -1,58 +1,29 @@
 <?php
 /*
- * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
- archisw plugin for GLPI
- Copyright (C) 2009-2016 by the archisw Development Team.
-
- https://github.com/InfotelGLPI/archisw
+ Archisw plugin for GLPI
+ Copyright (C) 2009-2018 by Eric Feron.
  -------------------------------------------------------------------------
 
  LICENSE
       
- This file is part of archisw.
+ This file is part of Archisw.
 
- archisw is free software; you can redistribute it and/or modify
+ Archisw is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
+ at your option any later version.
 
- archisw is distributed in the hope that it will be useful,
+ Archisw is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with archisw. If not, see <http://www.gnu.org/licenses/>.
+ along with Archisw. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
 
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
-
-// Class for a Dropdown
-class PluginArchiswSwcomponentType extends CommonTreeDropdown {
-
-   static $rightname = "plugin_archisw";
-   var $can_be_translated  = true;
-   
-   static function getTypeName($nb=0) {
-
-      return _n('Type','Types',$nb);
-   }
-   /**
-    * @return array
-    */
-/*   function getAdditionalFields()
-   {
-
-      return array(array('name' => $this->getForeignKeyField(),
-         'label' => __('As child of'),
-         'type' => 'parent',
-         'list'  => false)
-	  );
-   }*/
 }
 
 ?>
