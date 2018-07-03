@@ -2,7 +2,7 @@
             <name>Apps structure inventory</name>
             <key>archisw</key>
             <state>stable</state> <!-- stable | unstable | beta | alpha -->
-            <logo>https://github.com/ericferon/glpi-archisw/blob/master/swcomponent.png</logo>
+            <logo>https://raw.githubusercontent.com/ericferon/glpi-archisw/master/swcomponent.png</logo>
             <description>
                <short>
                   <en>Inventory of your applications. An application can be composed by several software components.</en>
