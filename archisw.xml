@@ -16,7 +16,7 @@
             <homepage>https://github.com/ericferon/glpi-archisw</homepage>
             <download>https://github.com/ericferon/glpi-archisw/releases</download>
             <issues>https://github.com/ericferon/glpi-archisw/issues</issues>
-            <readme>https://github.com/ericferon/glpi-archisw/blob/master/README.md</readme>
+            <readme>https://raw.githubusercontent.com/ericferon/glpi-archisw/master/README.md</readme>
             <authors>
                <author>Eric Feron</author>
             </authors>
