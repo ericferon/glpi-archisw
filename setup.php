@@ -24,8 +24,6 @@
  --------------------------------------------------------------------------
  */
 
-
-
 // Init the hooks of the plugins -Needed
 function plugin_init_archisw() {
    global $PLUGIN_HOOKS;

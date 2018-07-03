@@ -23,7 +23,6 @@
  along with Archisw. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-
  
 class PluginArchiswMenu extends CommonGLPI {
    static $rightname = 'plugin_archisw';

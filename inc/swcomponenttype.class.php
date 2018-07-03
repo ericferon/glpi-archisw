@@ -24,6 +24,32 @@
  --------------------------------------------------------------------------
  */
 
+if (!defined('GLPI_ROOT')) {
+   die("Sorry. You can't access directly to this file");
+}
+
+// Class for a Dropdown
+class PluginArchiswSwcomponentType extends CommonTreeDropdown {
+
+   static $rightname = "plugin_archisw";
+   var $can_be_translated  = true;
+   
+   static function getTypeName($nb=0) {
+
+      return _n('Type','Types',$nb);
+   }
+   /**
+    * @return array
+    */
+/*   function getAdditionalFields()
+   {
+
+      return array(array('name' => $this->getForeignKeyField(),
+         'label' => __('As child of'),
+         'type' => 'parent',
+         'list'  => false)
+	  );
+   }*/
 }
 
 ?>

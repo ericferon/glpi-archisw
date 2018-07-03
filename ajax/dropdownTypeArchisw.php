@@ -24,7 +24,6 @@
  --------------------------------------------------------------------------
  */
 
-
 if (strpos($_SERVER['PHP_SELF'],"dropdownTypeArchisw.php")) {
    $AJAX_INCLUDE=1;
    include ('../../../inc/includes.php');

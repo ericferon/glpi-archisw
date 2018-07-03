@@ -24,6 +24,23 @@
  --------------------------------------------------------------------------
  */
 
+if (!defined('GLPI_ROOT')) {
+	die("Sorry. You can't access directly to this file");
+}
+
+class PluginArchiswSwcomponent_Itemrole extends CommonDropdown {
+
+   static $rightname = "plugin_archisw";
+   var $can_be_translated  = true;
+   
+   static function getTypeName($nb=0) {
+
+      return _n('Link role','Link roles',$nb);
+   }
+   /**
+    * {@inheritDoc}
+    * @see CommonTreeDropdown::getAdditionalFields()
+    */
    public function getAdditionalFields() {
       return [
             [

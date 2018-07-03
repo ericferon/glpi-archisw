@@ -24,6 +24,42 @@
  --------------------------------------------------------------------------
  */
 
+if (strpos($_SERVER['PHP_SELF'],"dropdownItemRole.php")) {
+   $AJAX_INCLUDE=1;
+   include ('../../../inc/includes.php');
+   global $DB,$CFG_GLPI,$LANG;
+   header("Content-Type: text/html; charset=UTF-8");
+   Html::header_nocache();
+}
+
+Session::checkCentralAccess();
+
+// Make a select box
+if (isset($_POST["itemtype"])) {
+   $values = array();
+//   $values = array();
+   $options = array();
+   $used = array();
+
+      $query = "SELECT `id`,`name`
+                FROM `glpi_plugin_archisw_swcomponents_itemroles`
+                WHERE `itemtype` = '".$_POST['itemtype']."'" ;
+      foreach ($DB->request($query) AS $data) {
+		 $values[$data['id']] = $data['name'];
+	  }
+      $options['value']               = '';
+      $options['used']                = array();
+      $options['emptylabel']          = Dropdown::EMPTY_VALUE;
+      $options['width']               = '80%';
+      $options['readonly']            = false;
+      $options['display_emptychoice'] = false;
+      $options['display']             = true;
+ 	  if (isset($_POST["rand"])) {
+		$options['rand'] = $_POST['rand'];
+	  }
+	Dropdown::showFromArray(	$_POST['myname'],
+							$values/*,
+							$options*/
    );
 }
 
