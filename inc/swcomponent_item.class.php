@@ -283,7 +283,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
       echo "<th>".__('Type')."</th>";
       echo "<th>".__('Name')."</th>";
-      echo "<th>".__('Role')."</th>";
+      echo "<th>".__('Role','archisw')."</th>";
       echo "<th>".__('Comment')."</th>";
       if (Session::isMultiEntitiesMode())
          echo "<th>".__('Entity')."</th>";
@@ -532,10 +532,10 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       if (Session::isMultiEntitiesMode()) {
          echo "<th>".__('Entity')."</th>";
       }
-      echo "<th>".__('Component Owner')."</th>";
+      echo "<th>".__('Component Owner','archisw')."</th>";
       echo "<th>".__('Type')."</th>";
       echo "<th>".__('Status')."</th>";
-      echo "<th>".__('Role')."</th>";
+      echo "<th>".__('Role','archisw')."</th>";
       echo "<th>".__('Comment')."</th>";
       echo "<th>".__('Supplier')."</th>";
       echo "</tr>";

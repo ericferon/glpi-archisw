@@ -91,15 +91,15 @@ function plugin_version_archisw() {
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=>'',
-      'minGlpiVersion' => '0.90',
+      'minGlpiVersion' => '9.2',
    );
 
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archisw_check_prerequisites() {
-   if (version_compare(GLPI_VERSION,'0.90','lt') || version_compare(GLPI_VERSION,'9.3','ge')) {
-      _e('This plugin requires GLPI >= 0.90', 'archisw');
+   if (version_compare(GLPI_VERSION,'9.2','lt') || version_compare(GLPI_VERSION,'9.3','ge')) {
+      _e('This plugin requires GLPI >= 9.2', 'archisw');
       return false;
    }
    return true;

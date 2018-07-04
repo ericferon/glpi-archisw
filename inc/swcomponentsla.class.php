@@ -35,7 +35,7 @@ class PluginArchiswSwcomponentSla extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('Service level','Service levels',$nb);
+      return _n('Service level','Service levels',$nb,'archisw');
    }
 }
 

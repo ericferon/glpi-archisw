@@ -35,7 +35,7 @@ class PluginArchiswSwcomponentUser extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('# users','# users',$nb);
+      return _n('# users','# users',$nb,'archisw');
    }
 }
 

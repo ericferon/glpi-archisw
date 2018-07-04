@@ -34,7 +34,7 @@ class PluginArchiswSwcomponentTechnic extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('Development Langage','Development Langages',$nb);
+      return _n('Development Langage','Development Langages',$nb,'archisw');
    }
 }
 

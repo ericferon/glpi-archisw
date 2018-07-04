@@ -35,7 +35,7 @@ class PluginArchiswSwcomponentDb extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('DataBase','DataBases',$nb);
+      return _n('DataBase','DataBases',$nb,'archisw');
    }
 }
 

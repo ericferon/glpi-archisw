@@ -104,7 +104,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $tab[3]['table']           = $this->getTable();
       $tab[3]['field']           = 'level';
-      $tab[3]['name']            = __('Level');
+      $tab[3]['name']            = __('Level','archisw');
       $tab[3]['datatype']        = 'text';
 
       $tab[4]['table']           = 'glpi_plugin_archisw_swcomponentstates';
@@ -119,12 +119,12 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $tab[6]['table']           = 'glpi_plugin_archisw_swcomponenttechnics';
       $tab[6]['field']           = 'name';
-      $tab[6]['name']            = __('Development language');
+      $tab[6]['name']            = __('Development language','archisw');
       $tab[6]['datatype']        = 'dropdown';
 
       $tab[7]['table']           = 'glpi_plugin_archisw_swcomponentdbs';
       $tab[7]['field']           = 'name';
-      $tab[7]['name']            = __('Database');
+      $tab[7]['name']            = __('Database','archisw');
       $tab[7]['datatype']        = 'dropdown';
 
       $tab[8]['table']           = 'glpi_locations';
@@ -145,14 +145,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $tab[11]['table']          = 'glpi_users';
       $tab[11]['field']          = 'name';
       $tab[11]['linkfield']      = 'users_id';
-      $tab[11]['name']           = __('Component Maintainer');
+      $tab[11]['name']           = __('Component Maintainer','archisw');
       $tab[11]['datatype']       = 'dropdown';
       $tab[11]['right']          = 'interface';
 
       $tab[12]['table']          = 'glpi_groups';
       $tab[12]['field']          = 'name';
       $tab[12]['linkfield']      = 'groups_id';
-      $tab[12]['name']           = __('Component Owner');
+      $tab[12]['name']           = __('Component Owner','archisw');
       $tab[12]['condition']      = '`is_assign`';
       $tab[12]['datatype']       = 'dropdown';
 
@@ -187,7 +187,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $tab[80]['table']          = $this->getTable();
       $tab[80]['field']          = 'completename';
-      $tab[80]['name']           = __('Apps Structure');
+      $tab[80]['name']           = __('Apps Structure','archisw');
       $tab[80]['datatype']       = 'dropdown';
       
       $tab[81]['table']       = 'glpi_entities';
@@ -233,12 +233,12 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       Html::autocompletionTextField($this,"name");
       echo "</td>";
       //version of swcomponent
-      echo "<td>".__('Version')."</td>";
+      echo "<td>".__('Version','archisw')."</td>";
       echo "<td>";
       Html::autocompletionTextField($this,"version",array('size' => "4"));
       echo "</td>";
       //use startdate of swcomponent
-      echo "<td>".__('In use since year')."</td>";
+      echo "<td>".__('In use since year','archisw')."</td>";
       echo "<td>";
       Html::autocompletionTextField($this,"startyear",array('size' => "4"));
       echo "</td>";
@@ -246,17 +246,17 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<tr class='tab_bg_1'>";
       //completename of swcomponent
-      echo "<td>".__('As child of').": </td>";
+      echo "<td>".__('As child of','archisw').": </td>";
       echo "<td>";
       Dropdown::show('PluginArchiswSwcomponent', array('value' => $this->fields["plugin_archisw_swcomponents_id"]));
       echo "</td>";
       //level of swcomponent
-      echo "<td>".__('Level').": </td>";
+      echo "<td>".__('Level','archisw').": </td>";
       echo "<td>";
       Html::autocompletionTextField($this,"level",array('size' => "2", 'option' => "readonly='readonly'"));
       echo "</td>";
       //shortname of swcomponent
-      echo "<td>".__('Short code')."</td>";
+      echo "<td>".__('Short code','archisw')."</td>";
       echo "<td>";
       Html::autocompletionTextField($this,"shortname",array('size' => "5"));
       echo "</td>";
@@ -282,7 +282,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       Dropdown::show('PluginArchiswSwcomponentState', array('value' => $this->fields["plugin_archisw_swcomponentstates_id"]));
       echo "</td>";
       //status date of swcomponent
-      echo "<td  colspan='3'>".__('Status Startdate')."</td>";
+      echo "<td  colspan='3'>".__('Status Startdate','archisw')."</td>";
       echo "<td>";
       Html::showDateField("statedate", array('value' => $this->fields["statedate"]));
       echo "</td>";
@@ -296,7 +296,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       Dropdown::show('PluginArchiswSwcomponentType', array('value' => $this->fields["plugin_archisw_swcomponenttypes_id"]));
       echo "</td>";
       //language of swcomponent
-      echo "<td colspan='3'>".__('Development Language')."</td>";
+      echo "<td colspan='3'>".__('Development Language','archisw')."</td>";
       echo "<td>";
       Dropdown::show('PluginArchiswSwcomponentTechnic', array('value' => $this->fields["plugin_archisw_swcomponenttechnics_id"]));
       echo "</td>";
@@ -304,28 +304,28 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<tr class='tab_bg_1'>";
       //instances of swcomponent
-      echo "<td>".__('Instances')."</td>";
+      echo "<td>".__('Instances','archisw')."</td>";
       echo "<td>";
       Dropdown::show('PluginArchiswSwcomponentInstance', array('value' => $this->fields["plugin_archisw_swcomponentinstances_id"]));
       echo "</td>";
       //db
-      echo "<td colspan='3'>".__('DataBases')."</td><td>";
+      echo "<td colspan='3'>".__('DataBases','archisw')."</td><td>";
       Dropdown::show('PluginArchiswSwcomponentDb', array('value' => $this->fields["plugin_archisw_swcomponentdbs_id"]));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       //target
-      echo "<td>".__('Targets')."</td>";
+      echo "<td>".__('Targets','archisw')."</td>";
 	  echo "<td>";
       Dropdown::show('PluginArchiswSwcomponentTarget', array('value' => $this->fields["plugin_archisw_swcomponenttargets_id"]));
       echo "</td>";
       //#users
-      echo "<td>".__('# users')."</td>";
+      echo "<td>".__('# users','archisw')."</td>";
       echo "<td>";
       Dropdown::show('PluginArchiswSwcomponentUser', array('value' => $this->fields["plugin_archisw_swcomponentusers_id"]));
       echo "</td>";
-      echo "<td>".__('License metric')."</td>";
+      echo "<td>".__('License metric','archisw')."</td>";
       echo "<td>";
       Dropdown::show('PluginArchiswSwcomponentLicense', array('value' => $this->fields["plugin_archisw_swcomponentlicenses_id"]));
       echo "</td>";
@@ -333,11 +333,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<tr class='tab_bg_1'>";
       //groups
-      echo "<td>".__('Component Owner')."</td><td>";
+      echo "<td>".__('Component Owner','archisw')."</td><td>";
       Group::dropdown(array('name'      => 'groups_id', 'value'     => $this->fields['groups_id'], 'entity'    => $this->fields['entities_id'], 'condition' => '`is_assign`'));
       echo "</td>";
       //supplier of swcomponent
-      echo "<td colspan='3'>".__('Supplier')."</td>";
+      echo "<td colspan='3'>".__('Supplier','archisw')."</td>";
       echo "<td>";
       Dropdown::show('Supplier', array('value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]));
       echo "</td>";
@@ -345,11 +345,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<tr class='tab_bg_1'>";
       //users
-      echo "<td>".__('Component Maintainer')."</td><td>";
+      echo "<td>".__('Component Maintainer','archisw')."</td><td>";
       User::dropdown(array('name' => "users_id", 'value' => $this->fields["users_id"], 'entity' => $this->fields["entities_id"], 'right' => 'interface'));
       echo "</td>";
       //manufacturer of swcomponent
-      echo "<td colspan='3'>".__('Editor')."</td>";
+      echo "<td colspan='3'>".__('Editor','archisw')."</td>";
       echo "<td>";
       Dropdown::show('Manufacturer', array('value' => $this->fields["manufacturers_id"],'entity' => $this->fields["entities_id"]));
       echo "</td>";
@@ -357,11 +357,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<tr class='tab_bg_1'>";
       //url of swcomponent
-      echo "<td>".__('URL')."</td>";
+      echo "<td>".__('URL','archisw')."</td>";
       echo "<td>";
       Html::autocompletionTextField($this,"address",array('size' => "65"));
        //service level agreement
-      echo "<td colspan='3'>".__('Service level')."</td>";
+      echo "<td colspan='3'>".__('Service level','archisw')."</td>";
       echo "<td>";
 //      Dropdown::show('PluginArchiswSwcomponentType', array('value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]));
       Dropdown::show('PluginArchiswSwcomponentSla', array('value' => $this->fields["plugin_archisw_swcomponentslas_id"]));
@@ -537,7 +537,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "<div align='center'><table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='".(4+$colsup)."'>"._n('App structure associated', 'App structures associated', 2, 'archisw')."</th></tr>";
-      echo "<tr><th>".__('Name')."</th>";
+      echo "<tr><th>".__('Name','archisw')."</th>";
       if (Session::isMultiEntitiesMode())
          echo "<th>".__('Entity')."</th>";
       echo "<th>".PluginArchiswSwcomponentType::getTypeName(1)."</th>";

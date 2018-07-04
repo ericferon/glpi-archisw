@@ -35,7 +35,7 @@ class PluginArchiswSwcomponent_Itemrole extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('Link role','Link roles',$nb);
+      return _n('Link role','Link roles',$nb,'archisw');
    }
    /**
     * {@inheritDoc}

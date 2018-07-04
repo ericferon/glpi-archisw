@@ -35,7 +35,7 @@ class PluginArchiswSwcomponentLicense extends CommonDropdown {
    
    static function getTypeName($nb=0) {
 
-      return _n('License metric','License metrics',$nb);
+      return _n('License metric','License metrics',$nb,'archisw');
    }
 }
 
