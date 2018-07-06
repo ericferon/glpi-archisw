@@ -13,7 +13,7 @@ msgstr ""
 "Last-Translator: Eric Feron <ericferon@scarlet.be>, 2018\n"
 "Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -152,7 +152,6 @@ msgid "Role"
 msgstr "Rôle"
 
 #: inc/swcomponent_item.class.php:509
-msgctxt "button"
 msgid "Associate a swcomponent"
 msgstr "Associer un Composant Logiciel"
 
