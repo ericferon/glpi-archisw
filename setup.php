@@ -55,7 +55,8 @@ function plugin_init_archisw() {
 	  PluginArchiswSwcomponent::registerType('PluginDatabasesDatabase');
    }
 
-   if (class_exists('PluginArchimapGraph')) {
+   if (class_exists('PluginArchimapGraph') 
+   and class_exists('PluginArchiswSwcomponent'))  {
 	  PluginArchiswSwcomponent::registerType('PluginArchimapGraph');
    }
    if (Session::getLoginUserID()) {
