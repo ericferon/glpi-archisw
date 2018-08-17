@@ -2,21 +2,21 @@
 # Copyright (C) YEAR Eric Feron
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Archisw 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 15:47+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Eric Feron <ericferon@scarlet.be>, 2018\n"
+"POT-Creation-Date: 2018-08-17 15:57+0200\n"
+"PO-Revision-Date: 2018-08-17 16:11+0200\n"
+"Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
 "Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #: hook.php:337
 msgid "Associate to the Functional Area"
@@ -29,8 +29,8 @@ msgstr[0] "Structure d'Application"
 msgstr[1] "Structures d'Applications"
 
 #: setup.php:102
-msgid "This plugin requires GLPI >= 0.90"
-msgstr "Ce plugin exige GLPI >= 0.90"
+msgid "This plugin requires GLPI >= 9.2 and <= 9.2"
+msgstr "Ce plugin nécessite une version GLPI >= 9.2 et <= 9.2"
 
 #: inc/swcomponent.class.php:41 inc/swcomponent.class.php:190
 msgid "Apps Structure"
@@ -77,7 +77,7 @@ msgstr "Comme enfant de"
 
 #: inc/swcomponent.class.php:259
 msgid "Short code"
-msgstr "Abbréviation"
+msgstr "Abréviation"
 
 #: inc/swcomponent.class.php:285
 msgid "Status Startdate"
@@ -152,6 +152,7 @@ msgid "Role"
 msgstr "Rôle"
 
 #: inc/swcomponent_item.class.php:509
+msgctxt "button"
 msgid "Associate a swcomponent"
 msgstr "Associer un Composant Logiciel"
 
