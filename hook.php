@@ -333,7 +333,7 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
 function plugin_archisw_MassiveActions($type) {
 
    if (in_array($type,PluginArchiswSwcomponent::getTypes(true))) {
-      return array('PluginArchiswSwcomponent'.MassiveAction::CLASS_ACTION_SEPARATOR.'plugin_archisw__add_item' =>
+      return array('PluginArchiswSwcomponent'.MassiveAction::CLASS_ACTION_SEPARATOR.'plugin_archisw_add_item' =>
                                                               __('Associate to the Functional Area', 'archisw'));
    }
    return array();
