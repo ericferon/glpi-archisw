@@ -49,14 +49,12 @@ function plugin_init_archisw() {
    //Plugin::registerClass('PluginArchiswSwcomponent_Item',
    //                      array('ticket_types' => true));
       
-   if (class_exists('PluginDatabasesDatabase') 
-   and class_exists('PluginArchiswSwcomponent')) {
+   if (class_exists('PluginDatabasesDatabase')) {
 //      PluginDatabasesDatabase::registerType('PluginArchiswSwcomponent');
 	  PluginArchiswSwcomponent::registerType('PluginDatabasesDatabase');
    }
 
-   if (class_exists('PluginArchimapGraph') 
-   and class_exists('PluginArchiswSwcomponent'))  {
+   if (class_exists('PluginArchimapGraph'))  {
 	  PluginArchiswSwcomponent::registerType('PluginArchimapGraph');
    }
    if (Session::getLoginUserID()) {
