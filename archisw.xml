@@ -5,10 +5,12 @@
             <logo>https://raw.githubusercontent.com/ericferon/glpi-archisw/master/swcomponent.png</logo>
             <description>
                <short>
+                  <cs>Inventář vašich aplikací. Aplikace může být tvořena vícero softwarovými komponentami.</cs>
                   <en>Inventory of your applications. An application can be composed by several software components.</en>
                   <fr>Inventaire de vos applications. Une application peut être formée de plusieurs composants logiciels.</fr>
                </short>
                <long>
+                  <cs>Inventář vašich aplikací.<br/>Aplikace může být tvořena stromem o několika úrovních softwarových komponent.<br/>Tyto softwarové komponenty je možné přiřadit k ostatním prvkům inventáře (servery, databáze, toky dat, …)</cs>
                   <en>Inventory of your applications.<br/>An application can be composed by a tree with several levels of software components.<br/>You can associate these software components with other inventory elements (servers, databases, dataflows, ...)</en>
                   <fr>Inventaire de vos applications.<br/>Une application peut être formée par une arborescence à plusieurs niveaux de composants logiciels.<br/>Ces composants logiciels peuvent être associés à d'autres éléments d'inventaire (serveurs, bases de données, flux de données, ...)</fr>
                </long>
@@ -31,11 +33,18 @@
                </version>
             </versions>
             <langs>
+               <lang>cs_CZ</lang>      
                <lang>en_GB</lang>
                <lang>fr_FR</lang>
             </langs>
             <license>GPL v2+</license>
             <tags>
+               <cs>
+                  <tag>Inventář</tag>
+                  <tag>Architektura</tag>
+                  <tag>Applikace</tag>
+                  <tag>Zařízení</tag>
+               </cs>
                <en>
                   <tag>Inventory</tag>
                   <tag>Architecture</tag>
