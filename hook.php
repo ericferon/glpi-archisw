@@ -35,7 +35,7 @@ function plugin_archisw_install() {
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-1.0.1.sql");
 
    }
-   else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
+   else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.1.sql");
    }
@@ -47,7 +47,7 @@ function plugin_archisw_install() {
 
       foreach ($notepad_tables as $t) {
          // Migrate data
-         if (FieldExists($t, 'notepad')) {
+         if ($DB->FieldExists($t, 'notepad')) {
             $query = "SELECT id, notepad
                       FROM `$t`
                       WHERE notepad IS NOT NULL
