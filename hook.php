@@ -166,6 +166,13 @@ function plugin_archisw_postinit() {
    }
 }
 
+function plugin_archisw_AssignToTicket($types) {
+
+   if (Session::haveRight("plugin_archisw_open_ticket", "1")) {
+      $types['PluginArchiswSwcomponent'] = PluginArchiswSwcomponent::getTypeName(2);
+   }
+   return $types;
+}
 
 // Define dropdown relations
 function plugin_archisw_getSwcomponentRelations() {
