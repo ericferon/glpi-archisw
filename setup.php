@@ -46,16 +46,13 @@ function plugin_init_archisw() {
    Plugin::registerClass('PluginArchiswProfile',
                          array('addtabon' => 'Profile'));
                          
-   //Plugin::registerClass('PluginArchiswSwcomponent_Item',
-   //                      array('ticket_types' => true));
-      
-   if (class_exists('PluginDatabasesDatabase')) {
-//      PluginDatabasesDatabase::registerType('PluginArchiswSwcomponent');
-	  PluginArchiswSwcomponent::registerType('PluginDatabasesDatabase');
-   }
-
-   if (class_exists('PluginArchimapGraph'))  {
-	  PluginArchiswSwcomponent::registerType('PluginArchimapGraph');
+// Add links to other plugins
+   $types = array('PluginDatabasesDatabase',
+                     'PluginArchimapGraph');
+   foreach ($types as $itemtype) {
+      if (class_exists($itemtype)) {
+         $itemtype::registerType('PluginArchiswSwcomponent');
+      }
    }
    if (Session::getLoginUserID()) {
 
@@ -85,7 +82,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.0.2',
+      'version' => '2.0.3',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -97,7 +94,7 @@ function plugin_version_archisw() {
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archisw_check_prerequisites() {
    if (version_compare(GLPI_VERSION,'9.2','lt') || version_compare(GLPI_VERSION,'9.3','ge')) {
-      _e('This plugin requires GLPI >= 9.2 and <= 9.2', 'archisw');
+      _e('This plugin requires GLPI >= 9.2 and < 9.3', 'archisw');
       return false;
    }
    return true;
