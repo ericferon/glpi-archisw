@@ -47,13 +47,17 @@ function plugin_init_archisw() {
                          array('addtabon' => 'Profile'));
                          
 // Add links to other plugins
-   $types = array('PluginDatabasesDatabase',
+   $types = array(/*'PluginDatabasesDatabase',*/
                      'PluginArchimapGraph');
    foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
          $itemtype::registerType('PluginArchiswSwcomponent');
       }
    }
+// Add other plugin associations
+   if (class_exists('PluginDatabasesDatabase'))
+		PluginArchiswSwcomponent::registerType('PluginDatabasesDatabase');
+
    if (Session::getLoginUserID()) {
 
       $plugin = new Plugin();
