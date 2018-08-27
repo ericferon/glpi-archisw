@@ -83,17 +83,7 @@ function plugin_archisw_install() {
       $query="ALTER TABLE `glpi_plugin_archisw_profiles`
                DROP `name` ;";
       $result=$DB->query($query);
-
-      Plugin::migrateItemType(
-         array(2400=>'PluginArchiswSwcomponent'),
-         array("glpi_bookmarks", "glpi_bookmarks_users", "glpi_displaypreferences",
-               "glpi_documents_items", "glpi_infocoms", "glpi_logs", "glpi_items_tickets"),
-         array("glpi_plugin_archisw_swcomponents_items"));
-
-/*      Plugin::migrateItemType(
-         array(1200 => "PluginAppliancesAppliance",1300 => "PluginWebapplicationsWebapplication"),
-         array("glpi_plugin_archisw_swcomponents_items"));
-*/   }
+   }
 
    PluginArchiswProfile::initProfile();
    PluginArchiswProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
