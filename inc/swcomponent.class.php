@@ -441,7 +441,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          $values[$data['id']] = $data['name'];
       }
       $rand = mt_rand();
-      $out  = Dropdown::showFromArray('_swcomponenttype', $values, array('width'   => '30%',
+      $out  = Dropdown::showFromArray('_swcomponenttype', $values, array(/*'width'   => '15%',*/
                                                                      'rand'    => $rand,
                                                                      'display' => false));
       $field_id = Html::cleanId("dropdown__swcomponenttype$rand");
@@ -453,15 +453,29 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                         'used'   => $p['used']);
 
       $out .= Ajax::updateItemOnSelectEvent($field_id,"show_".$p['name'].$rand,
-                                            $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownTypeSwcomponents.php",
+                                            $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownTypeArchisw.php",
                                             $params, false);
       $out .= "<span id='show_".$p['name']."$rand'>";
       $out .= "</span>\n";
 
       $params['swcomponenttype'] = 0;
       $out .= Ajax::updateItem("show_".$p['name'].$rand,
-                               $CFG_GLPI["root_doc"]. "/plugins/archisw/ajax/dropdownTypeSwcomponents.php",
+                               $CFG_GLPI["root_doc"]. "/plugins/archisw/ajax/dropdownTypeArchisw.php",
                                $params, false);
+      $query = "SELECT `id`,`name`
+                FROM `glpi_plugin_archisw_swcomponents_itemroles`
+                WHERE `itemtype` = '".$_GET['_itemtype']."'" ;
+      $result = $DB->query($query);
+
+      $values = array(0 => Dropdown::EMPTY_VALUE);
+
+      while ($data = $DB->fetch_assoc($result)) {
+         $values[$data['id']] = $data['name'];
+      }
+      $out .= Dropdown::showFromArray('plugin_archisw_swcomponents_itemroles_id', $values, array(/*'width'   => '20%',*/
+                                                                     'rand'    => $rand,
+                                                                     'display' => false));
+      $out .= "<input name='comment'>";
       if ($p['display']) {
          echo $out;
          return $rand;
