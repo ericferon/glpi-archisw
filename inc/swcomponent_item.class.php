@@ -143,7 +143,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                                    AND `items_id` = '".$item->getID()."'");
    }
 
-   function getFromDBbySwcomponentsAndItem($plugin_archisw_swcomponents_id,$items_id,$itemtype) {
+   function getFromDBbySwcomponentsAndItem($plugin_archisw_swcomponents_id, $items_id, $itemtype) {
       global $DB;
 
       $query = "SELECT * FROM `".$this->getTable()."` " .
@@ -166,11 +166,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
    function addItem($values) {
 
-      $this->add(array('plugin_archisw_swcomponents_id'=>$values["plugin_archisw_swcomponents_id"],
-                        'items_id'=>$values["items_id"],
-                        'itemtype'=>$values["itemtype"],
-						'plugin_archisw_swcomponents_itemroles_id'=>$values["plugin_archisw_swcomponents_itemroles_id"],
-						'comment'=>$values["comment"]));
+      $this->add(array_slice($values, 0, -2));
 
    }
 
@@ -244,7 +240,6 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 		 echo "<td>";
 		 echo "<select name='plugin_archisw_swcomponents_itemroles_id' id='dropdown_plugin_archisw_swcomponents_itemroles_id$randitemtype'>";
 		 echo "</select>";
-		 echo "</td>";
 		 $entity_restrict = '';
 		 $used=array();
 		 $params=array('itemtype'=>'__VALUE__',
@@ -254,9 +249,10 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 				'used'=>$used
 		 );
 		 $field_id = Html::cleanId("dropdown_itemtype".$randitemtype);
-		 Ajax::updateItemOnSelectEvent($field_id,"dropdown_plugin_archisw_swcomponents_itemroles_id$randitemtype",
+		 Ajax::updateItemOnSelectEvent($field_id,"dropdown_plugin_archisw_swcomponents_itemroles_id".$randitemtype,
                                             $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownItemRole.php",
                                             $params, true);
+		 echo "</td>";
 		 echo "<td>";
          echo "<input name='comment'>";
 		 echo "</td>";
@@ -442,7 +438,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
       $query.= " ORDER BY `glpi_plugin_archisw_swcomponents`.`name` ";
 
-//file_put_contents("adebug.log","entering swcomponent_item.class - showForItem\n$query\n",FILE_APPEND);
+//file_put_contents("../adebug.log","entering swcomponent_item.class - showForItem\n$query\n",FILE_APPEND);
       $result = $DB->query($query);
       $number = $DB->numrows($result);
       $i      = 0;
@@ -452,7 +448,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       $used          = array();
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetch_assoc($result)) {
-            $swcomponents[$data['assocID']] = $data;
+            $swcomponents[$data['items_id']] = $data;
             $used[$data['id']] = $data['id'];
          }
       }
@@ -504,9 +500,10 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
             PluginArchiswSwcomponent::dropdownSwcomponent(array('entity' => $entities ,
                                                      'used'   => $used));
 
-            echo "</td><td class='center' width='20%'>";
+            echo "</td>";
+			echo "<td class='center' width='20%'>";
             echo "<input type='submit' name='additem' value=\"".
-                     _sx('button', 'Associate a swcomponent', 'archisw')."\" class='submit'>";
+                     _sx('button', 'Associate an ', 'archisw').PluginArchiswSwcomponent::getTypeName(1)."\" class='submit'>";
             echo "</td>";
             echo "</tr>";
             echo "</table>";
@@ -561,12 +558,12 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
             Session::addToNavigateListItems('PluginArchiswSwcomponent', $swcomponentID);
 
             $used[$swcomponentID]   = $swcomponentID;
-            $assocID             = $data["assocID"];
+            $items_id             = $data["items_id"];
 
             echo "<tr class='tab_bg_1".($data["is_deleted"]?"_2":"")."'>";
             if ($canedit && ($withtemplate < 2)) {
                echo "<td width='10'>";
-               Html::showMassiveActionCheckBox(__CLASS__, $data["assocID"]);
+               Html::showMassiveActionCheckBox(__CLASS__, $data["items_id"]);
                echo "</td>";
             }
             echo "<td class='center'>$link</td>";
