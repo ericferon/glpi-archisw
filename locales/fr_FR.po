@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Archisw 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-17 15:57+0200\n"
-"PO-Revision-Date: 2018-08-17 16:11+0200\n"
+"POT-Creation-Date: 2018-08-27 15:35+0200\n"
+"PO-Revision-Date: 2018-08-27 15:46+0200\n"
 "Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
 "Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
 "Language: fr\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 2.0.8\n"
 
-#: hook.php:337
+#: hook.php:344
 msgid "Associate to the Functional Area"
 msgstr "Associer à un Domaine Fonctionnel"
 
-#: setup.php:89 inc/menu.class.php:31 inc/profile.class.php:140
+#: setup.php:88 inc/menu.class.php:31 inc/profile.class.php:140
 msgid "Apps structure"
 msgid_plural "Apps structures"
 msgstr[0] "Structure d'Application"
 msgstr[1] "Structures d'Applications"
 
-#: setup.php:102
-msgid "This plugin requires GLPI >= 9.2 and <= 9.2"
-msgstr "Ce plugin nécessite une version GLPI >= 9.2 et <= 9.2"
+#: setup.php:101
+msgid "This plugin requires GLPI >= 9.2 and < 9.3"
+msgstr "Ce plugin nécessite une version GLPI >= 9.2 et < 9.3"
 
 #: inc/swcomponent.class.php:41 inc/swcomponent.class.php:190
 msgid "Apps Structure"
@@ -38,7 +38,7 @@ msgid_plural "Apps Structures"
 msgstr[0] "Structure d'Application"
 msgstr[1] "Structures d'Applications"
 
-#: inc/swcomponent.class.php:107 inc/swcomponent.class.php:254
+#: inc/swcomponent.class.php:107 inc/swcomponent.class.php:257
 msgid "Level"
 msgstr "Niveau"
 
@@ -50,88 +50,88 @@ msgstr "Langage de développement"
 msgid "Database"
 msgstr "Base de Données"
 
-#: inc/swcomponent.class.php:142 inc/swcomponent.class.php:352
+#: inc/swcomponent.class.php:142 inc/swcomponent.class.php:355
 msgid "Editor"
 msgstr "Editeur"
 
-#: inc/swcomponent.class.php:148 inc/swcomponent.class.php:348
+#: inc/swcomponent.class.php:148 inc/swcomponent.class.php:351
 msgid "Component Maintainer"
 msgstr "Mainteneur du Composant"
 
-#: inc/swcomponent.class.php:155 inc/swcomponent.class.php:336
-#: inc/swcomponent_item.class.php:535
+#: inc/swcomponent.class.php:155 inc/swcomponent.class.php:339
+#: inc/swcomponent_item.class.php:532
 msgid "Component Owner"
 msgstr "Propriétaire du Composant"
 
-#: inc/swcomponent.class.php:236
+#: inc/swcomponent.class.php:239
 msgid "Version"
 msgstr "Version"
 
-#: inc/swcomponent.class.php:241
+#: inc/swcomponent.class.php:244
 msgid "In use since year"
 msgstr "En usage depuis l'année"
 
-#: inc/swcomponent.class.php:249
+#: inc/swcomponent.class.php:252
 msgid "As child of"
 msgstr "Comme enfant de"
 
-#: inc/swcomponent.class.php:259
+#: inc/swcomponent.class.php:262
 msgid "Short code"
 msgstr "Abréviation"
 
-#: inc/swcomponent.class.php:285
+#: inc/swcomponent.class.php:288
 msgid "Status Startdate"
 msgstr "A ce statut depuis"
 
-#: inc/swcomponent.class.php:299
+#: inc/swcomponent.class.php:302
 msgid "Development Language"
 msgstr "Langage de développement"
 
-#: inc/swcomponent.class.php:307
+#: inc/swcomponent.class.php:310
 msgid "Instances"
 msgstr "Instances"
 
-#: inc/swcomponent.class.php:312
+#: inc/swcomponent.class.php:315
 msgid "DataBases"
 msgstr "Bases de Données"
 
-#: inc/swcomponent.class.php:319
+#: inc/swcomponent.class.php:322
 msgid "Targets"
 msgstr "Cibles"
 
-#: inc/swcomponent.class.php:324 inc/swcomponentuser.class.php:38
+#: inc/swcomponent.class.php:327 inc/swcomponentuser.class.php:38
 msgid "# users"
 msgid_plural "# users"
 msgstr[0] "# utilisateurs"
 msgstr[1] "# utilisateurs"
 
-#: inc/swcomponent.class.php:328 inc/swcomponentlicense.class.php:38
+#: inc/swcomponent.class.php:331 inc/swcomponentlicense.class.php:38
 msgid "License metric"
 msgid_plural "License metrics"
 msgstr[0] "Métrique de licence"
 msgstr[1] "Métriques de licences"
 
-#: inc/swcomponent.class.php:340
+#: inc/swcomponent.class.php:343
 msgid "Supplier"
 msgstr "Fournisseur"
 
-#: inc/swcomponent.class.php:360
+#: inc/swcomponent.class.php:363
 msgid "URL"
 msgstr "URL"
 
-#: inc/swcomponent.class.php:364 inc/swcomponentsla.class.php:38
+#: inc/swcomponent.class.php:367 inc/swcomponentsla.class.php:38
 msgid "Service level"
 msgid_plural "Service levels"
 msgstr[0] "Niveau de service"
 msgstr[1] "Niveaux de service"
 
-#: inc/swcomponent.class.php:539
+#: inc/swcomponent.class.php:556
 msgid "App structure associated"
 msgid_plural "App structures associated"
 msgstr[0] "Structure d'Application associée"
 msgstr[1] "Structures d'Application associées"
 
-#: inc/swcomponent.class.php:540
+#: inc/swcomponent.class.php:557
 msgid "Name"
 msgstr "Nom"
 
@@ -147,14 +147,14 @@ msgid_plural "Instances"
 msgstr[0] "Instance"
 msgstr[1] "Instances"
 
-#: inc/swcomponent_item.class.php:286 inc/swcomponent_item.class.php:538
+#: inc/swcomponent_item.class.php:282 inc/swcomponent_item.class.php:535
 msgid "Role"
 msgstr "Rôle"
 
-#: inc/swcomponent_item.class.php:509
+#: inc/swcomponent_item.class.php:506
 msgctxt "button"
-msgid "Associate a swcomponent"
-msgstr "Associer un Composant Logiciel"
+msgid "Associate an "
+msgstr "Associer un "
 
 #: inc/swcomponent_itemrole.class.php:38
 msgid "Link role"
