@@ -47,17 +47,21 @@ function plugin_init_archisw() {
                          array('addtabon' => 'Profile'));
                          
 // Add links to other plugins
-   $types = array(/*'PluginDatabasesDatabase',*/
-                     'PluginArchimapGraph');
+   $types = array('PluginArchimapGraph');
    foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
          $itemtype::registerType('PluginArchiswSwcomponent');
       }
    }
 // Add other plugin associations
-   if (class_exists('PluginDatabasesDatabase')
-	   && class_exists('PluginArchiswSwcomponent'))
-		PluginArchiswSwcomponent::registerType('PluginDatabasesDatabase');
+   $associatedtypes = array('PluginDatabasesDatabase',
+                     'PluginArchiswSwcomponent');
+   if (class_exists('PluginArchiswSwcomponent'))
+	  foreach ($associatedtypes as $itemtype) {
+		if (class_exists($itemtype)) {
+			$itemtype::registerType('PluginArchiswSwcomponent');
+		}
+	  }
 
    if (Session::getLoginUserID()) {
 
@@ -87,7 +91,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.0.7',
+      'version' => '2.0.8',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',

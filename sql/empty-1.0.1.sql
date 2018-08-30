@@ -90,6 +90,7 @@ INSERT INTO glpi_plugin_archisw_swcomponents_itemroles (id,itemtype,name,comment
 INSERT INTO glpi_plugin_archisw_swcomponents_itemroles (id,itemtype,name,comment) VALUES (3,'Computer','5-PROD','Production System');
 INSERT INTO glpi_plugin_archisw_swcomponents_itemroles (id,itemtype,name,comment) VALUES (4,'Computer','4-PREPROD','Pre-production system');
 INSERT INTO glpi_plugin_archisw_swcomponents_itemroles (id,itemtype,name,comment) VALUES (5,'Computer','2-INTEG','Integration');
+INSERT INTO glpi_plugin_archisw_swcomponents_itemroles (id,itemtype,name,comment) VALUES (6,'PluginArchiswSwcomponent','(To be/Being) Replaced by','Which application will replace this one ?');
 
 -- -----------------------------------------------------
 -- Table `glpi_plugin_archisw_profiles`

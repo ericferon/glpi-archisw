@@ -39,6 +39,9 @@ function plugin_archisw_install() {
       $update=true;
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.1.sql");
    }
+   if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archisw_swcomponents_itemroles where itemtype = 'PluginArchiswSwcomponent'")) == 0) {
+      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.2.sql");
+   }
 
    
    if ($DB->TableExists("glpi_plugin_archisw_profiles")) {
