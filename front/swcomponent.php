@@ -27,12 +27,7 @@
 include ('../../../inc/includes.php');
 
 $plugin = new Plugin();
-if ($plugin->isActivated("environment")) {
-   Html::header(PluginArchiswSwcomponent::getTypeName(2)
-                  ,'',"assets","pluginenvironmentdisplay","archisw");
-} else {
-   Html::header(PluginArchiswSwcomponent::getTypeName(2), '', "assets","pluginarchiswmenu");
-}
+Html::header(PluginArchiswSwcomponent::getTypeName(2), '', "assets","pluginarchiswmenu");
 $swcomponent = new PluginArchiswSwcomponent();
 
 if ($swcomponent->canView() || Session::haveRight("config", UPDATE)) {
