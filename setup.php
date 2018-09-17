@@ -55,6 +55,7 @@ function plugin_init_archisw() {
    }
 // Add other plugin associations
    $associatedtypes = array('PluginDatabasesDatabase',
+					'PluginWebapplicationsWebapplication',
                      'PluginArchiswSwcomponent');
    if (class_exists('PluginArchiswSwcomponent'))
 	  foreach ($associatedtypes as $itemtype) {
@@ -91,7 +92,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.0.9',
+      'version' => '2.0.10',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
