@@ -39,7 +39,7 @@ if (isset($_POST["add"])) {
 		// copy parent's value to child
 		$swcomponent->getFromDB($_POST['plugin_archisw_swcomponents_id']);
 		foreach ($swcomponent->fields as $key => $value) {
-			if ($key != 'id' && !isset($_POST[$key])) {
+			if ($key != 'id' && $key != 'sons_cache' && $key != 'ancestors_cache' && !isset($_POST[$key])) {
 				$_POST[$key] = $value;
 			}
 		}

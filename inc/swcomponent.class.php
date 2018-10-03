@@ -36,6 +36,28 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    
    static $types = array('Computer', 'Project', 'User', 'Software');
 
+   /**
+    * @since version 0.84
+   **/
+   function pre_deleteItem() {
+      global $GLPI_CACHE;
+
+      // Security do not delete root entity
+      if ($this->input['id'] == 0) {
+         return false;
+      }
+
+      //Cleaning sons calls getAncestorsOf and thus... Re-create cache. Call it before clean.
+      $this->cleanParentsSons();
+      if (Toolbox::useCache()) {
+         $ckey = $this->getTable() . '_ancestors_cache_' . $this->getID();
+         if ($GLPI_CACHE->hasItem($ckey)) {
+            $GLPI_CACHE->removeItem($ckey);
+         }
+      }
+      return true;
+   }
+
    static function getTypeName($nb=0) {
 
       return _n('Apps Structure', 'Apps Structures', $nb, 'archisw');
@@ -764,6 +786,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 				  $name = $values["name"];
 
                   unset($values["id"]);
+                  unset($values["sons_cache"]);
 				  for ($i = 1 ; $i <= $input['repeat'] ; $i++) {
 					$values["name"] = $name . " (Copy $i)";
 
