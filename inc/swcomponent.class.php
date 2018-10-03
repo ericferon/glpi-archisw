@@ -34,7 +34,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static $rightname = "plugin_archisw";
    protected $usenotepad         = true;
    
-   static $types = array('Computer', 'Project', 'User', 'Software');
+   static $types = array('Computer', 'Project', 'User', 'Software', 'Group');
 
    /**
     * @since version 0.84
