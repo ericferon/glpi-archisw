@@ -191,11 +191,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $tab[14]['name']            = __('Child entities');
       $tab[14]['datatype']        = 'bool';
 
-/*      $tab[13]['table']          = $this->getTable();
-      $tab[13]['field']          = 'is_helpdesk_visible';
-      $tab[13]['name']           = __('Associable to a ticket');
-      $tab[13]['datatype']       = 'bool';
-*/
+      $tab[15]['table']          = $this->getTable();
+      $tab[15]['field']          = 'is_helpdesk_visible';
+      $tab[15]['name']           = __('Associable to a ticket');
+      $tab[15]['datatype']       = 'bool';
+
       $tab[16]['table']          = $this->getTable();
       $tab[16]['field']          = 'date_mod';
       $tab[16]['massiveaction']  = false;
