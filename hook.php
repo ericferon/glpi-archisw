@@ -385,9 +385,9 @@ function plugin_archisw_MassiveActionsProcess($data) {
    return $res;
 }
 */
-function plugin_datainjection_populate_swcomponents() {
+function plugin_datainjection_populate_archisw() {
    global $INJECTABLE_TYPES;
-   $INJECTABLE_TYPES['PluginArchiswSwcomponentInjection'] = 'swcomponents';
+   $INJECTABLE_TYPES['PluginArchiswSwcomponentInjection'] = 'datainjection';
 }
 
 
