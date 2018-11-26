@@ -1,0 +1,29 @@
+language: php
+php:
+- '7.2'
+sudo: false
+branches:
+  only:
+  - master
+env: |
+  - GLPI_PLUGIN_NAME=`echo $TRAVIS_BUILD_DIR | sed -e 's/^.*-//'`
+    TRAVIS_TAG=`git for-each-ref --sort=-taggerdate --count=1 --format '%(refname:short)' refs/tags`
+    RELEASE_NAME=`git for-each-ref --sort=-taggerdate --count=1 --format '%(contents:subject)' refs/tags`
+    RELEASE_BODY=`git for-each-ref --sort=-taggerdate --count=1 --format '%(contents:body)' refs/tags`
+install: true
+script: true
+after_success:
+- tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz
+  ajax front inc locales sql *.png *.xml *.php  LICENSE README.md
+deploy:
+  provider: releases
+  api_key:
+    secure: a84nVJXsjspDF0v4DbqtKEWB+rnpkvO2RXtURtTxtTEWPzD2X0ZFpiW/Zb/ip4/NPHjgz8sHM1HkhUvNGs4M2q1GbIVadntZp252U13zJqHA6AYgBawhdRX8THzej/ZxlTv6n0qvh3ITxNlZjZv5NjK0uicuKCPHKuaYz67d/5i+iM0okSGPLM0SrKBFUOx19vpcoYocqv+PN7roAgGtyosQpHEyZj8ctzt1eIS/83/k5PUz7bBuNNSqzA+O/QhYTdXUKNMik8N7SQuwUX8c8rSW90Irv2Ul0/gQ2LH+FelipDipTIXBmr/JQzojfclZiFgm2WA2Ertjqm9IsZkA7B/KF+JcAcwNqgCJ9Yi9nGmsRvxNtMw+chProIQXih6S9xC86eosRQfcP54zJa463niO5R0hphzjOZarjHKInP6yEKQQjgLVMRiCIinE0Iqrq2IwKmc2bIs6TitgxGjPKLG3+QoE9tefe757imtK14gf+IdA9sqSTxeLIBNqDdFuMePBPgv1FhRiIOwMs84KpNMlYWQ9HRQGTS+1/NA6S6iWNnFLWSwjaFKSOYuFhcvUsWcOInpKhuIqPhJQYARykJjRPUaGLv7BFpDL+rdc27VCGKHjUb97wqaP6eLZcc9ctiUN9WI5ycp8ONlHbQLk5qU+tBYplERdGQj/RAwj8Mw=
+  skip_cleanup: true
+  file: $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz
+  name: $RELEASE_NAME
+  body: $RELEASE_BODY
+  prerelease: false
+  on:
+    repo: ericferon/glpi-$GLPI_PLUGIN_NAME
+    tags: true
