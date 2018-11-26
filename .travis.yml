@@ -5,7 +5,15 @@ sudo: false
 branches:
   only:
   - master
-env: |
+#addons:
+#  mariadb: '10.2'
+env:
+# in sequence :
+# get the directory name after the sign "-"
+# "git for-each-ref --sort=-taggerdate --count=1 --format '%(refname:short)' refs/tags" displays the last tag's shortname
+# "git for-each-ref --sort=-taggerdate --count=1 --format '%(contents:subject)' refs/tags" displays the last tag's first line
+# "git for-each-ref --sort=-taggerdate --count=1 --format '%(contents:body)' refs/tags" displays the last tag's 3d line and following ones
+>
   - GLPI_PLUGIN_NAME=`echo $TRAVIS_BUILD_DIR | sed -e 's/^.*-//'`
     TRAVIS_TAG=`git for-each-ref --sort=-taggerdate --count=1 --format '%(refname:short)' refs/tags`
     RELEASE_NAME=`git for-each-ref --sort=-taggerdate --count=1 --format '%(contents:subject)' refs/tags`
@@ -13,8 +21,7 @@ env: |
 install: true
 script: true
 after_success:
-- tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz
-  ajax front inc locales sql *.png *.xml *.php  LICENSE README.md
+- tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz ajax front inc locales sql *.png *.xml *.php  LICENSE README.md
 deploy:
   provider: releases
   api_key:
