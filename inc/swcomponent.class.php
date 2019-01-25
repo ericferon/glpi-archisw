@@ -96,7 +96,8 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
    static function countForItem(CommonDBTM $item) {
 
-      return countElementsInTable('glpi_plugin_archisw_swcomponents',
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_archisw_swcomponents',
                                   "`suppliers_id` = '".$item->getID()."'");
    }
 

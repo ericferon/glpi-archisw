@@ -130,7 +130,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       if (empty($types)) {
          return 0;
       }
-      return countElementsInTable('glpi_plugin_archisw_swcomponents_items',
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_archisw_swcomponents_items',
                                   "`itemtype` IN ('$types')
                                    AND `plugin_archisw_swcomponents_id` = '".$item->getID()."'");
    }
@@ -138,7 +139,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
    static function countForItem(CommonDBTM $item) {
 
-      return countElementsInTable('glpi_plugin_archisw_swcomponents_items',
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_archisw_swcomponents_items',
                                   "`itemtype`='".$item->getType()."'
                                    AND `items_id` = '".$item->getID()."'");
    }
