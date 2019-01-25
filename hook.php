@@ -121,7 +121,7 @@ function plugin_archisw_uninstall() {
 
 	$tables_glpi = array("glpi_displaypreferences",
                "glpi_documents_items",
-               "glpi_bookmarks",
+               "glpi_savedsearches",
                "glpi_logs",
                "glpi_items_tickets",
                "glpi_notepads",
