@@ -51,7 +51,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponents` (
   KEY is_helpdesk_visible (is_helpdesk_visible),
   KEY `is_deleted` (`is_deleted`),
   KEY `plugin_archisw_swcomponents_id` (`plugin_archisw_swcomponents_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=756 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) AUTO_INCREMENT=756 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 -- ----------------------------------------------------------------
 -- Table `glpi_plugin_archisw_swcomponents_items`
@@ -68,7 +68,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponents_items` (
 	UNIQUE KEY `unicity` (`plugin_archisw_swcomponents_id`,`items_id`,`itemtype`,`plugin_archisw_swcomponents_itemroles_id`),
   KEY `FK_device` (`items_id`,`itemtype`),
   KEY `item` (`itemtype`,`items_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------------------------------------------
 -- Table `glpi_plugin_archisw_swcomponents_itemroles`
@@ -81,7 +81,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponents_itemroles` (
 	`comment` VARCHAR(45) NULL ,
 	PRIMARY KEY  (`id`),
 	UNIQUE INDEX `unicity` (`itemtype`,`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 
@@ -103,7 +103,7 @@ CREATE TABLE `glpi_plugin_archisw_profiles` (
 	`open_ticket` char(1) collate utf8_unicode_ci default NULL,
 	PRIMARY KEY  (`id`),
 	KEY `profiles_id` (`profiles_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `glpi_plugin_archisw_swcomponentstates`
@@ -115,7 +115,7 @@ CREATE  TABLE `glpi_plugin_archisw_swcomponentstates` (
   `comment` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `glpi_plugin_archisw_swcomponentstates_name` (`name` ASC) )
-ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponentstates` ( `id` , `name` , `comment` )  VALUES (1,'In Development','In development');
 INSERT INTO `glpi_plugin_archisw_swcomponentstates` ( `id` , `name` , `comment` )  VALUES (2,'In Use','In Use');
@@ -139,7 +139,7 @@ CREATE  TABLE `glpi_plugin_archisw_swcomponenttypes` (
   `ancestors_cache` longtext COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `glpi_plugin_archisw_swcomponenttype_name` (`name` ASC) )
-ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+ DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponenttypes` ( `id` , `name` , `comment` )  VALUES (1,'Custom','Custom Development');
 INSERT INTO `glpi_plugin_archisw_swcomponenttypes` ( `id` , `name` , `comment` )  VALUES (2,'Package','Commercial Off The Shelf');
@@ -154,7 +154,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponenttechnics` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponenttechnics` VALUES ('1', 'Asp','');
 INSERT INTO `glpi_plugin_archisw_swcomponenttechnics` VALUES ('2', 'Cgi','');
@@ -173,7 +173,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponentusers` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `plugin_archisw_swcomponentslas`
@@ -185,7 +185,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponentslas` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- -----------------------------------------------------
 -- Table `plugin_archisw_swcomponentdbs`
@@ -197,7 +197,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponentdbs` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponentdbs` VALUES ('1', 'SQLserver','');
 INSERT INTO `glpi_plugin_archisw_swcomponentdbs` VALUES ('2', 'Oracle','');
@@ -213,7 +213,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponentinstances` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponentinstances` VALUES ('1', 'Integration+QA+Prod','');
 INSERT INTO `glpi_plugin_archisw_swcomponentinstances` VALUES ('2', 'QA+Prod','');
@@ -231,7 +231,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponenttargets` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponenttargets` VALUES ('1', 'Integrated+Franchise','');
 INSERT INTO `glpi_plugin_archisw_swcomponenttargets` VALUES ('2', 'Integrated only','');
@@ -247,7 +247,7 @@ CREATE TABLE `glpi_plugin_archisw_swcomponentlicenses` (
    `comment` text collate utf8_unicode_ci,
 	PRIMARY KEY  (`id`),
 	KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `glpi_plugin_archisw_swcomponentlicenses` VALUES ('1', 'Named user','');
 INSERT INTO `glpi_plugin_archisw_swcomponentlicenses` VALUES ('2', 'Concurrent user','');
