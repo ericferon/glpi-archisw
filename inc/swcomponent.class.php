@@ -111,6 +111,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    function getSearchOptions() {
 
       $tab                       = array();
+      if (version_compare(GLPI_VERSION,'9.3','ge')) return $tab;
 
       $tab['common']             = self::getTypeName(2);
 
@@ -217,6 +218,174 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $tab[81]['field']       = 'entities_id';
       $tab[81]['name']        = __('Entity')."-".__('ID');
       
+      return $tab;
+   }
+
+   // search fields from GLPI 9.3 on
+   function rawSearchOptions() {
+
+      $tab = [];
+      if (version_compare(GLPI_VERSION,'9.2','le')) return $tab;
+
+      $tab[] = [
+         'id'   => 'common',
+         'name' => self::getTypeName(2)
+      ];
+
+      $tab[] = [
+         'id'            => '1',
+         'table'         => $this->getTable(),
+         'field'         => 'name',
+         'name'          => __('Name'),
+         'datatype'      => 'itemlink',
+         'itemlink_type' => $this->getType()
+      ];
+
+      $tab[] = [
+         'id'       => '2',
+         'table'    => 'glpi_plugin_archisw_swcomponenttypes',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentType::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '3',
+         'table'    => $this->getTable(),
+         'field'    => 'level',
+         'name'     => __('Level','archisw'),
+         'datatype' => 'text'
+      ];
+
+      $tab[] = [
+         'id'       => '4',
+         'table'    => 'glpi_plugin_archisw_swcomponentstates',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentState::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '5',
+         'table'    => $this->getTable(),
+         'field'    => 'description',
+         'name'     => __('Description'),
+         'datatype' => 'text'
+      ];
+
+      $tab[] = [
+         'id'       => '6',
+         'table'    => 'glpi_plugin_archisw_swcomponenttechnics',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentTechnic::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '7',
+         'table'    => 'glpi_plugin_archisw_swcomponentdbs',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentDb::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '8',
+         'table'    => 'glpi_locations',
+         'field'    => 'completename',
+         'name'     => Location::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '9',
+         'table'    => 'glpi_suppliers',
+         'field'    => 'name',
+         'name'     => Supplier::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'        => '10',
+         'table'     => 'glpi_manufacturers',
+         'field'     => 'name',
+         'name'      => Manufacturer::getTypeName(1),
+         'datatype'  => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'        => '11',
+         'table'     => 'glpi_users',
+         'field'     => 'name',
+         'linkfield' => 'users_id',
+         'name'      => __('Component Maintainer','archisw'),
+         'datatype'  => 'dropdown',
+         'right'     => 'interface'
+      ];
+
+      $tab[] = [
+         'id'        => '12',
+         'table'     => 'glpi_groups',
+         'field'     => 'name',
+         'linkfield' => 'groups_id',
+         'name'      => __('Component Owner','archisw'),
+         'condition' => '`is_assign`',
+         'datatype'  => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'            => '15',
+         'table'         => $this->getTable(),
+         'field'         => 'is_helpdesk_visible',
+         'name'          => __('Associable to a ticket'),
+         'datatype'      => 'bool'
+      ];
+
+      $tab[] = [
+         'id'            => '16',
+         'table'         => $this->getTable(),
+         'field'         => 'date_mod',
+         'massiveaction' => false,
+         'name'          => __('Last update'),
+         'datatype'      => 'datetime'
+      ];
+
+      $tab[] = [
+         'id'            => '71',
+         'table'         => 'glpi_plugin_archisw_swcomponents_items',
+         'field'         => 'items_id',
+         'nosearch'      => true,
+         'massiveaction' => false,
+         'name'          => _n('Associated item', 'Associated items', 2),
+         'forcegroupby'  => true,
+         'joinparams'    => [
+            'jointype' => 'child'
+         ]
+      ];
+
+      $tab[] = [
+         'id'            => '72',
+         'table'         => $this->getTable(),
+         'field'         => 'id',
+         'name'          => __('ID'),
+         'datatype'      => 'number'
+      ];
+
+      $tab[] = [
+         'id'       => '80',
+         'table'    => $this->getTable(),
+         'field'    => 'completename',
+         'name'     => __('Apps Structure','archisw'),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'    => '81',
+         'table' => 'glpi_entities',
+         'field' => 'entities_id',
+         'name'  => __('Entity') . "-" . __('ID')
+      ];
+
       return $tab;
    }
 
