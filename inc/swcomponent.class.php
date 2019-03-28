@@ -34,7 +34,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static $rightname = "plugin_archisw";
    protected $usenotepad         = true;
    
-   static $types = array('Computer', 'Project', 'User', 'Software', 'Group');
+   static $types = array('Computer', 'Project', 'User', 'Software', 'Group', 'Entity');
 
    /**
     * @since version 0.84
@@ -204,6 +204,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $tab[16]['name']           = __('Last update');
       $tab[16]['datatype']       = 'datetime';
 
+      $tab[17]['table']           = 'glpi_plugin_archisw_standards';
+      $tab[17]['field']           = 'name';
+      $tab[17]['name']            = __('Standardization Status', 'archisw');
+      $tab[17]['datatype']        = 'dropdown';
+
       $tab[30]['table']          = $this->getTable();
       $tab[30]['field']          = 'id';
       $tab[30]['name']           = __('ID');
@@ -351,6 +356,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'       => '17',
+         'table'    => 'glpi_plugin_archisw_standards',
+         'field'    => 'name',
+         'name'     => PluginArchiswStandard::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
          'id'            => '71',
          'table'         => 'glpi_plugin_archisw_swcomponents_items',
          'field'         => 'items_id',
@@ -462,7 +475,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       //description of swcomponent
       echo "<td>".__('Description').":	</td>";
       echo "<td class='top center' colspan='6'>";
-      Html::autocompletionTextField($this,"description",array('size' => "140"));
+      Html::autocompletionTextField($this,"description",array('size' => 140, 'attrs' => array('size' => 140)));
       echo "</td>";
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
@@ -478,11 +491,16 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       Dropdown::show('PluginArchiswSwcomponentState', array('value' => $this->fields["plugin_archisw_swcomponentstates_id"]));
       echo "</td>";
       //status date of swcomponent
-      echo "<td  colspan='3'>".__('Status Startdate','archisw')."</td>";
+      echo "<td>".__('Status Startdate','archisw')."</td>";
       echo "<td>";
       Html::showDateField("statedate", array('value' => $this->fields["statedate"]));
       echo "</td>";
-      echo "</tr>";
+      //status of swcomponent
+      echo "<td>".__('Standardization Status', 'archisw')."</td>";
+      echo "<td>";
+      Dropdown::show('PluginArchiswStandard', array('value' => $this->fields["plugin_archisw_standards_id"]));
+      echo "</td>";
+       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       //type of swcomponent
