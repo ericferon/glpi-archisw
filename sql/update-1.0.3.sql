@@ -1,6 +1,7 @@
 ALTER TABLE `glpi_plugin_archisw_swcomponents` 
    ADD COLUMN IF NOT EXISTS `plugin_archisw_standards_id` INT(11) NOT NULL default '0' COMMENT 'Standard status (Standard, Not standard, ...)' AFTER `plugin_archisw_swcomponentlicenses_id`,
    ADD KEY IF NOT EXISTS `plugin_archisw_standards_id` (`plugin_archisw_standards_id`)
+;
 
 -- -----------------------------------------------------
 -- Table `glpi_plugin_archisw_standards`

@@ -32,7 +32,7 @@ function plugin_archisw_install() {
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
       
-      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-1.0.1.sql");
+      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-1.0.2.sql");
 
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
@@ -41,6 +41,9 @@ function plugin_archisw_install() {
    }
    if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archisw_swcomponents_itemroles where itemtype = 'PluginArchiswSwcomponent'")) == 0) {
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.2.sql");
+   }
+   if (!$DB->TableExists("glpi_plugin_archisw_standards") || !$DB->FieldExists("glpi_plugin_archisw_swcomponents","plugin_archisw_standards_id")) {
+      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.3.sql");
    }
 
    
@@ -276,7 +279,7 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
 
                   $query = "SELECT `" . $table_item . "`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `glpi_entities`.`id` AS entity "
                            . " FROM `glpi_plugin_archisw_swcomponents_items`, `" . $table_item
-                           . "` LEFT JOIN `glpi_entities` ON (`glpi_entities`.`id` = `" . $table_item . "`.`entities_id`) "
+                           . "` LEFT JOIN `glpi_entities` as entities ON (`entities`.`id` = `" . $table_item . "`.`entities_id`) "
                            . " WHERE `" . $table_item . "`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
                   AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemtype'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '" . $databases . "' "
@@ -285,7 +288,7 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
                   if ($item->maybeTemplate()) {
                      $query .= " AND `" . $table_item . "`.`is_template` = '0'";
                   }
-                  $query .= " ORDER BY `glpi_entities`.`completename`, `" . $table_item . "`.`$column`";
+                  $query .= " ORDER BY `entities`.`completename`, `" . $table_item . "`.`$column`";
 
                   if ($result_linked = $DB->query($query))
                      if ($DB->numrows($result_linked)) {
