@@ -49,7 +49,7 @@ function plugin_archisw_install() {
    
    if ($DB->TableExists("glpi_plugin_archisw_profiles")) {
    
-      $notepad_tables = array('glpi_plugin_archisw_swcomponents');
+      $notepad_tables = ['glpi_plugin_archisw_swcomponents'];
 
       foreach ($notepad_tables as $t) {
          // Migrate data
@@ -105,7 +105,7 @@ function plugin_archisw_uninstall() {
    include_once (GLPI_ROOT."/plugins/archisw/inc/profile.class.php");
    include_once (GLPI_ROOT."/plugins/archisw/inc/menu.class.php");
    
-	$tables = array("glpi_plugin_archisw_swcomponents",
+	$tables = ["glpi_plugin_archisw_swcomponents",
 					"glpi_plugin_archisw_swcomponents_items",
 					"glpi_plugin_archisw_swcomponentdbs",
 					"glpi_plugin_archisw_swcomponentinstances",
@@ -117,30 +117,30 @@ function plugin_archisw_uninstall() {
 					"glpi_plugin_archisw_swcomponenttechnics",
 					"glpi_plugin_archisw_swcomponenttypes",
 					"glpi_plugin_archisw_swcomponentusers",
-					"glpi_plugin_archisw_profiles");
+					"glpi_plugin_archisw_profiles"];
 
    foreach($tables as $table)
       $DB->query("DROP TABLE IF EXISTS `$table`;");
 
-	$tables_glpi = array("glpi_displaypreferences",
+	$tables_glpi = ["glpi_displaypreferences",
                "glpi_documents_items",
                "glpi_savedsearches",
                "glpi_logs",
                "glpi_items_tickets",
                "glpi_notepads",
-               "glpi_dropdowntranslations");
+               "glpi_dropdowntranslations"];
 
    foreach($tables_glpi as $table_glpi)
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginArchisw%' ;");
 
    if (class_exists('PluginDatainjectionModel')) {
-      PluginDatainjectionModel::clean(array('itemtype'=>'PluginArchiswSwcomponent'));
+      PluginDatainjectionModel::clean(['itemtype'=>'PluginArchiswSwcomponent']);
    }
    
    //Delete rights associated with the plugin
    $profileRight = new ProfileRight();
    foreach (PluginArchiswProfile::getAllRights() as $right) {
-      $profileRight->deleteByCriteria(array('name' => $right['field']));
+      $profileRight->deleteByCriteria(['name' => $right['field']]);
    }
    PluginArchiswMenu::removeRightsFromSession();
    PluginArchiswProfile::removeRightsFromSession();
@@ -151,12 +151,12 @@ function plugin_archisw_uninstall() {
 function plugin_archisw_postinit() {
    global $PLUGIN_HOOKS;
 
-   $PLUGIN_HOOKS['item_purge']['archisw'] = array();
+   $PLUGIN_HOOKS['item_purge']['archisw'] = [];
 
    foreach (PluginArchiswSwcomponent::getTypes(true) as $type) {
 
       $PLUGIN_HOOKS['item_purge']['archisw'][$type]
-         = array('PluginArchiswSwcomponent_Item','cleanForItem');
+         = ['PluginArchiswSwcomponent_Item','cleanForItem'];
 
       CommonGLPI::registerStandardTab($type, 'PluginArchiswSwcomponent_Item');
    }
@@ -175,21 +175,21 @@ function plugin_archisw_getSwcomponentRelations() {
 
    $plugin = new Plugin();
    if ($plugin->isActivated("archisw"))
-		return array("glpi_plugin_archisw_swcomponents"=>array("glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_id"),
-					 "glpi_plugin_archisw_swcomponenttypes"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttypes_id"),
-					 "glpi_plugin_archisw_swcomponents_itemroles"=>array("glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_itemroles_id"),
-					 "glpi_plugin_archisw_swcomponentstates"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentstates_id"),
-					 "glpi_plugin_archisw_swcomponenttechnics"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttechnics_id"),
-					 "glpi_plugin_archisw_swcomponentdbs"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentdbs_id"),
-					 "glpi_plugin_archisw_swcomponentinstances"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentinstances_id"),
-					 "glpi_plugin_archisw_swcomponenttargets"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttargets_id"),
-//					 "glpi_plugin_archisw_graphlevels"=>array("glpi_plugin_archisw_swcomponents"=>"plugin_archisw_graphlevels_id"),
-					 "glpi_entities"=>array("glpi_plugin_archisw_swcomponents"=>"entities_id"),
-					 "glpi_groups"=>array("glpi_plugin_archisw_swcomponents"=>"groups_id"),
-					 "glpi_users"=>array("glpi_plugin_archisw_swcomponents"=>"users_id")
-					 );
+		return ["glpi_plugin_archisw_swcomponents"=>["glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_id"],
+					 "glpi_plugin_archisw_swcomponenttypes"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttypes_id"],
+					 "glpi_plugin_archisw_swcomponents_itemroles"=>["glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_itemroles_id"],
+					 "glpi_plugin_archisw_swcomponentstates"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentstates_id"],
+					 "glpi_plugin_archisw_swcomponenttechnics"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttechnics_id"],
+					 "glpi_plugin_archisw_swcomponentdbs"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentdbs_id"],
+					 "glpi_plugin_archisw_swcomponentinstances"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentinstances_id"],
+					 "glpi_plugin_archisw_swcomponenttargets"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttargets_id"],
+//					 "glpi_plugin_archisw_graphlevels"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_graphlevels_id"],
+					 "glpi_entities"=>["glpi_plugin_archisw_swcomponents"=>"entities_id"],
+					 "glpi_groups"=>["glpi_plugin_archisw_swcomponents"=>"groups_id"],
+					 "glpi_users"=>["glpi_plugin_archisw_swcomponents"=>"users_id"]
+					 ];
    else
-      return array();
+      return [];
 }
 
 // Define Dropdown tables to be manage in GLPI :
@@ -197,7 +197,7 @@ function plugin_archisw_getDropdown() {
 
    $plugin = new Plugin();
    if ($plugin->isActivated("archisw"))
-		return array('PluginArchiswSwcomponentType'=>PluginArchiswSwcomponentType::getTypeName(2),
+		return ['PluginArchiswSwcomponentType'=>PluginArchiswSwcomponentType::getTypeName(2),
 					 'PluginArchiswSwcomponent_Itemrole'=>PluginArchiswSwcomponent_Itemrole::getTypeName(2),
 					 'PluginArchiswSwcomponentDb'=>PluginArchiswSwcomponentDb::getTypeName(1), //PluginArchiswSwcomponentDb::getTypeName(2) does not work
 					 'PluginArchiswSwcomponentInstance'=>PluginArchiswSwcomponentInstance::getTypeName(2),
@@ -207,16 +207,16 @@ function plugin_archisw_getDropdown() {
 					 'PluginArchiswSwcomponentTarget'=>PluginArchiswSwcomponentTarget::getTypeName(2),
 					 'PluginArchiswSwcomponentTechnic'=>PluginArchiswSwcomponentTechnic::getTypeName(2),
 					 'PluginArchiswSwcomponentUser'=>PluginArchiswSwcomponentUser::getTypeName(2)
-		);
+		];
    else
-      return array();
+      return [];
 }
 
 ////// SEARCH FUNCTIONS ///////() {
 
 function plugin_archisw_getAddSearchOptions($itemtype) {
 
-   $sopt=array();
+   $sopt=[];
 
    if (in_array($itemtype, PluginArchiswSwcomponent::getTypes(true))) {
       if (Session::haveRight("plugin_archisw", READ)) {
@@ -229,9 +229,9 @@ function plugin_archisw_getAddSearchOptions($itemtype) {
          $sopt[2460]['datatype']      = 'itemlink';
          $sopt[2460]['massiveaction'] = false;
          $sopt[2460]['itemlink_type'] = 'PluginArchiswSwcomponent';
-         $sopt[2460]['joinparams']    = array('beforejoin'
-                                                => array('table'      => 'glpi_plugin_archisw_swcomponents_items',
-                                                         'joinparams' => array('jointype' => 'itemtype_item')));
+         $sopt[2460]['joinparams']    = ['beforejoin'
+                                                => ['table'      => 'glpi_plugin_archisw_swcomponents_items',
+                                                         'joinparams' => ['jointype' => 'itemtype_item']]];
 
          $sopt[2461]['table']         ='glpi_plugin_archisw_swcomponenttypes';
          $sopt[2461]['field']         ='name';
@@ -239,9 +239,9 @@ function plugin_archisw_getAddSearchOptions($itemtype) {
          $sopt[2461]['forcegroupby']  = true;
          $sopt[2461]['datatype']      = 'dropdown';
          $sopt[2461]['massiveaction'] = false;
-         $sopt[2461]['joinparams']    = array('beforejoin' => array(
-                                                array('table'      => 'glpi_plugin_archisw_swcomponents',
-                                                      'joinparams' => $sopt[2460]['joinparams'])));
+         $sopt[2461]['joinparams']    = ['beforejoin' => [
+                                                ['table'      => 'glpi_plugin_archisw_swcomponents',
+                                                      'joinparams' => $sopt[2460]['joinparams']]]];
 
      }
    }
@@ -309,13 +309,13 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
 
       case 'glpi_plugin_archisw_swcomponents.name':
          if ($type == 'Ticket') {
-            $swcomponents_id = array();
+            $swcomponents_id = [];
             if ($data['raw']["ITEM_$num"] != '') {
                $swcomponents_id = explode('$$$$', $data['raw']["ITEM_$num"]);
             } else {
                $swcomponents_id = explode('$$$$', $data['raw']["ITEM_" . $num . "_2"]);
             }
-            $ret        = array();
+            $ret        = [];
             $paSwcomponent = new PluginArchiswSwcomponent();
             foreach ($swcomponents_id as $ap_id) {
                $paSwcomponent->getFromDB($ap_id);
@@ -334,15 +334,18 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
 
 function plugin_archisw_MassiveActions($type) {
 
-   if (in_array($type,PluginArchiswSwcomponent::getTypes(true))) {
-      return array('PluginArchiswSwcomponent'.MassiveAction::CLASS_ACTION_SEPARATOR.'plugin_archisw_add_item' =>
-                                                              __('Associate to the Functional Area', 'archisw'));
+    $plugin = new Plugin();
+    if ($plugin->isActivated('archisw')) {
+        if (in_array($type,PluginArchiswSwcomponent::getTypes(true))) {
+            return ['PluginArchiswSwcomponent'.MassiveAction::CLASS_ACTION_SEPARATOR.'plugin_archisw_add_item' =>
+                                                              __('Associate to the Apps Structure', 'archisw')];
+      }
    }
-   return array();
+   return [];
 }
 
 /*
-function plugin_archisw_MassiveActionsDisplay($options=array()) {
+function plugin_archisw_MassiveActionsDisplay($options=[]) {
 
    $swcomponent=new PluginArchiswSwcomponent;
 
@@ -356,9 +359,9 @@ function plugin_archisw_MassiveActionsDisplay($options=array()) {
 
 function plugin_archisw_MassiveActionsProcess($data) {
 
-   $res = array('ok' => 0,
+   $res = ['ok' => 0,
             'ko' => 0,
-            'noright' => 0);
+            'noright' => 0];
 
    $swcomponent_item = new PluginArchiswSwcomponent_Item();
 
@@ -367,9 +370,9 @@ function plugin_archisw_MassiveActionsProcess($data) {
       case "plugin_archisw_add_item":
          foreach ($data["item"] as $key => $val) {
             if ($val == 1) {
-               $input = array('plugin_archisw_swcomponent_id' => $data['plugin_archisw_swcomponent_id'],
+               $input = ['plugin_archisw_swcomponent_id' => $data['plugin_archisw_swcomponent_id'],
                               'items_id'      => $key,
-                              'itemtype'      => $data['itemtype']);
+                              'itemtype'      => $data['itemtype']];
                if ($swcomponent_item->can(-1,'w',$input)) {
                   if ($swcomponent_item->can(-1,'w',$input)) {
                      $swcomponent_item->add($input);

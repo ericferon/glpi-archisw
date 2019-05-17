@@ -44,11 +44,12 @@ class PluginArchiswSwcomponentType extends CommonTreeDropdown {
 /*   function getAdditionalFields()
    {
 
-      return array(array('name' => $this->getForeignKeyField(),
+      return [
+        ['name' => $this->getForeignKeyField(),
          'label' => __('As child of'),
          'type' => 'parent',
-         'list'  => false)
-	  );
+         'list'  => false]
+	  ];
    }*/
 }
 

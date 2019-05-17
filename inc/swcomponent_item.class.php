@@ -61,8 +61,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
       $temp = new self();
       $temp->deleteByCriteria(
-         array('itemtype' => $item->getType(),
-               'items_id' => $item->getField('id'))
+         ['itemtype' => $item->getType(),
+               'items_id' => $item->getField('id')]
       );
    }
 
@@ -126,14 +126,15 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
    static function countForSwcomponent(PluginArchiswSwcomponent $item) {
 
-      $types = implode("','", $item->getTypes());
-      if (empty($types)) {
+      $types = $item->getTypes();
+      if (count($types) == 0) {
          return 0;
       }
       $dbu = new DbUtils();
       return $dbu->countElementsInTable('glpi_plugin_archisw_swcomponents_items',
-                                  "`itemtype` IN ('$types')
-                                   AND `plugin_archisw_swcomponents_id` = '".$item->getID()."'");
+                                        ["plugin_archisw_swcomponents_id" => $item->getID(),
+                                         "itemtype"                      => $item->getTypes()
+                                        ]);
    }
 
 
@@ -141,8 +142,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
       $dbu = new DbUtils();
       return $dbu->countElementsInTable('glpi_plugin_archisw_swcomponents_items',
-                                  "`itemtype`='".$item->getType()."'
-                                   AND `items_id` = '".$item->getID()."'");
+                                        ["itemtype" => $item->getType(),
+                                         "items_id" => $item->getID()]);
    }
 
    function getFromDBbySwcomponentsAndItem($plugin_archisw_swcomponents_id, $items_id, $itemtype) {
@@ -175,7 +176,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
    function deleteItemBySwcomponentsAndItem($plugin_archisw_swcomponents_id,$items_id,$itemtype) {
 
       if ($this->getFromDBbySwcomponentsAndItem($plugin_archisw_swcomponents_id,$items_id,$itemtype)) {
-         $this->delete(array('id'=>$this->fields["id"]));
+         $this->delete(['id'=>$this->fields["id"]]);
       }
    }
 
@@ -233,7 +234,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
          echo "<tr class='tab_bg_1'><td colspan='".(3+$colsup)."' class='center'>";
          echo "<input type='hidden' name='plugin_archisw_swcomponents_id' value='$instID'>";
-		 $options=array();
+		 $options=[];
 		 $options['items_id_name']='items_id';
 		 $options['entity_restrict']=($swcomponent->fields['is_recursive']?-1:$swcomponent->fields['entities_id']);
 		 $options['itemtypes']=PluginArchiswSwcomponent::getTypes();
@@ -243,13 +244,13 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 		 echo "<select name='plugin_archisw_swcomponents_itemroles_id' id='dropdown_plugin_archisw_swcomponents_itemroles_id$randitemtype'>";
 		 echo "</select>";
 		 $entity_restrict = '';
-		 $used=array();
-		 $params=array('itemtype'=>'__VALUE__',
+		 $used=[];
+		 $params=['itemtype'=>'__VALUE__',
 				'entity_restrict'=>$entity_restrict,
 				'rand'=>$randitemtype,
 				'myname'=>'plugin_archisw_swcomponents_itemroles_id',
 				'used'=>$used
-		 );
+		 ];
 		 $field_id = Html::cleanId("dropdown_itemtype".$randitemtype);
 		 Ajax::updateItemOnSelectEvent($field_id,"dropdown_plugin_archisw_swcomponents_itemroles_id".$randitemtype,
                                             $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownItemRole.php",
@@ -269,7 +270,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       echo "<div class='spaced'>";
       if ($canedit && $number) {
          Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
-         $massiveactionparams = array();
+         $massiveactionparams = [];
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
@@ -397,9 +398,9 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
    static function showForItem(CommonDBTM $item, $withtemplate='') {
       global $DB, $CFG_GLPI;
 
-      $swcomponents	= array();
+      $swcomponents	= [];
       $swcomponent	= new PluginArchiswSwcomponent();
-      $used			= array();
+      $used			= [];
 
       $ID = $item->getField('id');
 
@@ -491,8 +492,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                echo "<input type='hidden' name='tickets_id' value='$ID'>";
             }
             
-            PluginArchiswSwcomponent::dropdownSwcomponent(array('entity' => $entities ,
-                                                     'used'   => $used));
+            PluginArchiswSwcomponent::dropdownSwcomponent(['entity' => $entities ,
+                                                     'used'   => $used]);
 
             echo "</td>";
 			echo "<td class='center' width='20%'>";
@@ -510,7 +511,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       echo "<div class='spaced'>";
       if ($canedit && $number && ($withtemplate < 2)) {
          Html::openMassiveActionsForm('mass'.__CLASS__.$rand);
-         $massiveactionparams = array('num_displayed'  => $number);
+         $massiveactionparams = ['num_displayed'  => $number];
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
@@ -530,7 +531,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       echo "<th>".__('Comment')."</th>";
       echo "<th>".__('Supplier')."</th>";
       echo "</tr>";
-      $used = array();
+      $used = [];
 
       if ($number) {
 

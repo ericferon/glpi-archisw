@@ -85,7 +85,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["deleteitem"])) {
 
    foreach ($_POST["item"] as $key => $val) {
-         $input = array('id' => $key);
+         $input = ['id' => $key];
          if ($val==1) {
             $swcomponent_item->check($key, UPDATE);
             $swcomponent_item->delete($input);
@@ -95,7 +95,7 @@ if (isset($_POST["add"])) {
 
 } else if (isset($_POST["deletearchisw"])) {
 
-   $input = array('id' => $_POST["id"]);
+   $input = ['id' => $_POST["id"]];
    $swcomponent_item->check($_POST["id"], UPDATE);
    $swcomponent_item->delete($input);
    Html::back();

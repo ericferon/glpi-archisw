@@ -35,7 +35,7 @@ Session::checkCentralAccess();
 
 // Make a select box
 if (isset($_POST["swcomponenttype"])) {
-   $used = array();
+   $used = [];
 
    // Clean used array
    if (isset($_POST['used']) && is_array($_POST['used']) && (count($_POST['used']) > 0)) {
@@ -50,12 +50,12 @@ if (isset($_POST["swcomponenttype"])) {
    }
 
    Dropdown::show('PluginArchiswSwcomponent',
-                  array('name'      => $_POST['myname'],
+                  ['name'      => $_POST['myname'],
                         'used'      => $used,
                         'width'     => '50%',
                         'entity'    => $_POST['entity'],
                         'rand'      => $_POST['rand'],
-                        'condition' => "glpi_plugin_archisw_swcomponents.plugin_archisw_swcomponenttypes_id='".$_POST["swcomponenttype"]."'"));
+                        'condition' => "glpi_plugin_archisw_swcomponents.plugin_archisw_swcomponenttypes_id='".$_POST["swcomponenttype"]."'"]);
 
 }
 

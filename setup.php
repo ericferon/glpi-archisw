@@ -29,34 +29,34 @@ function plugin_init_archisw() {
    global $PLUGIN_HOOKS;
 
    $PLUGIN_HOOKS['csrf_compliant']['archisw'] = true;
-   $PLUGIN_HOOKS['change_profile']['archisw'] = array('PluginArchiswProfile', 'initProfile');
+   $PLUGIN_HOOKS['change_profile']['archisw'] = ['PluginArchiswProfile', 'initProfile'];
    $PLUGIN_HOOKS['assign_to_ticket']['archisw'] = true;
    
    //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
-   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = array('PluginArchiswSwcomponent_Item');
+   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
    
-   Plugin::registerClass('PluginArchiswSwcomponent', array(
+   Plugin::registerClass('PluginArchiswSwcomponent', [
          'linkgroup_tech_types'   => true,
          'linkuser_tech_types'    => true,
          'document_types'         => true,
          'ticket_types'           => true,
          'helpdesk_visible_types' => true//,
 //         'addtabon'               => 'Supplier'
-   ));
+   ]);
    Plugin::registerClass('PluginArchiswProfile',
-                         array('addtabon' => 'Profile'));
+                         ['addtabon' => 'Profile']);
                          
 // Add links to other plugins
-   $types = array('PluginArchimapGraph');
+   $types = ['PluginArchimapGraph'];
    foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
          $itemtype::registerType('PluginArchiswSwcomponent');
       }
    }
 // Add other plugin associations
-   $associatedtypes = array('PluginDatabasesDatabase',
+   $associatedtypes = ['PluginDatabasesDatabase',
 					'PluginWebapplicationsWebapplication',
-                     'PluginArchiswSwcomponent');
+                     'PluginArchiswSwcomponent'];
    if (class_exists('PluginArchiswSwcomponent'))
 	  foreach ($associatedtypes as $itemtype) {
 		if (class_exists($itemtype)) {
@@ -69,7 +69,7 @@ function plugin_init_archisw() {
       $plugin = new Plugin();
       if (Session::haveRight("plugin_archisw", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archisw'] = array('assets'   => 'PluginArchiswMenu');
+         $PLUGIN_HOOKS['menu_toadd']['archisw'] = ['assets'   => 'PluginArchiswMenu'];
       }
 
       if (Session::haveRight("plugin_archisw", UPDATE)) {
@@ -92,19 +92,19 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.1.1',
+      'version' => '2.1.2',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
-      'minGlpiVersion' => '9.2',
+      'minGlpiVersion' => '9.4',
    );
 
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archisw_check_prerequisites() {
-   if (version_compare(GLPI_VERSION,'9.2','lt') || version_compare(GLPI_VERSION,'9.5','ge')) {
-      _e('This plugin requires GLPI >= 9.2 and < 9.5', 'archisw');
+   if (version_compare(GLPI_VERSION,'9.4','lt') || version_compare(GLPI_VERSION,'9.5','ge')) {
+      _e('This plugin requires GLPI >= 9.4 and < 9.5', 'archisw');
       return false;
    }
    return true;

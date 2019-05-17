@@ -47,8 +47,8 @@ class PluginArchiswProfile extends Profile {
          $prof = new self();
 
          self::addDefaultProfileInfos($ID,
-                                    array('plugin_archisw'               => 0,
-                                          'plugin_archisw_open_ticket'   => 0));
+                                    ['plugin_archisw'               => 0,
+                                          'plugin_archisw_open_ticket'   => 0]);
          $prof->showForm($ID);
       }
       return true;
@@ -57,8 +57,8 @@ class PluginArchiswProfile extends Profile {
    static function createFirstAccess($ID) {
       //85
       self::addDefaultProfileInfos($ID,
-                                   array('plugin_archisw'             => 127,
-                                         'plugin_archisw_open_ticket' => 1), true);
+                                   ['plugin_archisw'             => 127,
+                                         'plugin_archisw_open_ticket' => 1], true);
    }
 
     /**
@@ -74,7 +74,7 @@ class PluginArchiswProfile extends Profile {
                                          ['profiles_id' => $profiles_id,
                                           'name'        => $right])
             && $drop_existing) {
-            $profileRight->deleteByCriteria(array('profiles_id' => $profiles_id, 'name' => $right));
+            $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
          }
          if (!$dbu->countElementsInTable('glpi_profilerights',
 //                                   "`profiles_id`='$profiles_id' AND `name`='$right'")) {
@@ -103,7 +103,7 @@ class PluginArchiswProfile extends Profile {
    function showForm($profiles_id=0, $openform=TRUE, $closeform=TRUE) {
 
       echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, array(CREATE, UPDATE, PURGE)))
+      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
           && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='".$profile->getFormURL()."'>";
@@ -113,27 +113,27 @@ class PluginArchiswProfile extends Profile {
       $profile->getFromDB($profiles_id);
       if ($profile->getField('interface') == 'central') {
          $rights = $this->getAllRights();
-         $profile->displayRightsChoiceMatrix($rights, array('canedit'       => $canedit,
+         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
                                                          'default_class' => 'tab_bg_2',
-                                                         'title'         => __('General')));
+                                                         'title'         => __('General')]);
       }
       echo "<table class='tab_cadre_fixehov'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>".__('Helpdesk')."</th></tr>\n";
 
-      $effective_rights = ProfileRight::getProfileRights($profiles_id, array('plugin_archisw_open_ticket'));
+      $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_archisw_open_ticket']);
       echo "<tr class='tab_bg_2'>";
       echo "<td width='20%'>".__('Associable items to a ticket')."</td>";
       echo "<td colspan='5'>";
-      Html::showCheckbox(array('name'    => '_plugin_archisw_open_ticket',
-                               'checked' => $effective_rights['plugin_archisw_open_ticket']));
+      Html::showCheckbox(['name'    => '_plugin_archisw_open_ticket',
+                               'checked' => $effective_rights['plugin_archisw_open_ticket']]);
       echo "</td></tr>\n";
       echo "</table>";
 
       if ($canedit
           && $closeform) {
          echo "<div class='center'>";
-         echo Html::hidden('id', array('value' => $profiles_id));
-         echo Html::submit(_sx('button', 'Save'), array('name' => 'update'));
+         echo Html::hidden('id', ['value' => $profiles_id]);
+         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
          echo "</div>\n";
          Html::closeForm();
       }
@@ -141,17 +141,17 @@ class PluginArchiswProfile extends Profile {
    }
 
    static function getAllRights($all = false) {
-      $rights = array(
-          array('itemtype'  => 'PluginArchiswSwcomponent',
+      $rights = [
+          ['itemtype'  => 'PluginArchiswSwcomponent',
                 'label'     => _n('Apps structure', 'Apps structures', 2, 'archisw'),
                 'field'     => 'plugin_archisw'
-          ),
-      );
+          ],
+      ];
 
       if ($all) {
-         $rights[] = array('itemtype' => 'PluginArchiswSwcomponent',
+         $rights[] = ['itemtype' => 'PluginArchiswSwcomponent',
                            'label'    =>  __('Associable items to a ticket'),
-                           'field'    => 'plugin_archisw_open_ticket');
+                           'field'    => 'plugin_archisw_open_ticket'];
       }
 
       return $rights;
@@ -194,8 +194,8 @@ class PluginArchiswProfile extends Profile {
       foreach ($DB->request('glpi_plugin_archisw_profiles',
                             "`profiles_id`='$profiles_id'") as $profile_data) {
 
-         $matching = array('archisw'    => 'plugin_archisw',
-                           'open_ticket' => 'plugin_archisw_open_ticket');
+         $matching = ['archisw'    => 'plugin_archisw',
+                           'open_ticket' => 'plugin_archisw_open_ticket'];
          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
          foreach ($matching as $old => $new) {
             if (!isset($current_rights[$old])) {
@@ -221,7 +221,7 @@ class PluginArchiswProfile extends Profile {
          if ($dbu->countElementsInTable("glpi_profilerights",
                                          ['name'        => $data['field']]) == 0) {
 //                                  "`name` = '".$data['field']."'") == 0) {
-            ProfileRight::addProfileRights(array($data['field']));
+            ProfileRight::addProfileRights([$data['field']]);
          }
       }
 
