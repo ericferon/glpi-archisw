@@ -253,6 +253,7 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
    $searchopt =& Search::getOptions($type);
    $table     = $searchopt[$ID]["table"];
    $field     = $searchopt[$ID]["field"];
+   $dbu       = new DbUtils();
 
    switch ($table . '.' . $field) {
       case "glpi_plugin_archisw_swcomponents_items.items_id" :
@@ -275,15 +276,15 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
                }
                $item = new $itemtype();
                if ($item->canView()) {
-                  $table_item = getTableForItemType($itemtype);
+                  $table_item = $dbu->getTableForItemType($itemtype);
 
-                  $query = "SELECT `" . $table_item . "`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `glpi_entities`.`id` AS entity "
+                  $query = "SELECT `" . $table_item . "`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `entities`.`id` AS entity "
                            . " FROM `glpi_plugin_archisw_swcomponents_items`, `" . $table_item
                            . "` LEFT JOIN `glpi_entities` as entities ON (`entities`.`id` = `" . $table_item . "`.`entities_id`) "
                            . " WHERE `" . $table_item . "`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
                   AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemtype'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '" . $databases . "' "
-                           . getEntitiesRestrictRequest(" AND ", $table_item, '', '', $item->maybeRecursive());
+                           . $dbu->getEntitiesRestrictRequest(" AND ", $table_item, '', '', $item->maybeRecursive());
 
                   if ($item->maybeTemplate()) {
                      $query .= " AND `" . $table_item . "`.`is_template` = '0'";

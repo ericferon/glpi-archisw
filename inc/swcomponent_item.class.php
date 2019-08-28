@@ -205,6 +205,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       if (!$swcomponent->can($instID, READ))   return false;
 
       $rand=mt_rand();
+      $dbu  = new DbUtils();
 
       $canedit=$swcomponent->can($instID, UPDATE);
 
@@ -234,11 +235,21 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
          echo "<tr class='tab_bg_1'><td colspan='".(3+$colsup)."' class='center'>";
          echo "<input type='hidden' name='plugin_archisw_swcomponents_id' value='$instID'>";
-		 $options=[];
-		 $options['items_id_name']='items_id';
-		 $options['entity_restrict']=($swcomponent->fields['is_recursive']?-1:$swcomponent->fields['entities_id']);
-		 $options['itemtypes']=PluginArchiswSwcomponent::getTypes();
-		 $randitemtype=Dropdown::showSelectItemFromItemtypes($options);
+//		 $options=[];
+//		 $options['items_id_name']='items_id';
+//		 $options['entity_restrict']=($swcomponent->fields['is_recursive']?-1:$swcomponent->fields['entities_id']);
+//		 $options['itemtypes']=PluginArchiswSwcomponent::getTypes();
+//		 $randitemtype=Dropdown::showSelectItemFromItemtypes($options);
+         $randitemtype=Dropdown::showSelectItemFromItemtypes(['items_id_name' => 'items_id',
+                                                'itemtypes'     => PluginArchiswSwcomponent::getTypes(true),
+                                                'entity_restrict'
+                                                                => ($swcomponent->fields['is_recursive']
+                                                   ? $dbu->getSonsOf('glpi_entities',
+                                                               $swcomponent->fields['entities_id'])
+                                                   : $swcomponent->fields['entities_id']),
+                                                'checkright'
+                                                                => true,
+                                               ]);
          echo "</td>";
 		 echo "<td>";
 		 echo "<select name='plugin_archisw_swcomponents_itemroles_id' id='dropdown_plugin_archisw_swcomponents_itemroles_id$randitemtype'>";
@@ -293,13 +304,13 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       for ($i=0 ; $i < $number ; $i++) {
          $itemType=$DB->result($result, $i, "itemtype");
 
-         if (!($item = getItemForItemtype($itemType))) {
+         if (!($item = $dbu->getItemForItemtype($itemType))) {
             continue;
          }
 
          if ($item->canView()) {
             $column="name";
-            $itemTable = getTableForItemType($itemType);
+            $itemTable = $dbu->getTableForItemType($itemType);
 
              if ($itemType!='Entity') {
                   $query = "SELECT `".$itemTable."`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `glpi_plugin_archisw_swcomponents_items`.`comment` AS table_items_comment, `glpi_entities`.`id` AS entity, `glpi_plugin_archisw_swcomponents_itemroles`.`name` AS role "
@@ -310,7 +321,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                   ." WHERE `".$itemTable."`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
                   AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemType'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '$instID' "
-                  . getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
+                  . $dbu->getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
 
                   if ($item->maybeTemplate()) {
                      $query.=" AND ".$itemTable.".is_template='0'";
@@ -322,7 +333,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                   ."` WHERE `".$itemTable."`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
                   AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemType'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '$instID' "
-                  . getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
+                  . $dbu->getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
 
                   if ($item->maybeTemplate()) {
                      $query.=" AND ".$itemTable.".is_template='0'";
