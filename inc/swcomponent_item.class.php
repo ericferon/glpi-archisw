@@ -235,11 +235,6 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
          echo "<tr class='tab_bg_1'><td colspan='".(3+$colsup)."' class='center'>";
          echo "<input type='hidden' name='plugin_archisw_swcomponents_id' value='$instID'>";
-//		 $options=[];
-//		 $options['items_id_name']='items_id';
-//		 $options['entity_restrict']=($swcomponent->fields['is_recursive']?-1:$swcomponent->fields['entities_id']);
-//		 $options['itemtypes']=PluginArchiswSwcomponent::getTypes();
-//		 $randitemtype=Dropdown::showSelectItemFromItemtypes($options);
          $randitemtype=Dropdown::showSelectItemFromItemtypes(['items_id_name' => 'items_id',
                                                 'itemtypes'     => PluginArchiswSwcomponent::getTypes(true),
                                                 'entity_restrict'
