@@ -30,9 +30,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
-   public $dohistory=true;
-   static $rightname = "plugin_archisw";
-   protected $usenotepad         = true;
+   public 	 $dohistory  = true;
+   static 	 $rightname  = "plugin_archisw";
+   protected $usenotepad = true;
    
    static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract'];
 
@@ -64,16 +64,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-   switch ($item->getType()) {
-        case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
-			if ($_SESSION['glpishow_count_on_tabs']) {
-				return self::createTabEntry(self::getTypeName(2), self::countForItem($item));
-			}
-			return self::getTypeName(2);
-        case 'PluginArchiswSwcomponent' :
-			return $this->getTypeName(Session::getPluralNumber());
+	   switch ($item->getType()) {
+			case 'Supplier' :
+				if ($_SESSION['glpishow_count_on_tabs']) {
+					return self::createTabEntry(self::getTypeName(2), self::countForItem($item));
+				}
+				return self::getTypeName(2);
+			case 'PluginArchiswSwcomponent' :
+				return $this->getTypeName(Session::getPluralNumber());
       }
       return '';
    }
@@ -318,22 +316,20 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
-      echo "<tr class='tab_bg_1'>";
-      //name of swcomponent
-      echo "<td>".__('Name')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"name");
-      echo "</td>";
-      //version of swcomponent
-      echo "<td>".__('Version','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"version",['size' => "4"]);
-      echo "</td>";
-      //use startdate of swcomponent
-      echo "<td>".__('In use since year','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"startyear",['size' => "4"]);
-      echo "</td>";
+		// Re-organize data in the form, best disposition
+
+		// Line: 1
+		echo "<tr class='tab_bg_1'>";
+			// Name of SwComponent
+			echo "<td>".__('Name')."</td>";
+			echo "<td>";
+			Html::autocompletionTextField($this, "name");
+			echo "</td>";
+
+			// Version
+			echo "<td>".__('Version', 'archisw')."</td>";
+			echo "<td>";
+			Html::autocompletionTextField($this, "version", ['size' => "4"]);
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
