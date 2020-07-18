@@ -31,21 +31,25 @@ function plugin_archisw_install() {
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
-      
-      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-1.0.2.sql");
-
+		$DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-2.2.0.sql");
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.1.sql");
    }
+
    if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archisw_swcomponents_itemroles where itemtype = 'PluginArchiswSwcomponent'")) == 0) {
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.2.sql");
    }
+
    if (!$DB->TableExists("glpi_plugin_archisw_standards") || !$DB->FieldExists("glpi_plugin_archisw_swcomponents","plugin_archisw_standards_id")) {
       $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.3.sql");
    }
 
+	// Field introduced in version 2.2.0
+	if (!$DB->FieldExists("glpi_plugin_archisw_swcomponents", "address_qa")) {
+		$DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-2.2.0.sql");
+	}
    
    if ($DB->TableExists("glpi_plugin_archisw_profiles")) {
    

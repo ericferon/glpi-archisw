@@ -375,7 +375,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
 		// Line: 4
       echo "<tr class='tab_bg_1'>";
-			echo "<th rowspan=8></th>";
+			echo "<th rowspan=10></th>";
 
 	      //status of swcomponent
 	      echo "<td>".__('Status')."</td>";
@@ -489,9 +489,24 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 		echo "<tr class='tab_bg_1'>";
 			echo "<td>".__('URL QA', 'archisw')."</td>";
 			echo "<td colspan='2'>";
-			Html::autocompletionTextField($this, "address", ['option' => 'style="width:100%"']);
+			Html::autocompletionTextField($this, "address_qa", ['option' => 'style="width:100%"']);
 			echo "</td>";
-		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+			echo "<td>".__('URL Health Check', 'archisw')."</td>";
+			echo "<td colspan='2'>";
+			Html::autocompletionTextField($this, "health_check", ['option' => 'style="width:100%"']);
+			echo "</td>";
+		echo "</tr>";
+
+		// News fields for version 2.2.0
+		echo "<tr class='tab_bg_1'>";
+			echo "<td>".__("Repository")."</td>";
+			echo "<td colspan='2'>";
+			Html::autocompletionTextField($this, "repo", ['option' => 'style="width:100%"']);
+			echo "</td>";
+		echo "</tr>";
 
 		// Just a separator
 		echo "<tr><td></td></tr>";
