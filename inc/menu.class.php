@@ -41,8 +41,13 @@ class PluginArchiswMenu extends CommonGLPI {
       if (PluginArchiswSwcomponent::canCreate()) {
          $menu['links']['add']                        = PluginArchiswSwcomponent::getFormURL(false);
       }
+      $menu['icon'] = self::getIcon();
 
       return $menu;
+   }
+
+   static function getIcon() {
+      return "fas fa-cog";
    }
 
    static function removeRightsFromSession() {
