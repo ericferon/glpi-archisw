@@ -30,9 +30,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
-   public $dohistory=true;
-   static $rightname = "plugin_archisw";
-   protected $usenotepad         = true;
+   public 	 $dohistory  = true;
+   static 	 $rightname  = "plugin_archisw";
+   protected $usenotepad = true;
    
    static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract'];
 
@@ -64,16 +64,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    }
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
-   switch ($item->getType()) {
-        case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
-			if ($_SESSION['glpishow_count_on_tabs']) {
-				return self::createTabEntry(self::getTypeName(2), self::countForItem($item));
-			}
-			return self::getTypeName(2);
-        case 'PluginArchiswSwcomponent' :
-			return $this->getTypeName(Session::getPluralNumber());
+	   switch ($item->getType()) {
+			case 'Supplier' :
+				if ($_SESSION['glpishow_count_on_tabs']) {
+					return self::createTabEntry(self::getTypeName(2), self::countForItem($item));
+				}
+				return self::getTypeName(2);
+			case 'PluginArchiswSwcomponent' :
+				return $this->getTypeName(Session::getPluralNumber());
       }
       return '';
    }
@@ -315,173 +313,226 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 */
    function showForm ($ID, $options=[]) {
 
+		// Because a lot of informations, we use 3 (6) columns
+		//	 Make <table> aware of it
+		$options['colspan']=4;
+
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
 
+		// Line: 1
+		echo "<tr class='tab_bg_1'>";
+			echo "<th rowspan=3></th>";
+
+			// Name of SwComponent
+			echo "<td>".__('Name')."</td>";
+			echo "<td>";
+			Html::autocompletionTextField($this, "name");
+			echo "</td>";
+
+			// Version
+			echo "<td>".__('Version', 'archisw')."</td>";
+			echo "<td>";
+			Html::autocompletionTextField($this, "version", ['size' => "4"]);
+			echo "</td>";
+
+	      // Use startdate of the swcomponent
+	      echo "<td>".__('In use since year','archisw')."</td>";
+	      echo "<td>";
+	      Html::autocompletionTextField($this,"startyear",['size' => "4"]);
+	      echo "</td>";
+      echo "</tr>";
+
+		// Line: 2
       echo "<tr class='tab_bg_1'>";
-      //name of swcomponent
-      echo "<td>".__('Name')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"name");
-      echo "</td>";
-      //version of swcomponent
-      echo "<td>".__('Version','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"version",['size' => "4"]);
-      echo "</td>";
-      //use startdate of swcomponent
-      echo "<td>".__('In use since year','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"startyear",['size' => "4"]);
-      echo "</td>";
+	      //completename of swcomponent
+  			echo "<td>".__('As child of','archisw').": </td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponent', ['value' => $this->fields["plugin_archisw_swcomponents_id"]]);
+	      echo "</td>";
+
+	      //level of swcomponent
+	      echo "<td>".__('Level','archisw').": </td>";
+	      echo "<td>";
+	      Html::autocompletionTextField($this,"level",['size' => "2", 'option' => "readonly='readonly'"]);
+	      echo "</td>";
+
+	      //shortname of swcomponent
+	      echo "<td>".__('Short code','archisw')."</td>";
+	      echo "<td>";
+	      Html::autocompletionTextField($this,"shortname",['size' => "5"]);
+	      echo "</td>";
+      echo "</tr>";
+
+		// Line: 3
+		echo "<tr class='tab_bg_1'>";
+	      echo "<td>".__('Description').":	</td>";
+      	echo "<td class='top left' colspan='5'><textarea cols='100' rows='3' name='description' >".$this->fields["description"]."</textarea>";
+      echo "</tr>";
+
+		// Just a separator
+		echo "<tr><td></td></tr>";
+
+		// Line: 4
+      echo "<tr class='tab_bg_1'>";
+			echo "<th rowspan=10></th>";
+
+	      //status of swcomponent
+	      echo "<td>".__('Status')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentState', ['value' => $this->fields["plugin_archisw_swcomponentstates_id"]]);
+	      echo "</td>";
+
+	      //status date of swcomponent
+	      echo "<td>".__('Status Startdate','archisw')."</td>";
+	      echo "<td>";
+	      Html::showDateField("statedate", ['value' => $this->fields["statedate"]]);
+	      echo "</td>";
+
+	      //status of swcomponent
+	      echo "<td>".__('Standardization Status', 'archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswStandard', ['value' => $this->fields["plugin_archisw_standards_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //completename of swcomponent
-      echo "<td>".__('As child of','archisw').": </td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponent', ['value' => $this->fields["plugin_archisw_swcomponents_id"]]);
-      echo "</td>";
-      //level of swcomponent
-      echo "<td>".__('Level','archisw').": </td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"level",['size' => "2", 'option' => "readonly='readonly'"]);
-      echo "</td>";
-      //shortname of swcomponent
-      echo "<td>".__('Short code','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"shortname",['size' => "5"]);
-      echo "</td>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      //description of swcomponent
-      echo "<td>".__('Description').":	</td>";
-      echo "<td class='top center' colspan='6'>";
-      Html::autocompletionTextField($this,"description",['size' => 140, 'attrs' => ['size' => 140]]);
-      echo "</td>";
-      echo "</tr>";
-      echo "<tr class='tab_bg_1'>";
-      //comment about swcomponent
-      echo "<td>".__('Comment').":	</td>";
-      echo "<td class='top center' colspan='5'><textarea cols='100' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
-      echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      //status of swcomponent
-      echo "<td>".__('Status')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentState', ['value' => $this->fields["plugin_archisw_swcomponentstates_id"]]);
-      echo "</td>";
-      //status date of swcomponent
-      echo "<td>".__('Status Startdate','archisw')."</td>";
-      echo "<td>";
-      Html::showDateField("statedate", ['value' => $this->fields["statedate"]]);
-      echo "</td>";
-      //status of swcomponent
-      echo "<td>".__('Standardization Status', 'archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswStandard', ['value' => $this->fields["plugin_archisw_standards_id"]]);
-      echo "</td>";
-       echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
-      //type of swcomponent
-      echo "<td>".__('Type')."</td>";
-      echo "<td>";
+	      // Type of swcomponent
+	      echo "<td>".__('Type')."</td>";
+			echo "<td>";
 //      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]]);
-      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"]]);
-      echo "</td>";
-      //language of swcomponent
-      echo "<td colspan='3'>".__('Development Language','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentTechnic', ['value' => $this->fields["plugin_archisw_swcomponenttechnics_id"]]);
-      echo "</td>";
+	      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"]]);
+	      echo "</td>";
+
+	      // Language of swcomponent
+	      echo "<td >".__('Development Language','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentTechnic', ['value' => $this->fields["plugin_archisw_swcomponenttechnics_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //instances of swcomponent
-      echo "<td>".__('Instances','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentInstance', ['value' => $this->fields["plugin_archisw_swcomponentinstances_id"]]);
-      echo "</td>";
-      //db
-      echo "<td colspan='3'>".__('DataBases','archisw')."</td><td>";
-      Dropdown::show('PluginArchiswSwcomponentDb', ['value' => $this->fields["plugin_archisw_swcomponentdbs_id"]]);
-      echo "</td>";
+	      //instances of swcomponent
+   	   echo "<td>".__('Instances','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentInstance', ['value' => $this->fields["plugin_archisw_swcomponentinstances_id"]]);
+	      echo "</td>";
+	      //db
+	      echo "<td>".__('Databases','archisw')."</td><td>";
+	      Dropdown::show('PluginArchiswSwcomponentDb', ['value' => $this->fields["plugin_archisw_swcomponentdbs_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //target
-      echo "<td>".__('Targets','archisw')."</td>";
-	  echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentTarget', ['value' => $this->fields["plugin_archisw_swcomponenttargets_id"]]);
-      echo "</td>";
-      //#users
-      echo "<td>".__('# users','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentUser', ['value' => $this->fields["plugin_archisw_swcomponentusers_id"]]);
-      echo "</td>";
-      echo "<td>".__('License metric','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('PluginArchiswSwcomponentLicense', ['value' => $this->fields["plugin_archisw_swcomponentlicenses_id"]]);
-      echo "</td>";
+	      //target
+	      echo "<td>".__('Targets','archisw')."</td>";
+		   echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentTarget', ['value' => $this->fields["plugin_archisw_swcomponenttargets_id"]]);
+	      echo "</td>";
+	      //#users
+	      echo "<td>".__('# users','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentUser', ['value' => $this->fields["plugin_archisw_swcomponentusers_id"]]);
+	      echo "</td>";
+	      echo "<td>".__('License metric','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('PluginArchiswSwcomponentLicense', ['value' => $this->fields["plugin_archisw_swcomponentlicenses_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //groups
-      echo "<td>".__('Component Owner','archisw')."</td><td>";
-      Group::dropdown(['name'      => 'groups_id', 
-                        'value'     => $this->fields['groups_id'], 
-                        'entity'    => $this->fields['entities_id'], 
-                        'condition' => ['is_assign' => 1]
-                        ]);
-      echo "</td>";
-      //supplier of swcomponent
-      echo "<td colspan='3'>".__('Supplier','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('Supplier', ['value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
-      echo "</td>";
+	      //groups
+	      echo "<td>".__('Component Owner','archisw')."</td><td>";
+	      Group::dropdown(['name'      => 'groups_id', 
+	                        'value'     => $this->fields['groups_id'], 
+	                        'entity'    => $this->fields['entities_id'], 
+	                        'condition' => ['is_assign' => 1]
+	                        ]);
+	      echo "</td>";
+
+	      //supplier of swcomponent
+	      echo "<td>".__('Supplier','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('Supplier', ['value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //users
-      echo "<td>".__('Component Maintainer','archisw')."</td><td>";
-      User::dropdown(['name' => "users_id", 'value' => $this->fields["users_id"], 'entity' => $this->fields["entities_id"], 'right' => 'interface']);
-      echo "</td>";
-      //manufacturer of swcomponent
-      echo "<td colspan='3'>".__('Editor','archisw')."</td>";
-      echo "<td>";
-      Dropdown::show('Manufacturer', ['value' => $this->fields["manufacturers_id"],'entity' => $this->fields["entities_id"]]);
-      echo "</td>";
+	      //users
+	      echo "<td>".__('Component Maintainer','archisw')."</td><td>";
+	      User::dropdown(['name' => "users_id", 'value' => $this->fields["users_id"], 'entity' => $this->fields["entities_id"], 'right' => 'interface']);
+	      echo "</td>";
+
+	      //manufacturer of swcomponent
+	      echo "<td>".__('Editor','archisw')."</td>";
+	      echo "<td>";
+	      Dropdown::show('Manufacturer', ['value' => $this->fields["manufacturers_id"],'entity' => $this->fields["entities_id"]]);
+	      echo "</td>";
+
+	      //service level agreement
+	      echo "<td>".__('Service level','archisw')."</td>";
+	      echo "<td>";
+	//      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]]);
+	      Dropdown::show('PluginArchiswSwcomponentSla', ['value' => $this->fields["plugin_archisw_swcomponentslas_id"]]);
+	      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //url of swcomponent
-      echo "<td>".__('URL','archisw')."</td>";
-      echo "<td>";
-      Html::autocompletionTextField($this,"address",['size' => "65"]);
-       //service level agreement
-      echo "<td colspan='3'>".__('Service level','archisw')."</td>";
-      echo "<td>";
-//      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]]);
-      Dropdown::show('PluginArchiswSwcomponentSla', ['value' => $this->fields["plugin_archisw_swcomponentslas_id"]]);
-      echo "</td>";
+	      //url of swcomponent
+	      echo "<td>".__('URL Production','archisw')."</td>";
+	      echo "<td colspan='2'>";
+
+	      Html::autocompletionTextField($this,"address", ['option' => 'style="width:100%"']);
+			echo "</td>";
       echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+			echo "<td>".__('URL QA', 'archisw')."</td>";
+			echo "<td colspan='2'>";
+			Html::autocompletionTextField($this, "address_qa", ['option' => 'style="width:100%"']);
+			echo "</td>";
+		echo "</tr>";
+
+		echo "<tr class='tab_bg_1'>";
+			echo "<td>".__('URL Health Check', 'archisw')."</td>";
+			echo "<td colspan='2'>";
+			Html::autocompletionTextField($this, "health_check", ['option' => 'style="width:100%"']);
+			echo "</td>";
+		echo "</tr>";
+
+		// News fields for version 2.2.0
+		echo "<tr class='tab_bg_1'>";
+			echo "<td>".__("Repository")."</td>";
+			echo "<td colspan='2'>";
+			Html::autocompletionTextField($this, "repo", ['option' => 'style="width:100%"']);
+			echo "</td>";
+		echo "</tr>";
+
+		// Just a separator
+		echo "<tr><td></td></tr>";
 
       echo "<tr class='tab_bg_1'>";
-      //location of swcomponent
-      echo "<td>".__('Location')."</td>";
-      echo "<td>";
-      Dropdown::show('Location', ['value' => $this->fields["locations_id"],'entity' => $this->fields["entities_id"]]);
-      echo "</td>";
-       echo "</td>";
-      //is_helpdesk_visible
-      echo "<td>" . __('Associable to a ticket')."</td><td>";
-      Dropdown::showYesNo('is_helpdesk_visible',$this->fields['is_helpdesk_visible']);
-      echo "</td>";
+			echo "<th rowspan=2></th>";
+
+	      //location of swcomponent
+	      echo "<td>".__('Location')."</td>";
+	      echo "<td>";
+	      Dropdown::show('Location', ['value' => $this->fields["locations_id"],'entity' => $this->fields["entities_id"]]);
+	      echo "</td>";
+	      echo "</td>";
+	      //is_helpdesk_visible
+	      echo "<td>" . __('Associable to a ticket')."</td><td>";
+	      Dropdown::showYesNo('is_helpdesk_visible',$this->fields['is_helpdesk_visible']);
+	      echo "</td>";
       echo "</tr>";
 
+
+		// Last line
+      echo "<tr class='tab_bg_1'>";
+	      //comment about swcomponent
+	      echo "<td>".__('Comment').":	</td>";
+	      echo "<td class='top left' colspan='5'><textarea cols='100' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
+      echo "</tr>";
 
 
       $this->showFormButtons($options);
