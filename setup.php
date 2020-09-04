@@ -96,20 +96,26 @@ function plugin_version_archisw() {
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
-      'minGlpiVersion' => '9.5',
+      'requirements' => [
+         'glpi' => [
+            'min' => '9.5',
+            'dev' => false
+         ]
+      ]
    );
 
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archisw_check_prerequisites() {
-	if (version_compare(GLPI_VERSION, '9.5', 'lt') ||
-		 version_compare(GLPI_VERSION, '9.6', 'ge')) {
-		// new in 9.5 version
-		echo Plugin::messageIncompatible('core', '9.5');
-		return false;
-	}
-	return true;
+   if (version_compare(GLPI_VERSION, '9.5', 'lt')
+       || version_compare(GLPI_VERSION, '9.6', 'ge')) {
+      if (method_exists('Plugin', 'messageIncompatible')) {
+         echo Plugin::messageIncompatible('core', '9.5');
+      }
+      return false;
+   }
+   return true;
 }
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
