@@ -51,11 +51,11 @@ if (isset($_POST["swcomponenttype"])) {
 
    Dropdown::show('PluginArchiswSwcomponent',
                   ['name'      => $_POST['myname'],
-                        'used'      => $used,
-                        'width'     => '50%',
-                        'entity'    => $_POST['entity'],
-                        'rand'      => $_POST['rand'],
-                        'condition' => "glpi_plugin_archisw_swcomponents.plugin_archisw_swcomponenttypes_id='".$_POST["swcomponenttype"]."'"]);
+					'used'      => $used,
+					'width'     => '50%',
+					'entity'    => $_POST['entity'],
+					'rand'      => $_POST['rand'],
+					'condition' => ["glpi_plugin_archisw_swcomponents.plugin_archisw_swcomponenttypes_id"=>$_POST["swcomponenttype"]]]);
 
 }
 

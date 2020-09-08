@@ -502,7 +502,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
 		// News fields for version 2.2.0
 		echo "<tr class='tab_bg_1'>";
-			echo "<td>".__("Repository")."</td>";
+			echo "<td>".__("Source Repository")."</td>";
 			echo "<td colspan='2'>";
 			Html::autocompletionTextField($this, "repo", ['option' => 'style="width:100%"']);
 			echo "</td>";
