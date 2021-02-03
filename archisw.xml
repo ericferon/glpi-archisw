@@ -27,17 +27,17 @@
 		<version>
 			<num>2.2.2</num>
 			<compatibility>9.5</compatibility>
-			<download_url>//github.com/ericferon/glpi-archisw/releases/download/2.2.1/archisw-2.2.2.tar.gz</download_url>
+			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v2.2.2/archisw-v2.2.2.tar.gz</download_url>
 		</version>
 		<version>
 			<num>2.2.1</num>
 			<compatibility>9.5</compatibility>
-			<download_url>//github.com/ericferon/glpi-archisw/releases/download/2.2.1/archisw-2.2.1.tar.gz</download_url>
+			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v2.2.1/archisw-v2.2.1.tar.gz</download_url>
 		</version>
 		<version>
 			<num>2.2.0</num>
 			<compatibility>9.5</compatibility>
-			<download_url>//github.com/ericferon/glpi-archisw/releases/download/2.2.0/archisw-2.2.0.tar.gz</download_url>
+			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v2.2.0/archisw-v2.2.0.tar.gz</download_url>
 		</version>
 		<version>
 			<num>2.1.4</num>
