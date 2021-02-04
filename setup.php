@@ -55,7 +55,7 @@ function plugin_init_archisw() {
    }
 // Add other plugin associations
    $associatedtypes = ['PluginDatabasesDatabase',
-//					'PluginWebapplicationsWebapplication',
+                     'PluginWebapplicationsAppliance',
                      'PluginArchiswSwcomponent'];
    if (class_exists('PluginArchiswSwcomponent'))
 	  foreach ($associatedtypes as $itemtype) {
