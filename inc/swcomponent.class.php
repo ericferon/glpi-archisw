@@ -34,7 +34,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static 	 $rightname  = "plugin_archisw";
    protected $usenotepad = true;
    
-   static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract'];
+   static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract', 'Appliance'];
 
    /**
     * @since version 0.84
@@ -81,7 +81,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       switch ($item->getType()) {
         case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
 			$self = new self();
 			$self->showPluginFromSupplier($item->getField('id'));
             break;
@@ -214,7 +213,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'field'     => 'name',
          'linkfield' => 'groups_id',
          'name'      => __('Component Owner','archisw'),
-         'condition' => '`is_assign`',
+         'condition' => ['is_assign' => 1],
          'datatype'  => 'dropdown'
       ];
 
@@ -453,7 +452,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      //supplier of swcomponent
 	      echo "<td>".__('Supplier','archisw')."</td>";
 	      echo "<td>";
-	      Dropdown::show('Supplier', ['value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
+	      Dropdown::show('Supplier', ['name' => "suppliers_id", 'value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
 	      echo "</td>";
       echo "</tr>";
 
@@ -586,7 +585,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $values = [0 => Dropdown::EMPTY_VALUE];
 
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $values[$data['id']] = $data['name'];
       }
       $rand = mt_rand();
@@ -618,7 +617,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $values = [0 => Dropdown::EMPTY_VALUE];
 
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $values[$data['id']] = $data['name'];
       }
       $out .= Dropdown::showFromArray('plugin_archisw_swcomponents_itemroles_id', $values, [/*'width'   => '20%',*/

@@ -40,8 +40,8 @@ function plugin_init_archisw() {
          'linkuser_tech_types'    => true,
          'document_types'         => true,
          'ticket_types'           => true,
-         'helpdesk_visible_types' => true//,
-//         'addtabon'               => 'Supplier'
+         'helpdesk_visible_types' => true,
+         'addtabon'               => 'Supplier'
    ]);
    Plugin::registerClass('PluginArchiswProfile',
                          ['addtabon' => 'Profile']);
@@ -91,7 +91,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.2.3',
+      'version' => '2.2.4',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
