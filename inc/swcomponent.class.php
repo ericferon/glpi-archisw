@@ -34,7 +34,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static 	 $rightname  = "plugin_archisw";
    protected $usenotepad = true;
    
-   static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract'];
+   static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract', 'Appliance'];
 
    /**
     * @since version 0.84
@@ -81,7 +81,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       switch ($item->getType()) {
         case 'Supplier' :
-//      if ($item->getType()=='Supplier') {
 			$self = new self();
 			$self->showPluginFromSupplier($item->getField('id'));
             break;
@@ -214,7 +213,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'field'     => 'name',
          'linkfield' => 'groups_id',
          'name'      => __('Component Owner','archisw'),
-         'condition' => '`is_assign`',
+         'condition' => ['is_assign' => 1],
          'datatype'  => 'dropdown'
       ];
 
@@ -453,7 +452,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      //supplier of swcomponent
 	      echo "<td>".__('Supplier','archisw')."</td>";
 	      echo "<td>";
-	      Dropdown::show('Supplier', ['value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
+	      Dropdown::show('Supplier', ['name' => "suppliers_id", 'value' => $this->fields["suppliers_id"],'entity' => $this->fields["entities_id"]]);
 	      echo "</td>";
       echo "</tr>";
 
@@ -553,7 +552,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
     *
     * @return nothing (print out an HTML select box)
    **/
-   static function dropdownSwcomponent($options=[]) {
+   static function dropdownSwcomponent($options=[], $itemtype='') {
       global $DB, $CFG_GLPI;
 
 
@@ -586,7 +585,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       $values = [0 => Dropdown::EMPTY_VALUE];
 
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $values[$data['id']] = $data['name'];
       }
       $rand = mt_rand();
@@ -613,12 +612,12 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                                $params, false);
       $query = "SELECT `id`,`name`
                 FROM `glpi_plugin_archisw_swcomponents_itemroles`
-                WHERE `itemtype` = '".$_GET['_itemtype']."'" ;
+                WHERE `itemtype` = '".(isset($_GET['_itemtype'])?$_GET['_itemtype']:$itemtype)."'" ;
       $result = $DB->query($query);
 
       $values = [0 => Dropdown::EMPTY_VALUE];
 
-      while ($data = $DB->fetch_assoc($result)) {
+      while ($data = $DB->fetchAssoc($result)) {
          $values[$data['id']] = $data['name'];
       }
       $out .= Dropdown::showFromArray('plugin_archisw_swcomponents_itemroles_id', $values, [/*'width'   => '20%',*/
@@ -769,7 +768,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       switch ($ma->getAction()) {
          case 'plugin_archisw_add_item':
-            self::dropdownDataflow([]);
+            self::dropdownSwcomponent([], array_keys($ma->getItems())[0]);
             echo "&nbsp;".
                  Html::submit(_x('button','Post'), ['name' => 'massiveaction']);
             return true;
@@ -822,24 +821,26 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
                                                        array $ids) {
       global $DB;
-      
-      $dataflow_item = new PluginDataflowsDataflow_Item();
+
+      $swcomponent_item = new PluginArchiswSwcomponent_Item();
       
       switch ($ma->getAction()) {
          case "plugin_archisw_add_item":
             $input = $ma->getInput();
             foreach ($ids as $id) {
-               $input = ['plugin_archisw_swcomponenttypes_id' => $input['plugin_archisw_swcomponenttypes_id'],
-                                 'items_id'      => $id,
-                                 'itemtype'      => $item->getType()];
-               if ($dataflow_item->can(-1,UPDATE,$input)) {
-                  if ($dataflow_item->add($input)) {
+               $input = ['plugin_archisw_swcomponents_id' 					=> $input['plugin_archisw_swcomponents_id'],
+                                 'items_id'      							=> $id,
+                                 'itemtype'      							=> $item->getType(),
+                                 'plugin_archisw_swcomponents_itemroles_id'	=> $input['plugin_archisw_swcomponents_itemroles_id'],
+                                 'comment'      							=> $input['comment']];
+               if ($swcomponent_item->can(-1,CREATE,$input)) {
+                  if ($swcomponent_item->add($input)) {
                      $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
                   } else {
                      $ma->itemDone($item->getType(), $ids, MassiveAction::ACTION_KO);
                   }
                } else {
-                  $ma->itemDone($item->getType(), $ids, MassiveAction::ACTION_KO);
+                  $ma->itemDone($item->getType(), $ids, MassiveAction::ACTION_NORIGHT);
                }
             }
 
@@ -876,7 +877,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                   $values = ['plugin_archisw_swcomponents_id' => $key,
                                  'items_id'      => $input["item_item"],
                                  'itemtype'      => $input['typeitem']];
-                  if ($dataflow_item->add($values)) {
+                  if ($swcomponent_item->add($values)) {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
@@ -892,7 +893,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             $input = $ma->getInput();
             foreach ($ids as $key) {
                if ($val == 1) {
-                  if ($dataflow_item->deleteItemBySwcomponentsAndItem($key,$input['item_item'],$input['typeitem'])) {
+                  if ($swcomponent_item->deleteItemBySwcomponentsAndItem($key,$input['item_item'],$input['typeitem'])) {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
