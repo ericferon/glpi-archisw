@@ -157,7 +157,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
          if ($DB->numrows($result) != 1) {
             return false;
          }
-         $this->fields = $DB->fetch_assoc($result);
+         $this->fields = $DB->fetchAssoc($result);
          if (is_array($this->fields) && count($this->fields)) {
             return true;
          } else {
@@ -342,7 +342,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
                   Session::initNavigateListItems($itemType,PluginArchiswSwcomponent::getTypeName(2)." = ".$swcomponent->fields['name']);
 
-                  while ($data=$DB->fetch_assoc($result_linked)) {
+                  while ($data=$DB->fetchAssoc($result_linked)) {
 
                      $item->getFromDB($data["id"]);
 
@@ -448,7 +448,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       $i      = 0;
 
       if ($numrows = $DB->numrows($result)) {
-         while ($data = $DB->fetch_assoc($result)) {
+         while ($data = $DB->fetchAssoc($result)) {
             $swcomponents[$data['items_id']] = $data;
             $used[$data['id']] = $data['id'];
          }

@@ -298,7 +298,7 @@ function plugin_archisw_giveItem($type,$ID,$data,$num) {
                   if ($result_linked = $DB->query($query))
                      if ($DB->numrows($result_linked)) {
                         $item = new $itemtype();
-                        while ($data = $DB->fetch_assoc($result_linked)) {
+                        while ($data = $DB->fetchAssoc($result_linked)) {
                            if ($item->getFromDB($data['id'])) {
                               $out .= $item::getTypeName(1) . " - " . $item->getLink() . "<br>";
                            }
