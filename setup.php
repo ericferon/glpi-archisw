@@ -32,21 +32,24 @@ function plugin_init_archisw() {
    $PLUGIN_HOOKS['change_profile']['archisw'] = ['PluginArchiswProfile', 'initProfile'];
    $PLUGIN_HOOKS['assign_to_ticket']['archisw'] = true;
    
-   //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
-   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
+//   $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
+//   $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
    
    Plugin::registerClass('PluginArchiswSwcomponent', [
          'linkgroup_tech_types'   => true,
          'linkuser_tech_types'    => true,
          'document_types'         => true,
          'ticket_types'           => true,
-         'helpdesk_visible_types' => true//,
-//         'addtabon'               => 'Supplier'
+         'helpdesk_visible_types' => true,
+         'addtabon'               => 'Supplier'
    ]);
    Plugin::registerClass('PluginArchiswProfile',
                          ['addtabon' => 'Profile']);
                          
-// Add links to other plugins
+   //Plugin::registerClass('PluginDatabasesDatabase_Item',
+   //                      array('ticket_types' => true));
+
+   // Add links to other plugins
    $types = ['PluginArchimapGraph'];
    foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
@@ -55,7 +58,6 @@ function plugin_init_archisw() {
    }
 // Add other plugin associations
    $associatedtypes = ['PluginDatabasesDatabase',
-					'PluginWebapplicationsWebapplication',
                      'PluginArchiswSwcomponent'];
    if (class_exists('PluginArchiswSwcomponent'))
 	  foreach ($associatedtypes as $itemtype) {
@@ -92,7 +94,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.2.1',
+      'version' => '2.2.6',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',

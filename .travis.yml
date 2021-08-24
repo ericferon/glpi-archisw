@@ -1,7 +1,6 @@
 language: php
 php:
 - '7.2'
-sudo: false
 branches:
   only:
   - master
@@ -24,12 +23,12 @@ after_success:
 - tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz ajax front inc locales sql *.png *.xml *.php  LICENSE README.md
 deploy:
   provider: releases
-  api_key:
-    secure: a84nVJXsjspDF0v4DbqtKEWB+rnpkvO2RXtURtTxtTEWPzD2X0ZFpiW/Zb/ip4/NPHjgz8sHM1HkhUvNGs4M2q1GbIVadntZp252U13zJqHA6AYgBawhdRX8THzej/ZxlTv6n0qvh3ITxNlZjZv5NjK0uicuKCPHKuaYz67d/5i+iM0okSGPLM0SrKBFUOx19vpcoYocqv+PN7roAgGtyosQpHEyZj8ctzt1eIS/83/k5PUz7bBuNNSqzA+O/QhYTdXUKNMik8N7SQuwUX8c8rSW90Irv2Ul0/gQ2LH+FelipDipTIXBmr/JQzojfclZiFgm2WA2Ertjqm9IsZkA7B/KF+JcAcwNqgCJ9Yi9nGmsRvxNtMw+chProIQXih6S9xC86eosRQfcP54zJa463niO5R0hphzjOZarjHKInP6yEKQQjgLVMRiCIinE0Iqrq2IwKmc2bIs6TitgxGjPKLG3+QoE9tefe757imtK14gf+IdA9sqSTxeLIBNqDdFuMePBPgv1FhRiIOwMs84KpNMlYWQ9HRQGTS+1/NA6S6iWNnFLWSwjaFKSOYuFhcvUsWcOInpKhuIqPhJQYARykJjRPUaGLv7BFpDL+rdc27VCGKHjUb97wqaP6eLZcc9ctiUN9WI5ycp8ONlHbQLk5qU+tBYplERdGQj/RAwj8Mw=
+  token:
+    secure: FQT1uKbO+LN8T3bfUbAD5guBsI4byRMSwWOTSA60vr306neIC9PLzmAxeZYHNz42x/Ph+0fenpo7KYbDTo2OFAx60KXCdmBMFE6XFhHoNJnS3XFDgCzoRNAZMrtpDdexiIGafi693gkxNw4G1LsUmWHcFvt6p38ZjIr2dG+GPobknGY1zv8TH9H9pba7Vwp0MVjefujMZcsXGSZ/mXVIAMOQrQBGNVcj5d1NynAGTc4yoayowCP9CAGZERVCU9xpysLbeGmJjnIDSNWLEMndAOMZp+vzuX10uN0FQ/MIdGegvGyStfIWmO57IN4mnMuxl/6ukDWDu+MmeVWF1Ygk7MNXMILKHUgsnVBmp0tzHJbdynHotO7QE0Da24L3nfBnVrrKFs5ni6LJ6VRGj9YTkp3KGbnY1sCOR9FIoF3QwY7W4k4pGrwZ55+ECDQqRdumBDhUkqmCHyH9NRw1muYZ7gqHQSLm0tYwRQ9sH1/Ty4qQm1uNLNcNIbyrTCYIW4+fq/5FrgQ0Uk9DjznTiWnIKWmCBduVX/ekrYAHRZdkNlTMNEubVtGur2T/B51rYkGeNHjifWwj0NUU7aCNcPfX2Zy8/6yi7qsns/xTkYURusT7qRkf9zKN0nuGKXNY+KDtWYJCa+egjLAeS7D1JpKfIkcIurtTJnLuz3EPmcU1vw0=
   skip_cleanup: true
   file: $GLPI_PLUGIN_NAME-$TRAVIS_TAG.tar.gz
   name: $RELEASE_NAME
-  body: $RELEASE_BODY
+  release_notes: $RELEASE_BODY
   prerelease: false
   on:
     repo: ericferon/glpi-$GLPI_PLUGIN_NAME
