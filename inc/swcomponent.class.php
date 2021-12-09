@@ -243,6 +243,22 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'       => '20',
+         'table'    => 'glpi_plugin_archisw_swcomponentinstances',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentInstance::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'       => '21',
+         'table'    => 'glpi_plugin_archisw_swcomponenttargets',
+         'field'    => 'name',
+         'name'     => PluginArchiswSwcomponentTarget::getTypeName(1),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
          'id'            => '71',
          'table'         => 'glpi_plugin_archisw_swcomponents_items',
          'field'         => 'items_id',
@@ -474,35 +490,46 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	//      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]]);
 	      Dropdown::show('PluginArchiswSwcomponentSla', ['value' => $this->fields["plugin_archisw_swcomponentslas_id"]]);
 	      echo "</td>";
-      echo "</tr>";
+		  echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
+		  echo "<tr class='tab_bg_1'>";
 	      //url of swcomponent
-	      echo "<td>".__('URL Production','archisw')."</td>";
-	      echo "<td colspan='2'>";
-
+//	      echo "<td>".__('URL Production','archisw')."</td>";
+          echo "<td>";
+	      echo Html::link(__('URL Production', 'archisw'), $this->fields["address"]);
+          echo "<td>";
+	      echo "<td colspan='4'>";
 	      Html::autocompletionTextField($this,"address", ['option' => 'style="width:100%"']);
-			echo "</td>";
-      echo "</tr>";
+		  echo "</td>";
+		  echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-			echo "<td>".__('URL QA', 'archisw')."</td>";
-			echo "<td colspan='2'>";
+		  echo "<tr class='tab_bg_1'>";
+//			echo "<td>".__('URL QA', 'archisw')."</td>";
+          echo "<td>";
+	      echo Html::link(__('URL QA', 'archisw'), $this->fields["address_qa"]);
+          echo "<td>";
+			echo "<td colspan='4'>";
 			Html::autocompletionTextField($this, "address_qa", ['option' => 'style="width:100%"']);
 			echo "</td>";
-		echo "</tr>";
+		  echo "</tr>";
 
-		echo "<tr class='tab_bg_1'>";
-			echo "<td>".__('URL Health Check', 'archisw')."</td>";
-			echo "<td colspan='2'>";
+		  echo "<tr class='tab_bg_1'>";
+//			echo "<td>".__('URL Health Check', 'archisw')."</td>";
+          echo "<td>";
+	      echo Html::link(__('URL Health Check', 'archisw'), $this->fields["health_check"]);
+          echo "<td>";
+			echo "<td colspan='4'>";
 			Html::autocompletionTextField($this, "health_check", ['option' => 'style="width:100%"']);
 			echo "</td>";
 		echo "</tr>";
 
 		// News fields for version 2.2.0
 		echo "<tr class='tab_bg_1'>";
-			echo "<td>".__("Source Repository")."</td>";
-			echo "<td colspan='2'>";
+//			echo "<td>".__("Source Repository")."</td>";
+          echo "<td>";
+	      echo Html::link(__('Source Repository', 'archisw'), $this->fields["repo"]);
+          echo "<td>";
+			echo "<td colspan='4'>";
 			Html::autocompletionTextField($this, "repo", ['option' => 'style="width:100%"']);
 			echo "</td>";
 		echo "</tr>";
