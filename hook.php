@@ -27,28 +27,28 @@
 function plugin_archisw_install() {
    global $DB;
 
-   include_once (GLPI_ROOT."/plugins/archisw/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archisw")."/inc/profile.class.php");
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
-		$DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/empty-2.2.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-2.2.0.sql");
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
-      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.1.sql");
+      $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-1.0.1.sql");
    }
 
    if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archisw_swcomponents_itemroles where itemtype = 'PluginArchiswSwcomponent'")) == 0) {
-      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.2.sql");
+      $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-1.0.2.sql");
    }
 
    if (!$DB->TableExists("glpi_plugin_archisw_standards") || !$DB->FieldExists("glpi_plugin_archisw_swcomponents","plugin_archisw_standards_id")) {
-      $DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-1.0.3.sql");
+      $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-1.0.3.sql");
    }
 
 	// Field introduced in version 2.2.0
 	if (!$DB->FieldExists("glpi_plugin_archisw_swcomponents", "address_qa")) {
-		$DB->runFile(GLPI_ROOT ."/plugins/archisw/sql/update-2.2.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.2.0.sql");
 	}
    
    if ($DB->TableExists("glpi_plugin_archisw_profiles")) {
@@ -106,8 +106,8 @@ function plugin_archisw_install() {
 function plugin_archisw_uninstall() {
    global $DB;
    
-   include_once (GLPI_ROOT."/plugins/archisw/inc/profile.class.php");
-   include_once (GLPI_ROOT."/plugins/archisw/inc/menu.class.php");
+   include_once (Plugin::getPhpDir("archisw")."/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archisw")."/inc/menu.class.php");
    
 	$tables = ["glpi_plugin_archisw_swcomponents",
 					"glpi_plugin_archisw_swcomponents_items",

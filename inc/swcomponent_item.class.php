@@ -259,7 +259,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 		 ];
 		 $field_id = Html::cleanId("dropdown_itemtype".$randitemtype);
 		 Ajax::updateItemOnSelectEvent($field_id,"dropdown_plugin_archisw_swcomponents_itemroles_id".$randitemtype,
-                                            $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownItemRole.php",
+                                            Plugin::getWebDir('archisw')."/ajax/dropdownItemRole.php",
                                             $params, true);
 		 echo "</td>";
 		 echo "<td>";
@@ -579,7 +579,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 			echo "<td class='center'>".((isset($data["items_itemroles_id"]) && $data["items_itemroles_id"] != 0)? Dropdown::getDropdownName("glpi_plugin_archisw_swcomponents_itemroles",$data["items_itemroles_id"]) :"-")."</td>";
 			echo "<td class='center'>".((isset($data["items_comment"]) && $data["items_comment"] != '')? "".$data["items_comment"]."" :"-")."</td>";
             echo "<td>";
-            echo "<a href=\"".$CFG_GLPI["root_doc"]."/front/supplier.form.php?id=".$data["suppliers_id"]."\">";
+            echo "<a href=\"".Plugin::getWebDir('archisw')."/front/supplier.form.php?id=".$data["suppliers_id"]."\">";
             echo Dropdown::getDropdownName("glpi_suppliers",$data["suppliers_id"]);
             if ($_SESSION["glpiis_ids_visible"] == 1 )
                echo " (".$data["suppliers_id"].")";

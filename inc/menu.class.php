@@ -36,7 +36,7 @@ class PluginArchiswMenu extends CommonGLPI {
 
       $menu                                           = [];
       $menu['title']                                  = self::getMenuName();
-      $menu['page']                                   = "/plugins/archisw/front/swcomponent.php";
+      $menu['page']                                   = "/".Plugin::getWebDir('archisw', false)."/front/swcomponent.php";
       $menu['links']['search']                        = PluginArchiswSwcomponent::getSearchURL(false);
       if (PluginArchiswSwcomponent::canCreate()) {
          $menu['links']['add']                        = PluginArchiswSwcomponent::getFormURL(false);

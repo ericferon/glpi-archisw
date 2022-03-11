@@ -628,14 +628,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                         'used'   => $p['used']];
 
       $out .= Ajax::updateItemOnSelectEvent($field_id,"show_".$p['name'].$rand,
-                                            $CFG_GLPI["root_doc"]."/plugins/archisw/ajax/dropdownTypeArchisw.php",
+                                            Plugin::getWebDir('archisw')."/ajax/dropdownTypeArchisw.php",
                                             $params, false);
       $out .= "<span id='show_".$p['name']."$rand'>";
       $out .= "</span>\n";
 
       $params['swcomponenttype'] = 0;
       $out .= Ajax::updateItem("show_".$p['name'].$rand,
-                               $CFG_GLPI["root_doc"]. "/plugins/archisw/ajax/dropdownTypeArchisw.php",
+                               Plugin::getWebDir('archisw')."/ajax/dropdownTypeArchisw.php",
                                $params, false);
       $query = "SELECT `id`,`name`
                 FROM `glpi_plugin_archisw_swcomponents_itemroles`
@@ -725,7 +725,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          $colsup=0;
       }
 
-      if ($withtemplate!=2) echo "<form method='post' action=\"".$CFG_GLPI["root_doc"]."/plugins/archisw/front/swcomponent.form.php\">";
+      if ($withtemplate!=2) echo "<form method='post' action=\"".Plugin::getWebDir('archisw')."/front/swcomponent.form.php\">";
 
       echo "<div align='center'><table class='tab_cadre_fixe'>";
       echo "<tr><th colspan='".(4+$colsup)."'>"._n('App structure associated', 'App structures associated', 2, 'archisw')."</th></tr>";
@@ -742,7 +742,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
          echo "<tr class='tab_bg_1".($data["is_deleted"]=='1'?"_2":"")."'>";
          if ($withtemplate!=3 && $canread && (in_array($data['entities_id'],$_SESSION['glpiactiveentities']) || $data["is_recursive"])) {
-            echo "<td class='center'><a href='".$CFG_GLPI["root_doc"]."/plugins/archisw/front/swcomponent.form.php?id=".$data["id"]."'>".$data["name"];
+            echo "<td class='center'><a href='".Plugin::getWebDir('archisw')."/front/swcomponent.form.php?id=".$data["id"]."'>".$data["name"];
          if ($_SESSION["glpiis_ids_visible"]) echo " (".$data["id"].")";
             echo "</a></td>";
          } else {
