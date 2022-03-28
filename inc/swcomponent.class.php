@@ -34,7 +34,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
    static 	 $rightname  = "plugin_archisw";
    protected $usenotepad = true;
    
-   static $types = ['Computer', 'Project', 'User', 'Software', 'Group', 'Entity', 'Contract', 'Appliance'];
+   static $types = ['Computer', 'Project', 'ProjectTask', 'User', 'Software', 'Group', 'Entity', 'Contract', 'Appliance'];
 
    /**
     * @since version 0.84
@@ -292,6 +292,44 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'table' => 'glpi_entities',
          'field' => 'entities_id',
          'name'  => __('Entity') . "-" . __('ID')
+      ];
+
+      $tab[] = [
+         'id'                 => '100',
+         'table'        	  => 'glpi_projects',
+         'field'              => 'name',
+         'name'               => Project::getTypeName(2)." - ".__('Name'),
+         'linkfield'		  => 'items_id',
+         'datatype'           => 'itemlink',
+         'massiveaction'      => false,
+         'forcegroupby'       => true,
+         'itemlink_type'	  => Project::getType(),
+         'joinparams'    	  => [
+								'beforejoin'=> ['table'      => 'glpi_plugin_archisw_swcomponents_items',
+												'joinparams' => ['jointype' => 'itemtype_item',
+																'linkfield'		  => 'plugin_archisw_swcomponents_id'
+																]
+												]
+								]
+      ];
+
+      $tab[] = [
+         'id'                 => '101',
+         'table'        	  => 'glpi_projecttasks',
+         'field'              => 'name',
+         'name'               => ProjectTask::getTypeName(2)." - ".__('Name'),
+         'linkfield'		  => 'items_id',
+         'datatype'           => 'itemlink',
+         'massiveaction'      => false,
+         'forcegroupby'       => true,
+         'itemlink_type'	  => ProjectTask::getType(),
+         'joinparams'    	  => [
+								'beforejoin'=> ['table'      => 'glpi_plugin_archisw_swcomponents_items',
+												'joinparams' => ['jointype' => 'itemtype_item',
+																'linkfield'		  => 'plugin_archisw_swcomponents_id'
+																]
+												]
+								]
       ];
 
       return $tab;
