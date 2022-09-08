@@ -31,7 +31,7 @@ function plugin_archisw_install() {
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
-		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-2.2.0.sql");
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-2.2.1.sql");
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
@@ -49,6 +49,10 @@ function plugin_archisw_install() {
 	// Field introduced in version 2.2.0
 	if (!$DB->FieldExists("glpi_plugin_archisw_swcomponents", "address_qa")) {
 		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.2.0.sql");
+	}
+	// Add missing indexes
+	if (plugin_version_archisw()['version'] == '2.2.10') {
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.2.1.sql");
 	}
    
    if ($DB->TableExists("glpi_plugin_archisw_profiles")) {

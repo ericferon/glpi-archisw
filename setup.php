@@ -94,7 +94,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.2.9',
+      'version' => '2.2.10',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',

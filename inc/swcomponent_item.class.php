@@ -336,7 +336,6 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                   $query.=" ORDER BY `glpi_entities`.`completename`, `".$itemTable."`.`$column` ";
                }
 
-//file_put_contents("adebug.log","entering swcomponent_item.class - showForSwcomponent : query \n$query\n",FILE_APPEND);
             if ($result_linked=$DB->query($query)) {
                if ($DB->numrows($result_linked)) {
 
@@ -442,7 +441,6 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
       $query.= " ORDER BY `glpi_plugin_archisw_swcomponents`.`name` ";
 
-//file_put_contents("../adebug.log","entering swcomponent_item.class - showForItem\n$query\n",FILE_APPEND);
       $result = $DB->query($query);
       $number = $DB->numrows($result);
       $i      = 0;
