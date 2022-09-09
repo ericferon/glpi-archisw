@@ -439,7 +439,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      //status date of swcomponent
 	      echo "<td>".__('Status Startdate','archisw')."</td>";
 	      echo "<td>";
-	      Html::showDateField("statedate", ['value' => $this->fields["statedate"]]);
+	      Html::showDateField("statedate", ['value' => empty($this->fields["statedate"])?date("Y-m-d"):$this->fields["statedate"], 'required' => true]);
 	      echo "</td>";
 
 	      //status of swcomponent
