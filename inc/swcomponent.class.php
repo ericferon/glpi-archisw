@@ -380,41 +380,41 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 			// Name of SwComponent
 			echo "<td>".__('Name')."</td>";
 			echo "<td>";
-			Html::autocompletionTextField($this, "name");
+            echo Html::input('name',['value' => $this->fields['name'], 'id' => "name"]);
 			echo "</td>";
 
 			// Version
 			echo "<td>".__('Version', 'archisw')."</td>";
 			echo "<td>";
-			Html::autocompletionTextField($this, "version", ['size' => "4"]);
+            echo Html::input('version',['value' => $this->fields['version'], 'id' => "version", 'size' => 4]);
 			echo "</td>";
 
 	      // Use startdate of the swcomponent
-	      echo "<td>".__('In use since year','archisw')."</td>";
-	      echo "<td>";
-	      Html::autocompletionTextField($this,"startyear",['size' => "4"]);
-	      echo "</td>";
+            echo "<td>".__('In use since year','archisw')."</td>";
+            echo "<td>";
+            echo Html::input('startyear',['value' => $this->fields['startyear'], 'id' => "startyear", 'size' => 4]);
+            echo "</td>";
       echo "</tr>";
 
 		// Line: 2
       echo "<tr class='tab_bg_1'>";
 	      //completename of swcomponent
   			echo "<td>".__('As child of','archisw').": </td>";
-	      echo "<td>";
-	      Dropdown::show('PluginArchiswSwcomponent', ['value' => $this->fields["plugin_archisw_swcomponents_id"]]);
-	      echo "</td>";
+            echo "<td>";
+            Dropdown::show('PluginArchiswSwcomponent', ['value' => $this->fields["plugin_archisw_swcomponents_id"]]);
+            echo "</td>";
 
 	      //level of swcomponent
-	      echo "<td>".__('Level','archisw').": </td>";
-	      echo "<td>";
-	      Html::autocompletionTextField($this,"level",['size' => "2", 'option' => "readonly='readonly'"]);
-	      echo "</td>";
+            echo "<td>".__('Level','archisw').": </td>";
+            echo "<td>";
+            echo Html::input('level',['value' => $this->fields['level'], 'id' => "level", 'size' => 2, 'readonly' => true]);
+            echo "</td>";
 
 	      //shortname of swcomponent
-	      echo "<td>".__('Short code','archisw')."</td>";
-	      echo "<td>";
-	      Html::autocompletionTextField($this,"shortname",['size' => "5"]);
-	      echo "</td>";
+            echo "<td>".__('Short code','archisw')."</td>";
+            echo "<td>";
+            echo Html::input('shortname',['value' => $this->fields['shortname'], 'id' => "shortname", 'size' => 5]);
+            echo "</td>";
       echo "</tr>";
 
 		// Line: 3
@@ -537,7 +537,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo Html::link(__('URL Production', 'archisw'), $this->fields["address"]);
           echo "<td>";
 	      echo "<td colspan='4'>";
-	      Html::autocompletionTextField($this,"address", ['option' => 'style="width:100%"']);
+            echo Html::input('address',['value' => $this->fields['address'], 'id' => "address", 'width' => "100%"]);
 		  echo "</td>";
 		  echo "</tr>";
 
@@ -547,7 +547,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo Html::link(__('URL QA', 'archisw'), $this->fields["address_qa"]);
           echo "<td>";
 			echo "<td colspan='4'>";
-			Html::autocompletionTextField($this, "address_qa", ['option' => 'style="width:100%"']);
+            echo Html::input('address_qa',['value' => $this->fields['address_qa'], 'id' => "address_qa", 'width' => "100%"]);
 			echo "</td>";
 		  echo "</tr>";
 
@@ -557,7 +557,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo Html::link(__('URL Health Check', 'archisw'), $this->fields["health_check"]);
           echo "<td>";
 			echo "<td colspan='4'>";
-			Html::autocompletionTextField($this, "health_check", ['option' => 'style="width:100%"']);
+            echo Html::input('health_check',['value' => $this->fields['health_check'], 'id' => "health_check", 'width' => "100%"]);
 			echo "</td>";
 		echo "</tr>";
 
@@ -568,7 +568,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo Html::link(__('Source Repository', 'archisw'), $this->fields["repo"]);
           echo "<td>";
 			echo "<td colspan='4'>";
-			Html::autocompletionTextField($this, "repo", ['option' => 'style="width:100%"']);
+            echo Html::input('repo',['value' => $this->fields['repo'], 'id' => "repo", 'width' => "100%"]);
 			echo "</td>";
 		echo "</tr>";
 
