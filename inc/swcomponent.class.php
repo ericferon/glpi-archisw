@@ -49,12 +49,9 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       //Cleaning sons calls getAncestorsOf and thus... Re-create cache. Call it before clean.
       $this->cleanParentsSons();
-      if (Toolbox::useCache()) {
-         $ckey = $this->getTable() . '_ancestors_cache_' . $this->getID();
-         if ($GLPI_CACHE->has($ckey)) {
-            $GLPI_CACHE->delete($ckey);
-         }
-      }
+      $ckey = 'ancestors_cache_' . $this->getTable() . '_' . $this->getID();
+      $GLPI_CACHE->delete($ckey);
+      
       return true;
    }
 
