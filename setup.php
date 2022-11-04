@@ -26,7 +26,7 @@
 
 // Init the hooks of the plugins -Needed
 function plugin_init_archisw() {
-   global $PLUGIN_HOOKS;
+   global $PLUGIN_HOOKS, $CFG_GLPI;
 
    $PLUGIN_HOOKS['csrf_compliant']['archisw'] = true;
    $PLUGIN_HOOKS['change_profile']['archisw'] = ['PluginArchiswProfile', 'initProfile'];
@@ -35,6 +35,8 @@ function plugin_init_archisw() {
 //   $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
 //   $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
    
+   $CFG_GLPI['impact_asset_types']['PluginArchiswSwcomponent'] = Plugin::getPhpDir("archisw", false)."/swcomponent.png";
+
    Plugin::registerClass('PluginArchiswSwcomponent', [
          'linkgroup_tech_types'   => true,
          'linkuser_tech_types'    => true,
@@ -94,7 +96,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.2.13',
+      'version' => '2.2.14',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',

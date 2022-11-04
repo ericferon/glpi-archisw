@@ -339,6 +339,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $this->addDefaultFormTab($ong);
       $this->addStandardTab('PluginArchiswSwcomponent', $ong, $options);
       $this->addStandardTab('PluginArchiswSwcomponent_Item', $ong, $options);
+      $this->addImpactTab($ong, $options);
       $this->addStandardTab('Ticket', $ong, $options);
       $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
       $this->addStandardTab('Item_Problem', $ong, $options);

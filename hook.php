@@ -136,10 +136,16 @@ function plugin_archisw_uninstall() {
                "glpi_logs",
                "glpi_items_tickets",
                "glpi_notepads",
-               "glpi_dropdowntranslations"];
+               "glpi_dropdowntranslations",
+               "glpi_impactitems"];
 
    foreach($tables_glpi as $table_glpi)
       $DB->query("DELETE FROM `$table_glpi` WHERE `itemtype` LIKE 'PluginArchisw%' ;");
+
+   $DB->query("DELETE
+                  FROM `glpi_impactrelations`
+                  WHERE `itemtype_source` IN ('PluginArchiswSwcomponent')
+                    OR `itemtype_impacted` IN ('PluginArchiswSwcomponent')");
 
    if (class_exists('PluginDatainjectionModel')) {
       PluginDatainjectionModel::clean(['itemtype'=>'PluginArchiswSwcomponent']);
