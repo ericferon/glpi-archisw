@@ -73,9 +73,14 @@ function plugin_init_archisw() {
       $plugin = new Plugin();
       if (Session::haveRight("plugin_archisw", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archisw'] = ['assets'   => 'PluginArchiswMenu'];
+         $PLUGIN_HOOKS['menu_toadd']['archisw'] = ['assets'   => 'PluginArchiswMenu'/*, "config" => 'PluginArchiswConfigMenu'*/];
       }
 
+/*      if (Session::haveRight("plugin_archisw", READ)
+          || Session::haveRight("config", UPDATE)) {
+         $PLUGIN_HOOKS['config_page']['archisw']        = 'front/config.php';
+      }
+*/
       if (Session::haveRight("plugin_archisw", UPDATE)) {
          $PLUGIN_HOOKS['use_massive_action']['archisw']=1;
       }
@@ -96,7 +101,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '2.2.14',
+      'version' => '2.2.15',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -112,14 +117,23 @@ function plugin_version_archisw() {
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
 function plugin_archisw_check_prerequisites() {
+   global $DB;
    if (version_compare(GLPI_VERSION, '10.0', 'lt')
        || version_compare(GLPI_VERSION, '10.1', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
          echo Plugin::messageIncompatible('core', '10.0');
       }
       return false;
-   }
-   return true;
+   } else {
+/*		$query = "select * from glpi_plugins where directory = 'statecheck' and state = 1";
+		$result_query = $DB->query($query);
+		if($DB->numRows($result_query) == 1) {
+*/			return true;
+/*		} else {
+			echo "the plugin 'statecheck' must be installed before using 'Apps structure (archisw)'";
+			return false;
+		}
+*/	}
 }
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
