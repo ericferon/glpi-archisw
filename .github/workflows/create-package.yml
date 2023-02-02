@@ -1,0 +1,11 @@
+name: create-package
+on: [push]
+jobs:
+  create-package:
+    runs-on: ubuntu-latest
+    env:
+      GLPI_PLUGIN_NAME: `echo ${{ github.event.repository.name }} | sed -e 's/^.*-//'`
+      TAG_NAME: ${{ github.event.release.tag_name }}
+    steps:
+      - name: create-archive
+        run: tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TAG_NAME.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
