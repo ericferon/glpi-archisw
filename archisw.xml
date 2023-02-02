@@ -12,8 +12,8 @@
 		</short>
 		<long>
 			<cs>Inventář vašich aplikací.<br/>Aplikace může být tvořena stromem o několika úrovních softwarových komponent.<br/>Tyto softwarové komponenty je možné přiřadit k ostatním prvkům inventáře (servery, databáze, toky dat, …)</cs>
-			<en>Inventory of your applications.<br/>An application can be composed by a tree with several levels of software components.<br/>You can associate these software components with other inventory elements (servers, databases, dataflows, ...)</en>
-			<fr>Inventaire de vos applications.<br/>Une application peut être formée par une arborescence à plusieurs niveaux de composants logiciels.<br/>Ces composants logiciels peuvent être associés à d'autres éléments d'inventaire (serveurs, bases de données, flux de données, ...)</fr>
+			<en>Inventory of your applications.<br/>An application can be composed by a tree with several levels of software components.<br/>You can associate these software components with other inventory elements (servers, databases, dataflows, ...). You can add or suppress yourself item characteristics (see https://github.com/ericferon/glpi-archisw/wiki/How-to-customize-the-fields)</en>
+			<fr>Inventaire de vos applications.<br/>Une application peut être formée par une arborescence à plusieurs niveaux de composants logiciels.<br/>Ces composants logiciels peuvent être associés à d'autres éléments d'inventaire (serveurs, bases de données, flux de données, ...). Vous pouvez ajouter ou supprimer vous-même des caractéristiques de l'application (voir https://github.com/ericferon/glpi-archisw/wiki/How-to-customize-the-fields).</fr>
 		</long>
 	</description>
 	<homepage>https://github.com/ericferon/glpi-archisw</homepage>
@@ -24,6 +24,11 @@
 		<author>Eric Feron</author>
 	</authors>
 	<versions>
+		<version>
+			<num>3.0.0</num>
+			<compatibility>~10.0.0</compatibility>
+			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v3.0.0/archisw-v3.0.0.tar.gz</download_url>
+		</version>
 		<version>
 			<num>2.2.15</num>
 			<compatibility>~10.0.0</compatibility>

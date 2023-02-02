@@ -2,7 +2,7 @@
 /*
  -------------------------------------------------------------------------
  Archisw plugin for GLPI
- Copyright (C) 2009-2018 by Eric Feron.
+ Copyright (C) 2009-2023 by Eric Feron.
  -------------------------------------------------------------------------
 
  LICENSE
@@ -23,10 +23,7 @@
  along with Archisw. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-
-include ('../../../inc/includes.php');
-
-$dropdown = new PluginArchiswSwcomponentState();
-include (GLPI_ROOT . "/front/dropdown.common.form.php");
-
-?>
+      include ('../../../inc/includes.php');
+      $dropdown = new PluginArchiswSwcomponentState();
+      include (GLPI_ROOT . '/front/dropdown.common.form.php');
+      ?>

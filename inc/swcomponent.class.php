@@ -104,6 +104,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
    // search fields from GLPI 9.3 on
    function rawSearchOptions() {
+      global $DB, $CFG_GLPI;
 
       $tab = [];
       if (version_compare(GLPI_VERSION,'9.2','le')) return $tab;
@@ -123,6 +124,15 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'            => '900',
+         'table'         => $this->getTable(),
+         'field'         => 'date_mod',
+         'massiveaction' => false,
+         'name'          => __('Last update'),
+         'datatype'      => 'datetime'
+      ];
+
+/*      $tab[] = [
          'id'       => '2',
          'table'    => 'glpi_plugin_archisw_swcomponenttypes',
          'field'    => 'name',
@@ -254,6 +264,69 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'name'     => PluginArchiswSwcomponentTarget::getTypeName(1),
          'datatype' => 'dropdown'
       ];
+*/
+
+      $linktable = [];
+      $tablequery = "SELECT * FROM `glpi_plugin_archisw_configlinks`";
+      $tableresult = $DB->query($tablequery);
+      while ($tabledata = $DB->fetchAssoc($tableresult)) {
+         $linktable[$tabledata['id']]['name'] = $tabledata['name'];
+         $linktable[$tabledata['id']]['has_dropdown'] = $tabledata['has_dropdown'];
+         $linktable[$tabledata['id']]['is_entity_limited'] = $tabledata['is_entity_limited'];
+      }
+
+      $datatypetable = [];
+      $datatypequery = "SELECT * FROM `glpi_plugin_archisw_configdatatypes`";
+      $datatyperesult = $DB->query($datatypequery);
+      while ($datatypedata = $DB->fetchAssoc($datatyperesult)) {
+         $datatypetable[$datatypedata['id']]['name'] = $datatypedata['name'];
+      }
+
+      $fieldquery = "SELECT * 
+                FROM `glpi_plugin_archisw_configs` 
+                WHERE `is_deleted` = 0 
+                ORDER BY `description`";
+      $fieldresult = $DB->query($fieldquery);
+      $rowcount = $DB->numrows($fieldresult);
+      $tabid = 1;
+      $tabtable = $this->getTable();
+      while ($fielddata = $DB->fetchAssoc($fieldresult)) {
+         $tabid++;
+         $datatypeid = $fielddata['plugin_archisw_configdatatypes_id'];
+         switch($datatypeid) {
+            case 1: //Text
+            case 2: //Boolean
+            case 3: //Date
+            case 4: //Date and time
+            case 5: //Number
+            case 8: //Textarea
+               $tab[] = [
+                  'id'       => $tabid,
+                  'table'    => $tabtable,
+                  'field'    => $fielddata['name'],
+                  'name'     => __($fielddata['description'],'archisw'),
+                  'datatype' => $datatypetable[$datatypeid]['name'],
+                  'massiveaction' => $fielddata['massiveaction'],
+                  'nosearch' => $fielddata['nosearch']
+               ];
+               break;
+            case 6: //Dropdown
+            case 9: //TreeDropdown
+               $linktableid = $fielddata['plugin_archisw_configlinks_id'];
+               $itemtype = $linktable[$linktableid]['name'];
+               $tablename = $this->getTable($itemtype);
+               $tab[] = [
+                  'id'       => $tabid,
+                  'table'    => $tablename,
+                  'field'    => 'name',
+                  'name'     => __($fielddata['description'],'archisw'),
+                  'datatype' => $datatypetable[$datatypeid]['name']
+               ];
+               break;
+            case 7: //Itemlink
+               break;
+         }
+      }
 
       $tab[] = [
          'id'            => '71',
@@ -328,7 +401,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 												]
 								]
       ];
-
       return $tab;
    }
 
@@ -364,16 +436,18 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 */
    function showForm ($ID, $options=[]) {
 
-		// Because a lot of informations, we use 3 (6) columns
-		//	 Make <table> aware of it
-		$options['colspan']=4;
+      global $DB, $CFG_GLPI;
+   
+      // Because a lot of informations, we use 3 (6) columns
+      // Make <table> aware of it
+      $options['colspan']=4;
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
-
+      
 		// Line: 1
 		echo "<tr class='tab_bg_1'>";
-			echo "<th rowspan=3></th>";
+//			echo "<th rowspan=3></th>";
 
 			// Name of SwComponent
 			echo "<td>".__('Name')."</td>";
@@ -381,7 +455,13 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             echo Html::input('name',['value' => $this->fields['name'], 'id' => "name"]);
 			echo "</td>";
 
-			// Version
+            // Parent of swcomponent
+  			echo "<td>".__('As child of','archisw').": </td>";
+            echo "<td>";
+            Dropdown::show('PluginArchiswSwcomponent', ['value' => $this->fields["plugin_archisw_swcomponents_id"]]);
+            echo "</td>";
+
+            /*			// Version
 			echo "<td>".__('Version', 'archisw')."</td>";
 			echo "<td>";
             echo Html::input('version',['value' => $this->fields['version'], 'id' => "version", 'size' => 4]);
@@ -421,13 +501,11 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       	echo "<td class='top left' colspan='5'><textarea cols='100' rows='3' name='description' >".$this->fields["description"]."</textarea>";
       echo "</tr>";
 
-		// Just a separator
-		echo "<tr><td></td></tr>";
+      // Accordion separator
+      echo "<tr class='badge accordion-header'><td><button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='.maintbl'>Main characteristics</button></td></tr>";
 
 		// Line: 4
-      echo "<tr class='tab_bg_1'>";
-			echo "<th rowspan=10></th>";
-
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      //status of swcomponent
 	      echo "<td>".__('Status')."</td>";
 	      echo "<td>";
@@ -447,7 +525,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      // Type of swcomponent
 	      echo "<td>".__('Type')."</td>";
 			echo "<td>";
@@ -462,9 +540,9 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      //instances of swcomponent
-   	   echo "<td>".__('Instances','archisw')."</td>";
+      echo "<td>".__('Instances','archisw')."</td>";
 	      echo "<td>";
 	      Dropdown::show('PluginArchiswSwcomponentInstance', ['value' => $this->fields["plugin_archisw_swcomponentinstances_id"]]);
 	      echo "</td>";
@@ -474,7 +552,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      //target
 	      echo "<td>".__('Targets','archisw')."</td>";
 		   echo "<td>";
@@ -490,8 +568,8 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      Dropdown::show('PluginArchiswSwcomponentLicense', ['value' => $this->fields["plugin_archisw_swcomponentlicenses_id"]]);
 	      echo "</td>";
       echo "</tr>";
-
-      echo "<tr class='tab_bg_1'>";
+      
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      //groups
 	      echo "<td>".__('Component Owner','archisw')."</td><td>";
 	      Group::dropdown(['name'      => 'groups_id', 
@@ -508,7 +586,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      echo "</td>";
       echo "</tr>";
 
-      echo "<tr class='tab_bg_1'>";
+      echo "<tr class='tab_bg_1 maintbl accordion-collapse collapse show'>";
 	      //users
 	      echo "<td>".__('Component Maintainer','archisw')."</td><td>";
 	      User::dropdown(['name' => "users_id", 'value' => $this->fields["users_id"], 'entity' => $this->fields["entities_id"], 'right' => 'interface']);
@@ -526,56 +604,53 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	//      Dropdown::show('PluginArchiswSwcomponentType', ['value' => $this->fields["plugin_archisw_swcomponenttypes_id"],'entity' => $this->fields["entities_id"]]);
 	      Dropdown::show('PluginArchiswSwcomponentSla', ['value' => $this->fields["plugin_archisw_swcomponentslas_id"]]);
 	      echo "</td>";
-		  echo "</tr>";
+      echo "</tr>";
 
-		  echo "<tr class='tab_bg_1'>";
+      // Accordion separator
+      echo "<tr class='badge accordion-header'><td><button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='.othertbl'>Locations</button></td></tr>";
+
+      echo "<tr class='tab_bg_1 othertbl accordion-collapse collapse show'>";
 	      //url of swcomponent
-//	      echo "<td>".__('URL Production','archisw')."</td>";
           echo "<td>";
 	      echo Html::link(__('URL Production', 'archisw'), $this->fields["address"]);
           echo "<td>";
 	      echo "<td colspan='4'>";
             echo Html::input('address',['value' => $this->fields['address'], 'id' => "address", 'width' => "100%"]);
 		  echo "</td>";
-		  echo "</tr>";
+      echo "</tr>";
 
-		  echo "<tr class='tab_bg_1'>";
-//			echo "<td>".__('URL QA', 'archisw')."</td>";
+      echo "<tr class='tab_bg_1 othertbl accordion-collapse collapse show'>";
           echo "<td>";
 	      echo Html::link(__('URL QA', 'archisw'), $this->fields["address_qa"]);
           echo "<td>";
 			echo "<td colspan='4'>";
             echo Html::input('address_qa',['value' => $this->fields['address_qa'], 'id' => "address_qa", 'width' => "100%"]);
 			echo "</td>";
-		  echo "</tr>";
+      echo "</tr>";
 
-		  echo "<tr class='tab_bg_1'>";
-//			echo "<td>".__('URL Health Check', 'archisw')."</td>";
+      echo "<tr class='tab_bg_1 othertbl accordion-collapse collapse show'>";
           echo "<td>";
 	      echo Html::link(__('URL Health Check', 'archisw'), $this->fields["health_check"]);
           echo "<td>";
 			echo "<td colspan='4'>";
             echo Html::input('health_check',['value' => $this->fields['health_check'], 'id' => "health_check", 'width' => "100%"]);
 			echo "</td>";
-		echo "</tr>";
+      echo "</tr>";
 
 		// News fields for version 2.2.0
-		echo "<tr class='tab_bg_1'>";
-//			echo "<td>".__("Source Repository")."</td>";
+      echo "<tr class='tab_bg_1 othertbl accordion-collapse collapse show'>";
           echo "<td>";
 	      echo Html::link(__('Source Repository', 'archisw'), $this->fields["repo"]);
           echo "<td>";
 			echo "<td colspan='4'>";
             echo Html::input('repo',['value' => $this->fields['repo'], 'id' => "repo", 'width' => "100%"]);
 			echo "</td>";
-		echo "</tr>";
+      echo "</tr>";
 
 		// Just a separator
-		echo "<tr><td></td></tr>";
+      echo "<tr><td></td></tr>";
 
-      echo "<tr class='tab_bg_1'>";
-			echo "<th rowspan=2></th>";
-
+      echo "<tr class='tab_bg_1 othertbl accordion-collapse collapse show'>";
 	      //location of swcomponent
 	      echo "<td>".__('Location')."</td>";
 	      echo "<td>";
@@ -587,19 +662,306 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 	      Dropdown::showYesNo('is_helpdesk_visible',$this->fields['is_helpdesk_visible']);
 	      echo "</td>";
       echo "</tr>";
+*/
+      $linktable = [];
+      $tablequery = "SELECT * FROM `glpi_plugin_archisw_configlinks`";
+      $tableresult = $DB->query($tablequery);
+      while ($tabledata = $DB->fetchAssoc($tableresult)) {
+         $linktable[$tabledata['id']]['name'] = $tabledata['name'];
+         $linktable[$tabledata['id']]['has_dropdown'] = $tabledata['has_dropdown'];
+         $linktable[$tabledata['id']]['is_entity_limited'] = $tabledata['is_entity_limited'];
+      }
 
+      $fieldquery = "SELECT * 
+                FROM `glpi_plugin_archisw_configs` 
+                WHERE `is_deleted` = 0 AND `plugin_archisw_configfieldgroups_id` = 0 
+                ORDER BY `row`, `plugin_archisw_confighaligns_id`";
+      $fieldresult = $DB->query($fieldquery);
+      $rowcount = $DB->numrows($fieldresult);
+      if ($rowcount > 0) {
+         $rownbr = '1';
+         $halign = 5;
+         $tonextrow = false;
+         while ($fielddata = $DB->fetchAssoc($fieldresult)) {
+            if ($fielddata['row'] != $rownbr) {
+               if ($rownbr != '1') {
+                  // If not the first row, end preceding table row
+                  echo "</tr>";
+               }
+               // Set current rownbr
+               $rownbr = $fielddata['row'];
+               // Start new table row
+               echo "<tr class='tab_bg_1'>";
+               $halign = 1;
+               $tonextrow = false;
+            } else if ($tonextrow) {
+               continue; // skip this field which is located on the same row (and should not)
+            }
+            
+            //Display field
+            switch($fielddata['plugin_archisw_confighaligns_id']) {
+               case 1: // Full row
+                  if ($halign == 1) {
+                     $colspan = 5;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 2: // Left column
+                  if ($halign == 1) {
+                     $colspan = 1;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               case 3: // Left+Center columns
+                  if ($halign == 1) {
+                     $colspan = 3;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 4: // Center column
+                  if ($halign <= 3) {
+                     $colspan = 1;
+                     while ($halign < 3) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               case 5: // Center+Right columns
+                  if ($halign <= 3) {
+                     $colspan = 3;
+                     while ($halign < 3) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 6: // Right column
+                  if ($halign <= 5) {
+                     $colspan = 1;
+                     while ($halign < 5) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               }
+            }
+            // End last table row
+            echo "</tr>";
+      }
 
-		// Last line
+      // Generate accordions according to groups named in configfieldgroups
+
+      $fgroupquery = "SELECT * 
+                FROM `glpi_plugin_archisw_configfieldgroups` 
+                ORDER BY `sortorder`";
+      $fgroupresult = $DB->query($fgroupquery);
+
+      while ($fgroupdata = $DB->fetchAssoc($fgroupresult)) {
+         $fgroupid = $fgroupdata['id'];
+         $fgroupname = $fgroupdata['name']."tbl"; //name of the grouping table
+         $fgroupcomment = $fgroupdata['comment'];
+         $fgroupexpanded = ($fgroupdata['is_visible'] != 0)?'collapse show':'collapse';
+
+         $fieldquery = "SELECT * 
+                FROM `glpi_plugin_archisw_configs` 
+                WHERE `is_deleted` = 0 AND `plugin_archisw_configfieldgroups_id` = $fgroupid 
+                ORDER BY `row`, `plugin_archisw_confighaligns_id`";
+         $fieldresult = $DB->query($fieldquery);
+         $rowcount = $DB->numrows($fieldresult);
+         if ($rowcount > 0) {
+            // Accordion separator
+            echo "<tr class='badge accordion-header'><td><button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='.".$fgroupname."'>".$fgroupcomment."</button></td></tr>";
+
+            $rownbr = '';
+            while ($fielddata = $DB->fetchAssoc($fieldresult)) {
+               if ($fielddata['row'] != $rownbr) {
+                  if ($rownbr != '') {
+                     // If not the first row, end preceding table row
+                     echo "</tr>";
+                  }
+                  // Set current rownbr
+                  $rownbr = $fielddata['row'];
+                  // Start new table row
+                  echo "<tr class='tab_bg_1 ".$fgroupname." accordion-collapse  ".$fgroupexpanded."'>";
+                  $halign = 1;
+                  $tonextrow = false;
+               } else if ($tonextrow) {
+                  continue; // skip this field which is located on the same row (and should not)
+               }
+            
+               //Display field
+               switch($fielddata['plugin_archisw_confighaligns_id']) {
+               case 1: // Full row
+                  if ($halign == 1) {
+                     $colspan = 5;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 2: // Left column
+                  if ($halign == 1) {
+                     $colspan = 1;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               case 3: // Left+Center columns
+                  if ($halign == 1) {
+                     $colspan = 3;
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 4: // Center column
+                  if ($halign <= 3) {
+                     $colspan = 1;
+                     while ($halign < 3) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               case 5: // Center+Right columns
+                  if ($halign <= 3) {
+                     $colspan = 3;
+                     while ($halign < 3) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = true;
+                  }
+                  break;
+               case 6: // Right column
+                  if ($halign <= 5) {
+                     $colspan = 1;
+                     while ($halign < 5) { // fill empty columns
+                        echo "<td/>";
+                        $halign++;
+                     }
+                     $this->displayField($fielddata, $colspan, $linktable);
+                     $halign += 1 + $colspan; // move halign to next column to write into
+                     $tonextrow = false;
+                  }
+                  break;
+               }
+            }
+            // End last table row
+            echo "</tr>";
+         }
+      }
+
+/*		// Last line
       echo "<tr class='tab_bg_1'>";
 	      //comment about swcomponent
 	      echo "<td>".__('Comment').":	</td>";
 	      echo "<td class='top left' colspan='5'><textarea cols='100' rows='3' name='comment' >".$this->fields["comment"]."</textarea>";
       echo "</tr>";
-
-
+*/
       $this->showFormButtons($options);
 
       return true;
+   }
+
+   function displayField($fielddata, $colspan = 1, $linktable=[]) {
+      $fieldname = $fielddata['name'];
+      $fielddescription = $fielddata['description'];
+      $fieldreadonly = $fielddata['is_readonly']?'true':'false';
+      $params = [];
+      $params['value'] = $this->fields[$fieldname];
+      if ($fielddata['is_readonly']) {
+         $params['readonly'] = 'true';
+      }
+      switch($fielddata['plugin_archisw_configdatatypes_id']) {
+         case 1: //Text
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            $params['id'] = $fieldname;
+            $params['width'] = '100%';
+            echo Html::input($fieldname,$params);
+            echo "</td>";
+            break;
+         case 2: //Boolean
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            Dropdown::showYesNo($fieldname,$this->fields[$fieldname], -1);
+            echo "</td>";
+            break;
+         case 3: //Date
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            Html::showDateField($fieldname, ['value' => empty($this->fields[$fieldname])?date("Y-m-d"):$this->fields[$fieldname], 'readonly' => $fieldreadonly]);
+            echo "</td>";
+            break;
+         case 4: //Date and time
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            Html::showDateTimeField($fieldname, ['value' => empty($this->fields[$fieldname])?date("Y-m-d H:i:s"):$this->fields[$fieldname], 'readonly' => $fieldreadonly]);
+            echo "</td>";
+            break;
+         case 5: //Number
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            Dropdown::showNumber($fieldname, $params);
+            echo "</td>";
+            break;
+         case 6: //Dropdown
+         case 9: //Dropdown
+            if ($linktable[$fielddata['plugin_archisw_configlinks_id']]['is_entity_limited']) {
+               $params['entity'] = $this->fields["entities_id"];
+            }
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            if ($linktable[$fielddata['plugin_archisw_configlinks_id']]['has_dropdown']) {
+               $linktable[$fielddata['plugin_archisw_configlinks_id']]['name']::dropdown($params);
+            }
+            else {
+               Dropdown::show($linktable[$fielddata['plugin_archisw_configlinks_id']]['name'], $params);
+            }
+            echo "</td>";
+            break;
+         case 7: //Itemlink
+            echo "<td>";
+            echo Html::link(__($fielddescription, 'archisw'), $this->fields[$fieldname]);
+            echo "</td>";
+            echo "<td colspan='".$colspan."'>";
+            $params['id'] = $fieldname;
+            $params['width'] = '100%';
+            echo Html::input($fieldname,$params);
+            echo "</td>";
+            break;
+         case 8: //Textarea
+            echo "<td>".__($fielddescription, 'archisw')."</td>";
+            echo "<td colspan='".$colspan."'>";
+            echo Html::textarea(['name' => $fieldname, 'value' => $this->fields[$fieldname], 'editor_id' => $fieldname, 
+                                'enable_richtext' => true, 'display' => false, 'rows' => 3, 'readonly' => $fieldreadonly]);
+            echo "</td>";
+            break;      
+      }
    }
    
    /**

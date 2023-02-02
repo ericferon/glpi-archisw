@@ -132,6 +132,22 @@ class PluginArchiswConfig extends CommonDBTM {
          'datatype' => 'dropdown'
       ];
 
+      $tab[] = [
+         'id'       => '15',
+         'table'    => $this->getTable(),
+         'field'    => 'nosearch',
+         'name'     => __('Massive action allowed ?', 'archisw'),
+         'datatype' => 'bool'
+      ];
+
+      $tab[] = [
+         'id'       => '16',
+         'table'    => $this->getTable(),
+         'field'    => 'forcegroupby',
+         'name'     => __('Force group by ?', 'archisw'),
+         'datatype' => 'bool'
+      ];
+
        $tab[] = [
          'id'            => '72',
          'table'         => $this->getTable(),

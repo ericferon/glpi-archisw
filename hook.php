@@ -31,7 +31,7 @@ function plugin_archisw_install() {
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
-		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-2.2.2.sql");
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-3.0.0.sql");
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
@@ -55,49 +55,25 @@ function plugin_archisw_install() {
 		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-2.2.1.sql");
 	}
    
-   if ($DB->TableExists("glpi_plugin_archisw_profiles")) {
-   
-      $notepad_tables = ['glpi_plugin_archisw_swcomponents'];
-
-      foreach ($notepad_tables as $t) {
-         // Migrate data
-         if ($DB->FieldExists($t, 'notepad')) {
-            $query = "SELECT id, notepad
-                      FROM `$t`
-                      WHERE notepad IS NOT NULL
-                            AND notepad <>'';";
-            foreach ($DB->request($query) as $data) {
-               $iq = "INSERT INTO `glpi_notepads`
-                             (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
-                      VALUES ('PluginArchiswSwcomponent', '".$data['id']."',
-                              '".addslashes($data['notepad'])."', NOW(), NOW())";
-               $DB->queryOrDie($iq, "0.85 migrate notepad data");
-            }
-            $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` DROP COLUMN `notepad`;";
-            $DB->query($query);
-         }
-      }
+   if (!$DB->TableExists("glpi_plugin_archisw_configs")) {
+      $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-3.0.0.sql");
    }
-   
-   if ($update) {
-      $query_="SELECT *
-            FROM `glpi_plugin_archisw_profiles` ";
-      $result_=$DB->query($query_);
-      if ($DB->numrows($result_)>0) {
 
-         while ($data=$DB->fetch_array($result_)) {
-            $query="UPDATE `glpi_plugin_archisw_profiles`
-                  SET `profiles_id` = '".$data["id"]."'
-                  WHERE `id` = '".$data["id"]."';";
-            $result=$DB->query($query);
-
-         }
-      }
-
-      $query="ALTER TABLE `glpi_plugin_archisw_profiles`
-               DROP `name` ;";
-      $result=$DB->query($query);
+   // regenerate configured fields
+   $query = "SELECT `glpi_plugin_archisw_configlinks`.`name` as `classname`, 'is_entity_limited', 'is_tree_dropdown'
+               FROM `glpi_plugin_archisw_configlinks` 
+               JOIN `glpi_plugin_archisw_configs`  ON `glpi_plugin_archisw_configlinks`.`id` = `glpi_plugin_archisw_configs`.`plugin_archisw_configlinks_id` 
+               WHERE `glpi_plugin_archisw_configlinks`.`name` like 'PluginArchisw%'";
+   $result = $DB->query($query);
+   $item = new CommonDBTM;
+   while ($data = $DB->fetchAssoc($result)) {
+      $item->input['name'] = $data['classname'];
+      $item->input['is_entity_limited'] = $data['is_entity_limited'];
+      $item->input['is_tree_dropdown'] = $data['is_tree_dropdown'];
+      hook_pre_item_add_configlink($item); // simulate the creation of this field
    }
+   // refresh with new files
+   header("Refresh:0");
 
    PluginArchiswProfile::initProfile();
    PluginArchiswProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
@@ -113,19 +89,46 @@ function plugin_archisw_uninstall() {
    include_once (Plugin::getPhpDir("archisw")."/inc/profile.class.php");
    include_once (Plugin::getPhpDir("archisw")."/inc/menu.class.php");
    
-	$tables = ["glpi_plugin_archisw_swcomponents",
+   $query = "SELECT `id` FROM `glpi_plugin_statecheck_tables` WHERE `name` = 'glpi_plugin_archisw_configs'";
+   $result = $DB->query($query);
+   $rowcount = $DB->numrows($result);
+   if ($rowcount > 0) {
+      while ($data = $DB->fetchAssoc($result)) {
+         $tableid = $data['id'];
+         $rulequery = "SELECT `id` FROM `glpi_plugin_statecheck_rules` WHERE `plugin_statecheck_tables_id` = '".$tableid."'";
+         $ruleresult = $DB->query($rulequery);
+         while ($ruledata = $DB->fetchAssoc($ruleresult)) {
+            $ruleid = $ruledata['id'];
+            $query = "DELETE FROM `glpi_plugin_statecheck_ruleactions` WHERE `plugin_statecheck_rules_id` = '".$ruleid."'";
+            $DB->query($query);
+            $query = "DELETE FROM `glpi_plugin_statecheck_rulecriterias` WHERE `plugin_statecheck_rules_id` = '".$ruleid."'";
+            $DB->query($query);
+         }
+         $query = "DELETE FROM `glpi_plugin_statecheck_rules` WHERE `plugin_statecheck_tables_id` = '".$tableid."'";
+         $DB->query($query);
+      }
+      $query = "DELETE FROM `glpi_plugin_statecheck_tables` WHERE `name` like 'glpi_plugin_archisw_%'";
+      $result = $DB->query($query);
+   }
+
+   $tables = ["glpi_plugin_archisw_swcomponents",
 					"glpi_plugin_archisw_swcomponents_items",
-					"glpi_plugin_archisw_swcomponentdbs",
-					"glpi_plugin_archisw_swcomponentinstances",
-					"glpi_plugin_archisw_swcomponentlicenses",
 					"glpi_plugin_archisw_swcomponents_itemroles",
-					"glpi_plugin_archisw_swcomponentslas",
-					"glpi_plugin_archisw_swcomponentstates",
-					"glpi_plugin_archisw_swcomponenttargets",
-					"glpi_plugin_archisw_swcomponenttechnics",
-					"glpi_plugin_archisw_swcomponenttypes",
-					"glpi_plugin_archisw_swcomponentusers",
+                    "glpi_plugin_archisw_configs",
+                    "glpi_plugin_archisw_configfieldgroups",
+                    "glpi_plugin_archisw_confighaligns",
+                    "glpi_plugin_archisw_configdbfieldtypes",
+                    "glpi_plugin_archisw_configdatatypes",
+                    "glpi_plugin_archisw_configlinks",
 					"glpi_plugin_archisw_profiles"];
+
+   $query = "SELECT `name` FROM `glpi_plugin_archisw_configlinks` WHERE `name` like 'PluginArchisw%'";
+   $result = $DB->query($query);
+   while ($data = $DB->fetchAssoc($result)) {
+      $tablename = CommonDBTM::getTable($data['name']);
+      if (!in_array($tablename,$tables))
+         $tables[] = $tablename;
+   }
 
    foreach($tables as $table)
       $DB->query("DROP TABLE IF EXISTS `$table`;");
@@ -186,42 +189,60 @@ function plugin_archisw_AssignToTicket($types) {
 
 // Define dropdown relations
 function plugin_archisw_getSwcomponentRelations() {
+   global $DB;
 
    $plugin = new Plugin();
-   if ($plugin->isActivated("archisw"))
-		return ["glpi_plugin_archisw_swcomponents"=>["glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_id"],
-					 "glpi_plugin_archisw_swcomponenttypes"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttypes_id"],
+   if ($plugin->isActivated("archisw")) {
+      $tables = ["glpi_plugin_archisw_swcomponents"=>["glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_id"],
 					 "glpi_plugin_archisw_swcomponents_itemroles"=>["glpi_plugin_archisw_swcomponents_items"=>"plugin_archisw_swcomponents_itemroles_id"],
-					 "glpi_plugin_archisw_swcomponentstates"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentstates_id"],
-					 "glpi_plugin_archisw_swcomponenttechnics"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttechnics_id"],
-					 "glpi_plugin_archisw_swcomponentdbs"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentdbs_id"],
-					 "glpi_plugin_archisw_swcomponentinstances"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponentinstances_id"],
-					 "glpi_plugin_archisw_swcomponenttargets"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_swcomponenttargets_id"],
-//					 "glpi_plugin_archisw_graphlevels"=>["glpi_plugin_archisw_swcomponents"=>"plugin_archisw_graphlevels_id"],
 					 "glpi_entities"=>["glpi_plugin_archisw_swcomponents"=>"entities_id"],
 					 "glpi_groups"=>["glpi_plugin_archisw_swcomponents"=>"groups_id"],
 					 "glpi_users"=>["glpi_plugin_archisw_swcomponents"=>"users_id"]
 					 ];
+
+      $query = "SELECT `name` FROM `glpi_plugin_archisw_configlinks` WHERE `name` like 'PluginArchisw%'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetchAssoc($result)) {
+         $tablename = CommonDBTM::getTable($data['name']);
+         if (!in_array($tablename,$tables)) {
+            $fieldname = substr($tablename, 5)."_id";
+            $tables[$tablename] = ["glpi_plugin_archisw_swcomponents"=>$fieldname];
+         }
+      }
+      return $tables;
+   }
    else
       return [];
 }
 
 // Define Dropdown tables to be manage in GLPI :
 function plugin_archisw_getDropdown() {
+   global $DB;
 
    $plugin = new Plugin();
-   if ($plugin->isActivated("archisw"))
-		return ['PluginArchiswSwcomponentType'=>PluginArchiswSwcomponentType::getTypeName(2),
+   if ($plugin->isActivated("archisw")) {
+      $classes = [//'PluginArchiswSwcomponentType'=>PluginArchiswSwcomponentType::getTypeName(2),
 					 'PluginArchiswSwcomponent_Itemrole'=>PluginArchiswSwcomponent_Itemrole::getTypeName(2),
-					 'PluginArchiswSwcomponentDb'=>PluginArchiswSwcomponentDb::getTypeName(1), //PluginArchiswSwcomponentDb::getTypeName(2) does not work
-					 'PluginArchiswSwcomponentInstance'=>PluginArchiswSwcomponentInstance::getTypeName(2),
-					 'PluginArchiswSwcomponentLicense'=>PluginArchiswSwcomponentLicense::getTypeName(2),
-					 'PluginArchiswSwcomponentSla'=>PluginArchiswSwcomponentSla::getTypeName(2),
-					 'PluginArchiswSwcomponentState'=>PluginArchiswSwcomponentState::getTypeName(2),
-					 'PluginArchiswSwcomponentTarget'=>PluginArchiswSwcomponentTarget::getTypeName(2),
-					 'PluginArchiswSwcomponentTechnic'=>PluginArchiswSwcomponentTechnic::getTypeName(2),
-					 'PluginArchiswSwcomponentUser'=>PluginArchiswSwcomponentUser::getTypeName(2)
+					 'PluginArchiswConfig'=>PluginArchiswConfig::getTypeName(2),
+					 'PluginArchiswConfigFieldgroup'=>PluginArchiswConfigFieldgroup::getTypeName(2),
+					 'PluginArchiswConfigHalign'=>PluginArchiswConfigHalign::getTypeName(2),
+					 'PluginArchiswConfigDbfieldtype'=>PluginArchiswConfigDbfieldtype::getTypeName(2),
+					 'PluginArchiswConfigDatatype'=>PluginArchiswConfigDatatype::getTypeName(2),
+					 'PluginArchiswConfigLink'=>PluginArchiswConfigLink::getTypeName(2)
 		];
+
+      $query = "SELECT `glpi_plugin_archisw_configlinks`.`name` as `classname`, `glpi_plugin_archisw_configs`.`description` as `typename` 
+               FROM `glpi_plugin_archisw_configlinks` 
+               JOIN `glpi_plugin_archisw_configs`  ON `glpi_plugin_archisw_configlinks`.`id` = `glpi_plugin_archisw_configs`.`plugin_archisw_configlinks_id` 
+               WHERE `glpi_plugin_archisw_configlinks`.`name` like 'PluginArchisw%'";
+      $result = $DB->query($query);
+      while ($data = $DB->fetchAssoc($result)) {
+         $classname = $data['classname'];
+         if (!in_array($classname,$classes))
+            $classes[$classname] = $data['typename'];
+      }
+      return $classes;
+   }
    else
       return [];
 }
@@ -241,22 +262,24 @@ function plugin_archisw_getAddSearchOptions($itemtype) {
          $sopt[2460]['name']          = PluginArchiswSwcomponent::getTypeName(2)." - ".__('Name');
          $sopt[2460]['forcegroupby']  = true;
          $sopt[2460]['datatype']      = 'itemlink';
-         $sopt[2460]['massiveaction'] = false;
+         $sopt[2460]['massiveaction'] = true;
          $sopt[2460]['itemlink_type'] = 'PluginArchiswSwcomponent';
          $sopt[2460]['joinparams']    = ['beforejoin'
                                                 => ['table'      => 'glpi_plugin_archisw_swcomponents_items',
                                                          'joinparams' => ['jointype' => 'itemtype_item']]];
 
-         $sopt[2461]['table']         ='glpi_plugin_archisw_swcomponenttypes';
-         $sopt[2461]['field']         ='name';
-         $sopt[2461]['name']          = PluginArchiswSwcomponent::getTypeName(2)." - ".PluginArchiswSwcomponentType::getTypeName(1);
-         $sopt[2461]['forcegroupby']  = true;
-         $sopt[2461]['datatype']      = 'dropdown';
-         $sopt[2461]['massiveaction'] = false;
-         $sopt[2461]['joinparams']    = ['beforejoin' => [
+         $classnames = plugin_archisw_getDropdown();
+         if (in_array('PluginArchiswSwcomponentType', $classnames)) {
+            $sopt[2461]['table']         ='glpi_plugin_archisw_swcomponenttypes';
+            $sopt[2461]['field']         ='name';
+            $sopt[2461]['name']          = PluginArchiswSwcomponent::getTypeName(2)." - ".$classnames['PluginArchiswSwcomponentType'];
+            $sopt[2461]['forcegroupby']  = true;
+            $sopt[2461]['datatype']      = 'dropdown';
+            $sopt[2461]['massiveaction'] = true;
+            $sopt[2461]['joinparams']    = ['beforejoin' => [
                                                 ['table'      => 'glpi_plugin_archisw_swcomponents',
                                                       'joinparams' => $sopt[2460]['joinparams']]]];
-
+         }
      }
    }
    return $sopt;
@@ -410,6 +433,290 @@ function plugin_datainjection_populate_archisw() {
    $INJECTABLE_TYPES['PluginArchiswSwcomponentInjection'] = 'datainjection';
 }
 
+function hook_pre_item_add_configlink(CommonDBTM $item) {
+   global $DB;
+   $dir = Plugin::getPhpDir("archisw", true);
+   $newclassname = $item->input['name'];
+   $newistreedropdown = $item->input['is_tree_dropdown'];
+   $newisentitylimited = $item->input['is_entity_limited'];
+   if (substr($newclassname, 0, 13) == 'PluginArchisw') {
+      $rootname = strtolower(substr($newclassname, 13));
+      $tablename = 'glpi_plugin_archisw_'.$rootname.'s';
+      $fieldname = 'plugin_archisw_'.$rootname.'s_id';
+      $entities = ($newisentitylimited?"`entities_id` INT(11) UNSIGNED NOT NULL DEFAULT 0,":"");
+      if (!$newistreedropdown) { //dropdown->create table
+         $query = "CREATE TABLE IF NOT EXISTS `".$tablename."` (
+                  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,".
+                  $entities.
+                  "`name` VARCHAR(45) NOT NULL,
+                  `comment` VARCHAR(255) NULL,
+                  `completename` MEDIUMTEXT NULL,
+                  PRIMARY KEY (`id`) ,
+                  UNIQUE INDEX `".$tablename."_name` (`name`) )
+                  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+         $result = $DB->query($query);
+      }
+      else { //treedropdown->create table
+         $query = "CREATE TABLE IF NOT EXISTS `".$tablename."` (
+                        `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,".
+                        $entities.
+                        "`is_recursive` BIT NOT NULL DEFAULT 0,
+                        `name` VARCHAR(45) NOT NULL,
+                        $fieldname INT(11) UNSIGNED NOT NULL DEFAULT 0,
+                        `completename` MEDIUMTEXT NULL,
+                        `comment` VARCHAR(255) NULL,
+                        `level` INT NOT NULL DEFAULT 0,
+                        `sons_cache` LONGTEXT NULL,
+                        `ancestors_cache` LONGTEXT NULL,
+                        PRIMARY KEY (`id`) ,
+                        UNIQUE INDEX `".$tablename."_name` (`name`) )
+                        DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
+         $result = $DB->query($query);
+      }
+      create_plugin_archisw_classfiles($dir, $newclassname, $newistreedropdown);
+   }
+}
+function hook_pre_item_update_configlink(CommonDBTM $item) {
+   global $DB;
+   $dir = Plugin::getPhpDir("archisw", true);
+   $newclassname = $item->input['name'];
+   $newistreedropdown = $item->input['is_tree_dropdown'];
+   $oldclassname = $item->fields['name'];
+   $oldistreedropdown = $item->fields['is_tree_dropdown'];
+   if (substr($newclassname, 0, 13) == 'PluginArchisw') {
+      // class is owned by this plugin
+      $newrootname = strtolower(substr($newclassname, 13));
+      $newfilename = $newrootname;
+      $newtablename = 'glpi_plugin_archisw_'.$newrootname.'s';
+      $newfieldname = 'plugin_archisw_'.$newrootname.'s_id';
+      if (substr($oldclassname, 0, 13) == 'PluginArchisw') { 
+         //old and new types are owned by this plugin
+         if ($oldclassname != $newclassname) { 
+            //dropdown name modified->rename table
+            $oldrootname = strtolower(substr($oldclassname, 13));
+            $oldfilename = $oldrootname;
+            $oldtablename = 'glpi_plugin_archisw_'.$oldrootname.'s';
+            $oldfieldname = 'plugin_archisw_'.$oldrootname.'s_id';
+            $query = "RENAME TABLE `".$oldtablename."` TO `".$newtablename."`";
+            $result = $DB->query($query);
+            $query = "UPDATE `glpi_plugin_archisw_configlinks` SET `name` = '".$newclassname."' WHERE `name` = '".$oldclassname."'";
+            $result = $DB->query($query);
+         }
+         else {// no change dropdown name
+            if (!$oldistreedropdown && $newistreedropdown) {
+               // 'is_tree_dropdown' has changed
+               // old type was dropdown and new one is treedropdown=>add the needed fields
+               $query = "ALTER TABLE $newtablename
+                     ADD COLUMN `is_recursive` BIT NOT NULL DEFAULT 0 AFTER `id`,
+                     ADD COLUMN $newfieldname INT(11) UNSIGNED NOT NULL DEFAULT 0 AFTER `name`,
+                     ADD COLUMN `level` INT NOT NULL DEFAULT 0 AFTER `completename`,
+                     ADD COLUMN `sons_cache` LONGTEXT NULL AFTER `level`,
+                     ADD COLUMN `ancestors_cache` LONGTEXT NULL AFTER `sons_cache`";
+               $result = $DB->query($query);
+            }
+            else if ($oldistreedropdown && !$newistreedropdown) {
+               // old type was treedropdown and new one is dropdown=>drop the unneeded fields
+               $query = "ALTER TABLE $newtablename
+                     DROP COLUMN `is_recursive`,
+                     DROP COLUMN $newfieldname,
+                     DROP COLUMN `level`,
+                     DROP COLUMN `sons_cache`,
+                     DROP COLUMN `ancestors_cache`";
+               $result = $DB->query($query);
+            }
+            // 'is_entity_limited' has changed
+            if (!$item->fields['is_entity_limited'] && $item->input['is_entity_limited']) { // 'is_entity_limited' changed from no to yes
+            // => add 'entities_id' column to dropdown table
+               $query = "ALTER TABLE $newtablename ADD COLUMN IF NOT EXISTS `entities_id` INT(11) UNSIGNED NOT NULL DEFAULT 0 AFTER `id`";
+               $result = $DB->query($query);
+            }
+            else if ($item->fields['is_entity_limited'] && !$item->input['is_entity_limited']) { // 'is_entity_limited' changed from yes to no
+            // => drop 'entities_id' column from dropdown table
+               $query = "ALTER TABLE $newtablename DROP COLUMN `entities_id`";
+               $result = $DB->query($query);
+            }
+         }
+      }
+      else {// old type wasn't owned by this plugin, but the new one is well owned
+         //dropdown new->create table
+         $entities = ($item->input['is_entity_limited']?"`entities_id` INT(11) UNSIGNED NOT NULL DEFAULT 0,":""); // with or without 'entities_id' column
+         if (!$newistreedropdown) {
+            // new simple dropdown table
+            $query = "CREATE TABLE IF NOT EXISTS `".$newtablename."` (
+                  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,".
+                  $entities.
+                  "`name` VARCHAR(45) NOT NULL,
+                  `comment` VARCHAR(255) NULL,
+                  `completename` MEDIUMTEXT NULL,
+                  PRIMARY KEY (`id`) ,
+                  UNIQUE INDEX `".$newtablename."_name` (`name`) )
+                  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         } 
+         else { // new treedropdon table
+            $query = "CREATE TABLE IF NOT EXISTS `".$newtablename."` (
+                  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,".
+                  $entities.
+                  "`is_recursive` BIT NOT NULL DEFAULT 0,
+                  `name` VARCHAR(45) NOT NULL,
+                  $newfieldname INT(11) UNSIGNED NOT NULL DEFAULT 0,
+                  `completename` MEDIUMTEXT NULL,
+                  `comment` VARCHAR(255) NULL,
+                  `level` INT NOT NULL DEFAULT 0,
+                  `sons_cache` LONGTEXT NULL,
+                  `ancestors_cache` LONGTEXT NULL,
+                  PRIMARY KEY (`id`) ,
+                  UNIQUE INDEX `".$newtablename."_name` (`name`) )
+                  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
+         }
+         $result = $DB->query($query);
+      }
+      create_plugin_archisw_classfiles($dir, $newclassname, $newistreedropdown);
+   }
+   if (substr($oldclassname, 0, 13) == 'PluginArchisw'
+   && $oldclassname != $newclassname) {
+      //old dropdown was owned by this plugin -> drop table if it hasn't been renamed
+      $oldrootname = strtolower(substr($oldclassname, 13));
+      $oldfilename = $oldrootname;
+      $oldtablename = 'glpi_plugin_archisw_'.$oldrootname.'s';
+      $oldfieldname = 'plugin_archisw_'.$oldrootname.'s_id';
+      $query = "DROP TABLE IF EXISTS `".$oldtablename."`";
+      $result = $DB->query($query);
+      $query = "DELETE FROM `glpi_plugin_archisw_configlinks` WHERE `name` = '".$oldclassname."'";
+      $result = $DB->query($query);
+      // delete files in inc and front directories
+      if (file_exists($dir.'/inc/'.$oldfilename.'.class.php')) 
+         unlink($dir.'/inc/'.$oldfilename.'.class.php');
+      if (file_exists($dir.'/front/'.$oldfilename.'.form.php')) 
+         unlink($dir.'/front/'.$oldfilename.'.form.php');
+      if (file_exists($dir.'/front/'.$oldfilename.'.php')) 
+         unlink($dir.'/front/'.$oldfilename.'.php');
+   }
+}
+function hook_pre_item_purge_configlink(CommonDBTM $item) {
+   global $DB;
+   $dir = Plugin::getPhpDir("archisw", true);
+   $oldclassname = $item->fields['name'];
+   $oldfilename = strtolower(substr($oldclassname, 13));
+   $oldid = $item->fields['id'];
+   // suppress in glpi_plugin_archisw_configs
+   $query = "UPDATE `glpi_plugin_archisw_configs` SET `plugin_archisw_configlinks_id` = 0 WHERE `plugin_archisw_configlinks_id` = '".$oldid."'";
+   $result = $DB->query($query);
+   if (substr($oldclassname, 0, 13) == 'PluginArchisw') {
+      // delete files in inc and front directories
+      if (file_exists($dir.'/inc/'.$oldfilename.'.class.php')) 
+         unlink($dir.'/inc/'.$oldfilename.'.class.php');
+      if (file_exists($dir.'/front/'.$oldfilename.'.form.php')) 
+         unlink($dir.'/front/'.$oldfilename.'.form.php');
+      if (file_exists($dir.'/front/'.$oldfilename.'.php')) 
+         unlink($dir.'/front/'.$oldfilename.'.php');
+   }
+   return true;
+}
+function create_plugin_archisw_classfiles($dir, $newclassname, $istreedropdown = false) {
+   if (substr($newclassname, 0, 13) == 'PluginArchisw') {
+      $newfilename = strtolower(substr($newclassname, 13));
+      $dropdowntype = 'CommonDropdown';
+      if ($istreedropdown) $dropdowntype = 'CommonTreeDropdown';
+      // create files in inc and front directories, with read/write access
+      file_put_contents($dir.'/inc/'.$newfilename.'.class.php', 
+      "<?php
+/*
+ -------------------------------------------------------------------------
+ Archisw plugin for GLPI
+ Copyright (C) 2009-2023 by Eric Feron.
+ -------------------------------------------------------------------------
 
+ LICENSE
+      
+ This file is part of Archisw.
 
+ Archisw is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ at your option any later version.
+
+ Archisw is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Archisw. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ */
+      if (!defined('GLPI_ROOT')) {
+         die('Sorry. You cannott access directly to this file');
+      }
+      class $newclassname extends $dropdowntype {
+      }
+      ?>");
+      file_put_contents($dir.'/front/'.$newfilename.'.form.php', 
+      "<?php
+/*
+ -------------------------------------------------------------------------
+ Archisw plugin for GLPI
+ Copyright (C) 2009-2023 by Eric Feron.
+ -------------------------------------------------------------------------
+
+ LICENSE
+      
+ This file is part of Archisw.
+
+ Archisw is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ at your option any later version.
+
+ Archisw is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Archisw. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ */
+      include ('../../../inc/includes.php');
+      \$dropdown = new $newclassname();
+      include (GLPI_ROOT . '/front/dropdown.common.form.php');
+      ?>");
+      file_put_contents($dir.'/front/'.$newfilename.'.php', 
+      "<?php
+/*
+ -------------------------------------------------------------------------
+ Archisw plugin for GLPI
+ Copyright (C) 2009-2023 by Eric Feron.
+ -------------------------------------------------------------------------
+
+ LICENSE
+      
+ This file is part of Archisw.
+
+ Archisw is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ at your option any later version.
+
+ Archisw is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with Archisw. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ */
+      include ('../../../inc/includes.php');
+      \$dropdown = new $newclassname();
+      include (GLPI_ROOT . '/front/dropdown.common.php');
+      ?>");
+      chmod($dir.'/inc/'.$newfilename.'.class.php', 0660);
+      chmod($dir.'/front/'.$newfilename.'.form.php', 0660);
+      chmod($dir.'/front/'.$newfilename.'.php', 0660);
+      // refresh with new files
+//      header("Refresh:0");
+//   Session::addMessageAfterRedirect(__('Please, refresh the display', 'archisw'));
+   }
+   return true;
+}
 ?>

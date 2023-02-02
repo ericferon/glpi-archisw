@@ -50,6 +50,12 @@ class PluginArchiswConfigLink extends CommonDropdown {
                   'type'      => 'bool',
                   'label'     => __('Is limited by entity', 'archisw'),
                   'list'      => false
+            ],
+            [
+                  'name'      => 'is_tree_dropdown',
+                  'type'      => 'bool',
+                  'label'     => __('Is hierarchical dropdown', 'archisw'),
+                  'list'      => false
             ]
 		];
    }
@@ -66,6 +72,11 @@ class PluginArchiswConfigLink extends CommonDropdown {
       $opt[2401]['field']       = 'is_entity_limited';
       $opt[2401]['name']        = __('Is limited by entity', 'archisw');
       $opt[2401]['datatype']    = 'boolean';
+
+      $opt[2402]['table']       = $this->getTable();
+      $opt[2402]['field']       = 'is_tree_dropdown';
+      $opt[2402]['name']        = __('Is hierarchical dropdown', 'archisw');
+      $opt[2402]['datatype']    = 'boolean';
 
       return $opt;
    }

@@ -91,6 +91,7 @@ CREATE  TABLE `glpi_plugin_archisw_configlinks` (
   `name` VARCHAR(255) NOT NULL,
   `has_dropdown` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '0=False/1=True',
   `is_entity_limited` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '0=False/1=True',
+  `is_tree_dropdown` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '0=False/1=True',
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `plugin_archisw_configlinks_name` (`name` ASC) )
  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -111,7 +112,7 @@ INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_en
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (14,'Location',0,1);
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (15,'PluginArchiswSwcomponentState',0,0);
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (16,'PluginArchiswStandard',0,0);
-INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (17,'PluginArchiswSwcomponentType',0,1);
+INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`,`is_tree_dropdown`) VALUES (17,'PluginArchiswSwcomponentType',0,1,1);
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (18,'PluginArchiswSwcomponentTechnic',0,0);
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (19,'PluginArchiswSwcomponentInstance',0,0);
 INSERT INTO `glpi_plugin_archisw_configlinks` (`id`,`name`,`has_dropdown`,`is_entity_limited`) VALUES (20,'PluginArchiswSwcomponentDb',0,0);
@@ -198,13 +199,15 @@ SELECT @rule_id := LAST_INSERT_ID();
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','row',null);
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','plugin_archisw_confighaligns_id',null);
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','description',null);
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','plugin_archisw_configdbfieldtypes_id',null);
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','plugin_archisw_configdatatypes_id',null);
 INSERT INTO `glpi_plugin_statecheck_rules` (`id`,`entities_id`,`name`,`plugin_statecheck_tables_id`,`plugin_statecheck_targetstates_id`,`ranking`,`match`,`is_active`,`comment`,`successnotifications_id`,`failurenotifications_id`,`date_mod`,`is_recursive`) VALUES (null,0,'Apps structure configuration - not dropdown',@table_id,0,1,'AND',true,'Do not delete
 /nIf the field is not a dropdown,
 /n- a name must be lowercase, start with a letter, contain only letters, numbers or underscores
-/n- a name may not end with "_id" ((?&#60;!a) is a negated lookbehind assertion that ensures, that before the end of the string (or row with m modifier), there is not the character "a")',0,0,NOW(),true);
+/n- a name may not end with "s_id" ((?&#60;!a) is a negated lookbehind assertion that ensures, that before the end of the string (or row with m modifier), there is not the character "a")',0,0,NOW(),true);
 SELECT @rule_id := LAST_INSERT_ID();
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'regex_check','name','/^[a-z][a-z0-9_]*$/');
-INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'regex_check','name','/.*(?&#60;!_id)$/m');
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'regex_check','name','/.*(?&#60;!s_id)$/m');
 INSERT INTO `glpi_plugin_statecheck_rulecriterias` (`id`,`plugin_statecheck_rules_id`,`criteria`,`condition`,`pattern`) VALUES (null,@rule_id,'plugin_archisw_configdatatypes_id',1,6);
 INSERT INTO `glpi_plugin_statecheck_rules` (`id`,`entities_id`,`name`,`plugin_statecheck_tables_id`,`plugin_statecheck_targetstates_id`,`ranking`,`match`,`is_active`,`comment`,`successnotifications_id`,`failurenotifications_id`,`date_mod`,`is_recursive`) VALUES (null,0,'Apps structure configuration - dropdown',@table_id,6,1,'AND',true,'Do not delete',0,0,NOW(),true);
 SELECT @rule_id := LAST_INSERT_ID();
@@ -213,11 +216,19 @@ INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','plugin_archisw_configlinks_id',null);
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'is','plugin_archisw_configdbfieldtypes_id',10);
 
-INSERT INTO `glpi_plugin_statecheck_tables` (`id`,`name`,`comment`,`statetable`,`stateclass`,`class`,`frontname`) VALUES (null,'glpi_plugin_archisw_configlinks', 'Apps structure configuration links', '', '', 'PluginArchiswConfigLink', 'config');
+INSERT INTO `glpi_plugin_statecheck_tables` (`id`,`name`,`comment`,`statetable`,`stateclass`,`class`,`frontname`) VALUES (null,'glpi_plugin_archisw_configlinks', 'Apps structure configuration links', '', '', 'PluginArchiswConfigLink', 'configlink');
 SELECT @table_id := LAST_INSERT_ID();
 INSERT INTO `glpi_plugin_statecheck_rules` (`id`,`entities_id`,`name`,`plugin_statecheck_tables_id`,`plugin_statecheck_targetstates_id`,`ranking`,`match`,`is_active`,`comment`,`successnotifications_id`,`failurenotifications_id`,`date_mod`,`is_recursive`) VALUES (null,0,'Apps structure configuration links for dropdown',@table_id,0,1,'AND',true,'Do not delete : set temporarily inactive, if needed',0,0,NOW(),true);
 SELECT @rule_id := LAST_INSERT_ID();
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'regex_check','name','/^PluginArchisw[a-zA-Z0-9]+$/');
+
+INSERT INTO `glpi_plugin_statecheck_tables` (`id`,`name`,`comment`,`statetable`,`stateclass`,`class`,`frontname`) VALUES (null,'glpi_plugin_archisw_configfieldgroups', 'Apps structure field groups', '', '', 'PluginArchiswConfigFieldgroup', 'configfieldgroup');
+SELECT @table_id := LAST_INSERT_ID();
+INSERT INTO `glpi_plugin_statecheck_rules` (`id`,`entities_id`,`name`,`plugin_statecheck_tables_id`,`plugin_statecheck_targetstates_id`,`ranking`,`match`,`is_active`,`comment`,`successnotifications_id`,`failurenotifications_id`,`date_mod`,`is_recursive`) VALUES (null,0,'Apps structure Field Groups - mandatory fields',@table_id,0,1,'AND',true,'Do not delete',0,0,NOW(),true);
+SELECT @rule_id := LAST_INSERT_ID();
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','name',null);
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','comment',null);
+INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','sortorder',null);
 
 INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',2,1,0);
 INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',3,2,0);

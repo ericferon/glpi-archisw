@@ -146,6 +146,11 @@ class PluginArchiswProfile extends Profile {
                 'label'     => _n('Apps structure', 'Apps structures', 2, 'archisw'),
                 'field'     => 'plugin_archisw'
           ],
+          ['rights'    => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update')],
+                'itemtype'  => 'PluginArchiswConfig',
+                'label'     => __('Configuration', 'archisw'),
+                'field'     => 'plugin_archisw_configuration']
+
       ];
 
       if ($all) {
