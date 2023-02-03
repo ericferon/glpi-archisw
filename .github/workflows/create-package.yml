@@ -8,15 +8,12 @@ jobs:
       TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
       - name: create-archive-name
-        run:
-          ARCHIVE_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
-          echo "ARCHIVE_NAME=$GLPI_PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
-          echo ${{env.ARCHIVE_NAME}}
-          echo $REPOSITORY_NAME
+        run: |
+          PLUGIN_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
+          echo "ARCHIVE_NAME=$PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
       - name: create-archive
         run: 
-          cd $REPOSITORY_NAME
-          tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+          tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ./ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
