@@ -10,12 +10,13 @@ jobs:
       - name: create-archive-name
         run: |
           PLUGIN_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
+          echo "PLUGIN_NAME=$PLUGIN_NAME" >> $GITHUB_ENV
           echo "ARCHIVE_NAME=$PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v3
       - name: create-archive
         run: |
-          pwd
-          tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+          echo $GLPI_PLUGIN_NAME
+          tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf "$ARCHIVE_NAME".tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
