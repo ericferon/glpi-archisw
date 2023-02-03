@@ -12,7 +12,9 @@ jobs:
           PLUGIN_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
           echo "ARCHIVE_NAME=$PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
       - name: create-archive
-        run: 
+        run: |
+          echo "plugin : ${{ env.PLUGIN_NAME }} - archive : ${{ env.ARCHIVE_NAME }}"
+          echo "workspace : ${{ env.GITHUB_WORKSPACE}}"
           tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ./ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
