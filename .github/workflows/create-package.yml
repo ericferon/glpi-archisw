@@ -14,8 +14,7 @@ jobs:
       - name: create-archive
         run: |
           pwd
-          cd ..
-          tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+          tar --show-transformed -zcvf ../archisw-v3.0.0.tar.gz ../ajax ../front ../inc ../locales ../sql ..swcomponent.png ../*.xml ../*.php  ../LICENSE ../README.md ../INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
