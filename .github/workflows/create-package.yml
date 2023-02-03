@@ -15,26 +15,28 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create Archive
         run: |
-          echo "$PLUGIN_NAME"
+          echo "${{ github.event.release }}"
           tar --transform "s%^%$PLUGIN_NAME/%" --show-transformed -zcvf "$ARCHIVE_NAME".tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: true
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: Release ${{ github.ref }}
+#          draft: true
+#          prerelease: true
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/release/"$ARCHIVE_NAME.tar.gz"
-          asset_name: "$ARCHIVE_NAME.tar.gz"
-          tag: ${{ github.ref }}
+          file: "$ARCHIVE_NAME.tar.gz"
+#          asset_name: "$ARCHIVE_NAME.tar.gz"
+          tag: v3.0.0 #${{ github.ref }}
           overwrite: true
+          prerelease: true
+          release_name: "GLPI 10.0 : stable version "
           body: "This is my release text"
 #            - name: upload-archive
 #               id: upload-archive
