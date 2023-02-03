@@ -9,12 +9,14 @@ jobs:
     steps:
       - name: create-archive-name
         run:
-          ARCHIVE_NAME=$(echo REPOSITORY_NAME | sed -e 's/^.*-//')
+          ARCHIVE_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
           echo "ARCHIVE_NAME=$GLPI_PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
           echo ${{env.ARCHIVE_NAME}}
-          echo $(pwd)
+          echo $REPOSITORY_NAME
       - name: create-archive
-        run: tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+        run: 
+          cd $REPOSITORY_NAME
+          tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
