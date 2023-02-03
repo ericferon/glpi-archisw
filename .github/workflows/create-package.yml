@@ -13,8 +13,7 @@ jobs:
           echo "ARCHIVE_NAME=$PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
       - name: create-archive
         run: |
-          echo ${{ env.GITHUB_WORKSPACE}}
-          cd ${{ env.GITHUB_WORKSPACE}}
+          pwd
           tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ./ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
