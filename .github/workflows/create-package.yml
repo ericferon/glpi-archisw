@@ -7,16 +7,35 @@ jobs:
       REPOSITORY_NAME: ${{ github.event.repository.name }}
       TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
-      - name: create-archive-name
+      - name: Create Archive Name
         run: |
           PLUGIN_NAME=$(echo $REPOSITORY_NAME | sed -e 's/^.*-//')
           echo "PLUGIN_NAME=$PLUGIN_NAME" >> $GITHUB_ENV
           echo "ARCHIVE_NAME=$PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v3
-      - name: create-archive
+      - name: Create Archive
         run: |
           echo "$PLUGIN_NAME"
           tar --transform "s%^%$PLUGIN_NAME/%" --show-transformed -zcvf "$ARCHIVE_NAME".tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: true
+          prerelease: true
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/release/"$ARCHIVE_NAME.tar.gz"
+          asset_name: "$ARCHIVE_NAME.tar.gz"
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "This is my release text"
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
