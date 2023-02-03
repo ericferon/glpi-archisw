@@ -1,0 +1,22 @@
+name: create-package
+on: [push]
+jobs:
+    create-package:
+        runs-on: ubuntu-latest
+        env:
+            GLPI_PLUGIN_NAME: archisw
+            TAG_NAME: ${{ github.event.release.tag_name }}
+            ARCHIVE_NAME: $GLPI_PLUGIN_NAME-$TAG_NAME
+        steps:
+            - name: create-archive
+                run: tar --transform "s%^%$GLPI_PLUGIN_NAME/%" --show-transformed -zcvf $GLPI_PLUGIN_NAME-$TAG_NAME.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+            - name: upload-archive
+                id: upload-archive
+                uses: actions/upload-release-asset@v1
+                with:
+                    upload_url: ${{ github.event.release.upload_url }}
+                    asset_path: ${{ env.ARCHIVE_NAME }}.tar.gz
+                    asset_name: ${{ env.ARCHIVE_NAME }}.tar.gz
+                    asset_content_type: application/gzip
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
