@@ -1,15 +1,19 @@
 name: create-package
 on: [push]
 jobs:
-    create-package:
-        runs-on: ubuntu-latest
-        env:
-            GLPI_PLUGIN_NAME: archisw
-            TAG_NAME: ${{ github.event.release.tag_name }}
-            ARCHIVE_NAME: $GLPI_PLUGIN_NAME-$TAG_NAME
-        steps:
-            - name: create-archive
-                run: tar --transform "s%^%archisw/%" --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
+  create-package:
+    runs-on: ubuntu-latest
+    env:
+      REPOSITORY_NAME: ${{ github.event.repository.name }}
+      TAG_NAME: ${{ github.event.release.tag_name }}
+    steps:
+      - name: create-archive-name
+        run:
+          ARCHIVE_NAME=$(echo REPOSITORY_NAME | sed -e 's/^.*-//')
+          echo "ARCHIVE_NAME=$GLPI_PLUGIN_NAME-$TAG_NAME" >> $GITHUB_ENV
+          echo ${{env.ARCHIVE_NAME}}
+      - name: create-archive
+        run: tar --show-transformed -zcvf archisw-v3.0.0.tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
 #            - name: upload-archive
 #               id: upload-archive
 #               uses: actions/upload-release-asset@v1
