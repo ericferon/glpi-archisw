@@ -285,13 +285,13 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $fieldquery = "SELECT * 
                 FROM `glpi_plugin_archisw_configs` 
                 WHERE `is_deleted` = 0 
-                ORDER BY `description`";
+                ORDER BY `id`";
       $fieldresult = $DB->query($fieldquery);
       $rowcount = $DB->numrows($fieldresult);
-      $tabid = 1;
+      $tabid = 1; // tabid 1 is used for name
       $tabtable = $this->getTable();
       while ($fielddata = $DB->fetchAssoc($fieldresult)) {
-         $tabid++;
+         $tabid = 1 + $fielddata['id'];
          $datatypeid = $fielddata['plugin_archisw_configdatatypes_id'];
          switch($datatypeid) {
             case 1: //Text
@@ -328,8 +328,9 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          }
       }
 
+      $tabid++;
       $tab[] = [
-         'id'            => '71',
+         'id'            => $tabid++,
          'table'         => 'glpi_plugin_archisw_swcomponents_items',
          'field'         => 'items_id',
          'nosearch'      => true,
@@ -342,7 +343,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
-         'id'            => '72',
+         'id'            => $tabid++,
          'table'         => $this->getTable(),
          'field'         => 'id',
          'name'          => __('ID'),
@@ -350,7 +351,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
-         'id'       => '80',
+         'id'       => $tabid++,
          'table'    => $this->getTable(),
          'field'    => 'completename',
          'name'     => __('Apps Structure','archisw'),
@@ -358,14 +359,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
-         'id'    => '81',
+         'id'    => $tabid++,
          'table' => 'glpi_entities',
          'field' => 'entities_id',
          'name'  => __('Entity') . "-" . __('ID')
       ];
 
       $tab[] = [
-         'id'                 => '100',
+         'id'                 => $tabid++,
          'table'        	  => 'glpi_projects',
          'field'              => 'name',
          'name'               => Project::getTypeName(2)." - ".__('Name'),
@@ -384,7 +385,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
-         'id'                 => '101',
+         'id'                 => $tabid++,
          'table'        	  => 'glpi_projecttasks',
          'field'              => 'name',
          'name'               => ProjectTask::getTypeName(2)." - ".__('Name'),

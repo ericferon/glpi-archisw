@@ -60,7 +60,7 @@ function plugin_archisw_install() {
    }
 
    // regenerate configured fields
-   $query = "SELECT `glpi_plugin_archisw_configlinks`.`name` as `classname`, 'is_entity_limited', 'is_tree_dropdown'
+   $query = "SELECT `glpi_plugin_archisw_configlinks`.`name` as `classname`, `is_entity_limited`, `is_tree_dropdown`
                FROM `glpi_plugin_archisw_configlinks` 
                JOIN `glpi_plugin_archisw_configs`  ON `glpi_plugin_archisw_configlinks`.`id` = `glpi_plugin_archisw_configs`.`plugin_archisw_configlinks_id` 
                WHERE `glpi_plugin_archisw_configlinks`.`name` like 'PluginArchisw%'";
