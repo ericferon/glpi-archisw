@@ -23,7 +23,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.ARCHIVE_NAME}}.tar.gz
 #          asset_name: "$ARCHIVE_NAME.tar.gz"
-          tag: v3.0.0 #${{ github.ref }}
+          tag: ${{ github.event.release.tag_name }}
           overwrite: true
           prerelease: true
           release_name: ${{github.event.release.name}}
