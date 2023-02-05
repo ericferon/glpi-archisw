@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REPOSITORY_NAME: ${{ github.event.repository.name }}
-      TAG_NAME: ${{ github.event.release.tag_name }}
+      TAG_NAME: $GITHUB_REF_NAME
+#      TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
       - name: Create archive name
         run: |
@@ -15,15 +16,17 @@ jobs:
       - name: Get files into context
         uses: actions/checkout@v3
       - name: Create archive
+        if: ${{env.TAG_NAME}} != ""
         run: |
           tar --transform "s%^%$PLUGIN_NAME/%" --show-transformed -zcvf "$ARCHIVE_NAME".tar.gz ajax front inc locales sql swcomponent.png *.xml *.php  LICENSE README.md INSTALL.md
       - name: Upload tarfile to release
+        if: ${{env.TAG_NAME}} != ""
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{env.ARCHIVE_NAME}}.tar.gz
 #          asset_name: "$ARCHIVE_NAME.tar.gz"
-          tag: ${{ github.event.release.tag_name }}
+          tag: $GITHUB_REF_NAME
           overwrite: true
           prerelease: true
           release_name: ${{github.event.release.name}}
