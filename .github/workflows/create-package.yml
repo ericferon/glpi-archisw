@@ -31,6 +31,6 @@ jobs:
 #          asset_name: "$ARCHIVE_NAME.tar.gz"
           tag: ${{env.TAG_NAME}}
           overwrite: true
-          prerelease: true
+          prerelease: false
           release_name: ${{github.event.release.name}}
           body: ${{github.event.release.body}}
