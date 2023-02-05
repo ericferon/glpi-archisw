@@ -1,7 +1,8 @@
 name: create-package
-on: [push]
-tags:
-  - 'v[0-9]+.[0-9]+.[0-9]+'
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
   create-package:
     runs-on: ubuntu-latest
