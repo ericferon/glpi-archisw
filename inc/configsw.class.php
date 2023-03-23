@@ -28,7 +28,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchiswConfig extends CommonDBTM {
+class PluginArchiswConfigsw extends CommonDBTM {
 
    public $dohistory=true;
    static $rightname = "plugin_archisw";
@@ -70,25 +70,25 @@ class PluginArchiswConfig extends CommonDBTM {
 
       $tab[] = [
          'id'       => '3',
-         'table'    => PluginArchiswConfigFieldgroup::getTable(),
+         'table'    => PluginArchiswConfigswFieldgroup::getTable(),
          'field'    => 'name',
-         'name'     => PluginArchiswConfigFieldgroup::getTypeName(1),
+         'name'     => PluginArchiswConfigswFieldgroup::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
       $tab[] = [
          'id'       => '4',
-         'table'    => PluginArchiswConfigDatatype::getTable(),
+         'table'    => PluginArchiswConfigswDatatype::getTable(),
          'field'    => 'name',
-         'name'     => PluginArchiswConfigDatatype::getTypeName(1),
+         'name'     => PluginArchiswConfigswDatatype::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
       $tab[] = [
          'id'       => '5',
-         'table'    => PluginArchiswConfigDbfieldtype::getTable(),
+         'table'    => PluginArchiswConfigswDbfieldtype::getTable(),
          'field'    => 'name',
-         'name'     => PluginArchiswConfigDbfieldtype::getTypeName(1),
+         'name'     => PluginArchiswConfigswDbfieldtype::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
@@ -110,9 +110,9 @@ class PluginArchiswConfig extends CommonDBTM {
 
       $tab[] = [
          'id'       => '12',
-         'table'    => PluginArchiswConfigHalign::getTable(),
+         'table'    => PluginArchiswConfigswHalign::getTable(),
          'field'    => 'name',
-         'name'     => PluginArchiswConfigHalign::getTypeName(1),
+         'name'     => PluginArchiswConfigswHalign::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
@@ -126,9 +126,9 @@ class PluginArchiswConfig extends CommonDBTM {
 
       $tab[] = [
          'id'       => '14',
-         'table'    => PluginArchiswConfigLink::getTable(),
+         'table'    => PluginArchiswConfigswLink::getTable(),
          'field'    => 'name',
-         'name'     => PluginArchiswConfigLink::getTypeName(1),
+         'name'     => PluginArchiswConfigswLink::getTypeName(1),
          'datatype' => 'dropdown'
       ];
 
@@ -195,7 +195,7 @@ class PluginArchiswConfig extends CommonDBTM {
       //field group
       echo "<td>".__('Field group', 'archisw').": </td>";
       echo "<td>";
-      Dropdown::show('PluginArchiswConfigFieldgroup', ['value' => $this->fields['plugin_archisw_configfieldgroups_id']]);
+      Dropdown::show('PluginArchiswConfigswFieldgroup', ['value' => $this->fields['plugin_archisw_configswfieldgroups_id']]);
       echo "</td>";
       //row
       echo "<td>".__('Row', 'archisw')."</td>";
@@ -205,7 +205,7 @@ class PluginArchiswConfig extends CommonDBTM {
       //horizontal alignment
       echo "<td>".__('Hor.alignment', 'archisw')."</td>";
       echo "<td>";
-      Dropdown::show('PluginArchiswConfigHalign', ['value' => $this->fields['plugin_archisw_confighaligns_id']]);
+      Dropdown::show('PluginArchiswConfigswHalign', ['value' => $this->fields['plugin_archisw_configswhaligns_id']]);
       echo "</td>";
 	  echo "</tr>";
 
@@ -213,12 +213,12 @@ class PluginArchiswConfig extends CommonDBTM {
       //db field type
       echo "<td>".__('DB Field Type', 'archisw').": </td>";
       echo "<td>";
-      Dropdown::show('PluginArchiswConfigDbfieldtype', ['value' => $this->fields['plugin_archisw_configdbfieldtypes_id']]);
+      Dropdown::show('PluginArchiswConfigswDbfieldtype', ['value' => $this->fields['plugin_archisw_configswdbfieldtypes_id']]);
       echo "</td>";
       //search datatype
       echo "<td>".__('Search Data Type', 'archisw').": </td>";
       echo "<td>";
-      Dropdown::show('PluginArchiswConfigDatatype', ['value' => $this->fields['plugin_archisw_configdatatypes_id']]);
+      Dropdown::show('PluginArchiswConfigswDatatype', ['value' => $this->fields['plugin_archisw_configswdatatypes_id']]);
       echo "</td>";
       //readonly
       echo "<td>".__('Is read-only ?', 'archisw').": </td>";
@@ -254,7 +254,7 @@ class PluginArchiswConfig extends CommonDBTM {
       //linked table
       echo "<td>".__('Linked class', 'archisw')."</td>";
       echo "<td>";
-      Dropdown::show('PluginArchiswConfigLink', ['value' => $this->fields['plugin_archisw_configlinks_id']]);
+      Dropdown::show('PluginArchiswConfigswLink', ['value' => $this->fields['plugin_archisw_configswlinks_id']]);
       echo "</td>";
       //link field
       echo "<td>".__('Linked by field', 'archisw')."</td>";

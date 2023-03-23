@@ -28,14 +28,14 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchiswConfigDatatype extends CommonDropdown {
+class PluginArchiswConfigswHalign extends CommonDropdown {
 
    static $rightname = "plugin_archisw";
    var $can_be_translated  = true;
    
    static function getTypeName($nb=0) {
 
-      return _n('Search datatype','Search datatypes',$nb);
+      return _n('Horizontal alignment','Horizontal alignments',$nb);
    }
 }
 

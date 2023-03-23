@@ -23,7 +23,7 @@
  along with Archisw. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-class PluginArchiswConfigMenu extends CommonGLPI {
+class PluginArchiswConfigswMenu extends CommonGLPI {
    static $rightname = 'plugin_archisw';
 
    static function getMenuName() {
@@ -35,10 +35,10 @@ class PluginArchiswConfigMenu extends CommonGLPI {
 
 		$menu                                           = [];
 		$menu['title']                                  = self::getMenuName();
-		$menu['page']                                   = "/".Plugin::getWebDir('archisw', false)."/front/config.php";
-		$menu['links']['search']                        = PluginArchiswConfig::getSearchURL(false);
-		if (PluginArchiswConfig::canCreate()) {
-			$menu['links']['add']                        = PluginArchiswConfig::getFormURL(false);
+		$menu['page']                                   = "/".Plugin::getWebDir('archisw', false)."/front/configsw.php";
+		$menu['links']['search']                        = PluginArchiswConfigsw::getSearchURL(false);
+		if (PluginArchiswConfigsw::canCreate()) {
+			$menu['links']['add']                        = PluginArchiswConfigsw::getFormURL(false);
 		}
 		$menu['icon'] = self::getIcon();
 
@@ -50,11 +50,11 @@ class PluginArchiswConfigMenu extends CommonGLPI {
 	}
 
    static function removeRightsFromSession() {
-      if (isset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigMenu'])) {
-         unset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigMenu']); 
+      if (isset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigswMenu'])) {
+         unset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigswMenu']); 
       }
-      if (isset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigmenu'])) {
-         unset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigmenu']); 
+      if (isset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigswmenu'])) {
+         unset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigswmenu']); 
       }
    }
 }

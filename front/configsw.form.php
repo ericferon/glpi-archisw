@@ -27,7 +27,7 @@
 
 include ("../../../inc/includes.php");
 
-$config = new PluginArchiswConfig();
+$config = new PluginArchiswConfigsw();
 
 if (isset($_POST["add"])) {
 
@@ -62,10 +62,9 @@ if (isset($_POST["add"])) {
    Html::back();
 } else {
 
-print_r($config->checkGlobal(READ));
    $config->checkGlobal(READ);
 
-   Html::header(PluginArchiswConfig::getTypeName(2), '', "config", "pluginarchiswconfigmenu");
+   Html::header(PluginArchiswConfigsw::getTypeName(2), '', "config", "pluginarchiswconfigswmenu");
    $config->display($_GET);
 
    Html::footer();

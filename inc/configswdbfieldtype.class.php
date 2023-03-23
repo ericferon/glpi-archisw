@@ -28,7 +28,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchiswConfigDbfieldtype extends CommonDropdown {
+class PluginArchiswConfigswDbfieldtype extends CommonDropdown {
 
    static $rightname = "plugin_archisw";
    var $can_be_translated  = true;

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Archisw 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 18:01+0100\n"
-"PO-Revision-Date: 2023-01-16 18:14+0100\n"
+"POT-Creation-Date: 2023-03-23 15:29+0100\n"
+"PO-Revision-Date: 2023-03-23 15:35+0100\n"
 "Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
 "Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
 "Language: fr\n"
@@ -46,7 +46,7 @@ msgstr[1] "Structures d'Applications associées"
 #: inc/swcomponent.class.php:41 inc/swcomponent.class.php:190
 #: inc/swcomponent.class.php:63 inc/swcomponent.class.php:219
 #: inc/swcomponent.class.php:391 inc/swcomponent.class.php:271
-#: inc/swcomponent.class.php:355
+#: inc/swcomponent.class.php:355 inc/swcomponent.class.php:356
 msgid "Apps Structure"
 msgid_plural "Apps Structures"
 msgstr[0] "Structure d'Application"
@@ -62,9 +62,13 @@ msgstr[1] "Structures d'Applications"
 #. completename of swcomponent
 #. Parent of swcomponent
 #: inc/swcomponent.class.php:252 inc/swcomponent.class.php:458
-#: inc/swcomponent.class.php:349
+#: inc/swcomponent.class.php:349 inc/swcomponent.class.php:459
 msgid "As child of"
 msgstr "Comme enfant de"
+
+#: inc/configswlink.class.php:63 inc/configswlink.class.php:99
+msgid "As view on table"
+msgstr "Comme vue sur une table"
 
 #: inc/profile.class.php:125 inc/profile.class.php:153
 #: inc/profile.class.php:158
@@ -82,7 +86,7 @@ msgctxt "button"
 msgid "Associate an "
 msgstr "Associer un "
 
-#: hook.php:346 hook.php:361
+#: hook.php:346 hook.php:361 hook.php:401
 #, fuzzy
 msgid "Associate to the Apps Structure"
 msgstr "Associer à une Structure d'Application"
@@ -98,6 +102,7 @@ msgid "Comment"
 msgstr "Commentaire"
 
 #: inc/swcomponent.class.php:711 inc/swcomponent.class.php:1133
+#: inc/swcomponent.class.php:1135
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -119,7 +124,7 @@ msgstr "Mainteneur du Composant"
 msgid "Component Owner"
 msgstr "Propriétaire du Composant"
 
-#: inc/config.class.php:39
+#: inc/config.class.php:39 inc/configsw.class.php:39
 msgid "Config"
 msgstr "Config"
 
@@ -132,7 +137,7 @@ msgid "Create"
 msgstr "Créer"
 
 #. db field type
-#: inc/config.class.php:198
+#: inc/config.class.php:198 inc/configsw.class.php:214
 msgid "DB Field Type"
 msgstr "Type de champ Base de Données"
 
@@ -158,7 +163,8 @@ msgstr "Bases de Données"
 
 #. name
 #: inc/swcomponent.class.php:157 inc/swcomponent.class.php:369
-#: inc/config.class.php:99 inc/config.class.php:172
+#: inc/config.class.php:99 inc/config.class.php:172 inc/configsw.class.php:99
+#: inc/configsw.class.php:188
 msgid "Description"
 msgstr "Description"
 
@@ -188,17 +194,19 @@ msgstr "Editeur"
 #: inc/swcomponent.class.php:279 inc/swcomponent.class.php:708
 #: inc/swcomponent_item.class.php:294 inc/swcomponent_item.class.php:531
 #: inc/swcomponent.class.php:363 inc/swcomponent.class.php:1130
-#: inc/swcomponent_item.class.php:529
+#: inc/swcomponent_item.class.php:529 inc/swcomponent.class.php:364
+#: inc/swcomponent.class.php:1132
 msgid "Entity"
 msgstr "Entité"
 
 #. field group
-#: inc/config.class.php:180
+#: inc/config.class.php:180 inc/configsw.class.php:196
 msgid "Field group"
 msgstr "Groupe de champs"
 
 #. forcegroupby
-#: inc/config.class.php:226
+#: inc/config.class.php:226 inc/configsw.class.php:147
+#: inc/configsw.class.php:242
 msgid "Force group by ?"
 msgstr "Forcer le regroupement ?"
 
@@ -207,6 +215,7 @@ msgid "General"
 msgstr "Général"
 
 #: inc/configlink.class.php:45 inc/configlink.class.php:62
+#: inc/configswlink.class.php:45 inc/configswlink.class.php:81
 msgid "Has own dropdown"
 msgstr "A sa propre liste déroulante"
 
@@ -215,13 +224,14 @@ msgid "Helpdesk"
 msgstr "Support"
 
 #. horizontal alignment
-#: inc/config.class.php:190
+#: inc/config.class.php:190 inc/configsw.class.php:206
 msgid "Hor.alignment"
 msgstr "Alignement horizontal"
 
 #: inc/swcomponent.class.php:263 inc/swcomponent.class.php:279
 #: inc/config.class.php:139 inc/swcomponent.class.php:347
-#: inc/swcomponent.class.php:363
+#: inc/swcomponent.class.php:363 inc/configsw.class.php:155
+#: inc/swcomponent.class.php:348 inc/swcomponent.class.php:364
 msgid "ID"
 msgstr "ID"
 
@@ -243,30 +253,36 @@ msgstr[1] "Instances"
 msgid "Instances"
 msgstr "Instances"
 
+#: inc/configswlink.class.php:57 inc/configswlink.class.php:93
+msgid "Is hierarchical dropdown"
+msgstr "Est une liste hiérarchique"
+
 #: inc/configlink.class.php:51 inc/configlink.class.php:67
+#: inc/configswlink.class.php:51 inc/configswlink.class.php:87
 msgid "Is limited by entity"
 msgstr "Est limité par enité"
 
-#: inc/config.class.php:123
+#: inc/config.class.php:123 inc/configsw.class.php:123
 msgid "Is linked to another class"
 msgstr "Est lié à une autre classe"
 
 #. islinked
-#: inc/config.class.php:234
+#: inc/config.class.php:234 inc/configsw.class.php:250
 msgid "Is linked to another class ?"
 msgstr "Est lié à une autre classe ?"
 
 #. readonly
-#: inc/config.class.php:208
+#: inc/config.class.php:208 inc/configsw.class.php:224
 msgid "Is read-only ?"
 msgstr "Est en lecture seule ?"
 
 #: inc/configfieldgroup.class.php:52 inc/configfieldgroup.class.php:69
+#: inc/configswfieldgroup.class.php:52 inc/configswfieldgroup.class.php:71
 msgid "Is visible on opening"
 msgstr "Est visible à l'ouverture"
 
 #. join parameters
-#: inc/config.class.php:252
+#: inc/config.class.php:252 inc/configsw.class.php:268
 msgid "Join parameters"
 msgstr "Paramètres de jointure"
 
@@ -296,12 +312,12 @@ msgstr[0] "Rôle du lien"
 msgstr[1] "Rôles du lien"
 
 #. link field
-#: inc/config.class.php:244
+#: inc/config.class.php:244 inc/configsw.class.php:260
 msgid "Linked by field"
 msgstr "Lié par le champ"
 
 #. linked table
-#: inc/config.class.php:239
+#: inc/config.class.php:239 inc/configsw.class.php:255
 msgid "Linked class"
 msgstr "Classe liée"
 
@@ -311,10 +327,14 @@ msgid "Location"
 msgstr "Emplacement"
 
 #. massiveaction
-#: inc/config.class.php:221
+#: inc/config.class.php:221 inc/configsw.class.php:139
+#: inc/configsw.class.php:237
 msgid "Massive action allowed ?"
 msgstr "Action en masse permise ?"
 
+#. Name of SwComponent
+#. name
+#. echo "<th rowspan=3></th>";
 #. Name of SwComponent
 #. name
 #. echo "<th rowspan=3></th>";
@@ -326,7 +346,10 @@ msgstr "Action en masse permise ?"
 #: inc/config.class.php:163 inc/swcomponent.class.php:121
 #: inc/swcomponent.class.php:370 inc/swcomponent.class.php:389
 #: inc/swcomponent.class.php:452 inc/swcomponent.class.php:1128
-#: inc/swcomponent_item.class.php:527
+#: inc/swcomponent_item.class.php:527 hook.php:284 inc/configsw.class.php:65
+#: inc/configsw.class.php:179 inc/swcomponent.class.php:371
+#: inc/swcomponent.class.php:390 inc/swcomponent.class.php:453
+#: inc/swcomponent.class.php:1130
 msgid "Name"
 msgstr "Nom"
 
@@ -342,17 +365,18 @@ msgid "Role"
 msgstr "Rôle"
 
 #. row
-#: inc/config.class.php:107 inc/config.class.php:185
+#: inc/config.class.php:107 inc/config.class.php:185 inc/configsw.class.php:107
+#: inc/configsw.class.php:201
 msgid "Row"
 msgstr "Ligne"
 
 #. search datatype
-#: inc/config.class.php:203
+#: inc/config.class.php:203 inc/configsw.class.php:219
 msgid "Search Data Type"
 msgstr "Type de donnée Recherche"
 
 #. nosearch
-#: inc/config.class.php:216
+#: inc/config.class.php:216 inc/configsw.class.php:232
 msgid "Search allowed ?"
 msgstr "Recherche permise ?"
 
@@ -375,9 +399,9 @@ msgid "Short code"
 msgstr "Abréviation"
 
 #: inc/configfieldgroup.class.php:46 inc/configfieldgroup.class.php:64
-#, fuzzy
+#: inc/configswfieldgroup.class.php:46 inc/configswfieldgroup.class.php:65
 msgid "Sort order"
-msgstr "Abréviation"
+msgstr "Séquence de tri"
 
 #: inc/swcomponent.class.php:505
 msgid "Source Repository"
@@ -425,6 +449,7 @@ msgid "This plugin requires GLPI >= 9.2 and < 9.3"
 msgstr ""
 
 #: inc/swcomponent.class.php:756 inc/swcomponent.class.php:1178
+#: inc/swcomponent.class.php:1180
 msgid "Transfer"
 msgstr "Transfert"
 
@@ -433,6 +458,7 @@ msgstr "Transfert"
 #: inc/swcomponent.class.php:710 inc/swcomponent_item.class.php:289
 #: inc/swcomponent_item.class.php:534 inc/swcomponent_itemrole.class.php:60
 #: inc/swcomponent.class.php:1132 inc/swcomponent_item.class.php:532
+#: inc/swcomponent.class.php:1134
 msgid "Type"
 msgstr "Type"
 
@@ -462,3 +488,7 @@ msgstr "Mise à jour"
 #: inc/swcomponent.class.php:334
 msgid "Version"
 msgstr "Version"
+
+#: inc/configswlink.class.php:69
+msgid "View limited by WHERE clause"
+msgstr "Vue limitée par la clause WHERE"

@@ -28,7 +28,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchiswConfigFieldgroup extends CommonDropdown {
+class PluginArchiswConfigswFieldgroup extends CommonDropdown {
 
    static $rightname = "plugin_archisw";
    var $can_be_translated  = true;
@@ -55,15 +55,17 @@ class PluginArchiswConfigFieldgroup extends CommonDropdown {
 		];
    }
    
-   function getSearchOptions() {
-	  $opt = CommonDropdown::getSearchOptions();
+   function rawSearchOptions() {
+	  $opt = CommonDropdown::rawSearchOptions();
 //      $sopt['common'] = __("App structures", "archisw");
 
+      $opt[2400]['id']          = 2400;
       $opt[2400]['table']       = $this->getTable();
       $opt[2400]['field']       = 'sortorder';
       $opt[2400]['name']        = __('Sort order', 'archisw');
       $opt[2400]['datatype']    = 'text';
 
+      $opt[2401]['id']          = 2401;
       $opt[2401]['table']       = $this->getTable();
       $opt[2401]['field']       = 'is_visible';
       $opt[2401]['name']        = __('Is visible on opening', 'archisw');

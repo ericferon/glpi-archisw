@@ -2,7 +2,7 @@
 /*
  -------------------------------------------------------------------------
  Archisw plugin for GLPI
- Copyright (C) 2009-2018 by Eric Feron.
+ Copyright (C) 2009-2023 by Eric Feron.
  -------------------------------------------------------------------------
 
  LICENSE
@@ -23,34 +23,9 @@
  along with Archisw. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-
-if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
-}
-
-// Class for a Dropdown
-class PluginArchiswSwcomponentType extends CommonTreeDropdown {
-
-   static $rightname = "plugin_archisw";
-   var $can_be_translated  = true;
-   
-   static function getTypeName($nb=0) {
-
-      return _n('Type','Types',$nb);
-   }
-   /**
-    * @return array
-    */
-/*   function getAdditionalFields()
-   {
-
-      return [
-        ['name' => $this->getForeignKeyField(),
-         'label' => __('As child of'),
-         'type' => 'parent',
-         'list'  => false]
-	  ];
-   }*/
-}
-
-?>
+      if (!defined('GLPI_ROOT')) {
+         die('Sorry. You cannott access directly to this file');
+      }
+      class PluginArchiswSwcomponentType extends CommonDropdown {
+      }
+      ?>

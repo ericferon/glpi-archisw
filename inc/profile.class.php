@@ -147,7 +147,7 @@ class PluginArchiswProfile extends Profile {
                 'field'     => 'plugin_archisw'
           ],
           ['rights'    => [READ => __('Read'), CREATE => __('Create'), UPDATE => __('Update')],
-                'itemtype'  => 'PluginArchiswConfig',
+                'itemtype'  => 'PluginArchiswConfigsw',
                 'label'     => __('Configuration', 'archisw'),
                 'field'     => 'plugin_archisw_configuration']
 

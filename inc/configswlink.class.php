@@ -28,7 +28,7 @@ if (!defined('GLPI_ROOT')) {
 	die("Sorry. You can't access directly to this file");
 }
 
-class PluginArchiswConfigLink extends CommonDropdown {
+class PluginArchiswConfigswLink extends CommonDropdown {
 
    static $rightname = "plugin_archisw";
    var $can_be_translated  = true;
@@ -56,6 +56,18 @@ class PluginArchiswConfigLink extends CommonDropdown {
                   'type'      => 'bool',
                   'label'     => __('Is hierarchical dropdown', 'archisw'),
                   'list'      => false
+            ],
+            [
+                  'name'      => 'as_view_on',
+                  'type'      => 'text',
+                  'label'     => __('As view on table', 'archisw'),
+                  'list'      => false
+            ],
+            [
+                  'name'      => 'viewlimit',
+                  'type'      => 'text',
+                  'label'     => __('View limited by WHERE clause', 'archisw'),
+                  'list'      => false
             ]
 		];
    }
@@ -63,20 +75,29 @@ class PluginArchiswConfigLink extends CommonDropdown {
 	  $opt = CommonDropdown::getSearchOptions();
 //      $sopt['common'] = __("App structures", "archisw");
 
+      $opt[2400]['id']          = 2400;
       $opt[2400]['table']       = $this->getTable();
       $opt[2400]['field']       = 'has_dropdown';
       $opt[2400]['name']        = __('Has own dropdown', 'archisw');
       $opt[2400]['datatype']    = 'boolean';
 
+      $opt[2401]['id']          = 2401;
       $opt[2401]['table']       = $this->getTable();
       $opt[2401]['field']       = 'is_entity_limited';
       $opt[2401]['name']        = __('Is limited by entity', 'archisw');
       $opt[2401]['datatype']    = 'boolean';
 
+      $opt[2402]['id']          = 2402;
       $opt[2402]['table']       = $this->getTable();
       $opt[2402]['field']       = 'is_tree_dropdown';
       $opt[2402]['name']        = __('Is hierarchical dropdown', 'archisw');
       $opt[2402]['datatype']    = 'boolean';
+
+      $opt[2403]['id']          = 2403;
+      $opt[2403]['table']       = $this->getTable();
+      $opt[2403]['field']       = 'as_view_on';
+      $opt[2403]['name']        = __('As view on table', 'archisw');
+      $opt[2403]['datatype']    = 'text';
 
       return $opt;
    }

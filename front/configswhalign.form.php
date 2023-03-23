@@ -26,7 +26,7 @@
 
 include ('../../../inc/includes.php');
 
-$dropdown = new PluginArchiswConfigFieldgroup();
-include (GLPI_ROOT . "/front/dropdown.common.php");
+$dropdown = new PluginArchiswConfigswHalign();
+include (GLPI_ROOT . "/front/dropdown.common.form.php");
 
 ?>
