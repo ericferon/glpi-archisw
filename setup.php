@@ -51,23 +51,23 @@ function plugin_init_archisw() {
    //Plugin::registerClass('PluginDatabasesDatabase_Item',
    //                      array('ticket_types' => true));
 
-   // Add links to other plugins
+   // Register generic objects from genericobject plugin
    $plugin = new Plugin();
-   $types = ['PluginArchimapGraph'];
-   $associatedtypes = ['PluginDatabasesDatabase',
-                     'PluginArchiswSwcomponent'];
-   if ($plugin->isActivated('genericobject') && class_exists('PluginGenericobjectObject')) {
+   if ($plugin->isActivated('genericobject')) {
       $query = "SELECT itemtype FROM `glpi_plugin_genericobject_types` WHERE `is_active` = TRUE";
       $result = $DB->query($query);
       $rowcount = $DB->numrows($result);
       if ($rowcount > 0) {
          while ($data = $DB->fetchAssoc($result)) {
-            $types[] = $data['itemtype'];
-            $associatedtypes[] = $data['itemtype'];
+            PluginArchiswSwcomponent::registerType($data['itemtype']);
          }
       }
    }
-   foreach ($types as $itemtype) {
+   // Add links to other plugins
+   $types = ['PluginArchimapGraph'];
+   $associatedtypes = ['PluginDatabasesDatabase',
+                     'PluginArchiswSwcomponent'];
+  foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
          $itemtype::registerType('PluginArchiswSwcomponent');
          PluginArchiswSwcomponent::registerType($itemtype);
@@ -129,7 +129,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.2',
+      'version' => '3.0.3',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',

@@ -352,8 +352,8 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                      if ($_SESSION["glpiis_ids_visible"]||empty($data["name"]))
                         $ID= " (".$data["id"].")";
 
-                     $link=Toolbox::getItemTypeFormURL($itemType);
-                     $name= "<a href=\"".$link."?id=".$data["id"]."\">"
+                     $link=PluginArchiswSwcomponent_Item::getItemTypeFormURL($itemType);
+                     $name= "<a href=\"".$link."id=".$data["id"]."\">"
                         .$data["name"]."$ID</a>";
 
                      echo "<tr class='tab_bg_1'>";
@@ -392,7 +392,38 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       echo "</div>";
    }
 
-   /**
+    /**
+     * Get form URL for itemtype
+     *
+     * @param string  $itemtype  item type
+     * @param boolean $full      path or relative one
+     *
+     * return string itemtype Form URL
+     **/
+    public static function getItemTypeFormURL($itemtype, $full = true)
+    {
+        global $CFG_GLPI;
+
+        $dir = ($full ? $CFG_GLPI['root_doc'] : '');
+
+        if ($plug = isPluginItemType($itemtype)) {
+           /* PluginFooBar => /plugins/foo/front/bar */
+            $dir .= Plugin::getPhpDir(strtolower($plug['plugin']), false);
+            $item = str_replace('\\', '/', strtolower($plug['class']));
+        } else { // Standard case
+            $item = strtolower($itemtype);
+            if (substr($itemtype, 0, \strlen(NS_GLPI)) === NS_GLPI) {
+                $item = str_replace('\\', '/', substr($item, \strlen(NS_GLPI)));
+            }
+        }
+
+        if (substr($itemtype, 0, 19) == 'PluginGenericobject')
+         return "$dir/front/object.form.php?itemtype=$itemtype&";
+        else 
+         return "$dir/front/$item.form.php?";
+    }
+
+/**
    * Show swcomponents associated to an item
    *
    * @since version 0.84
