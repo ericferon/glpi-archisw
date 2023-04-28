@@ -50,11 +50,11 @@ class PluginArchiswConfigswMenu extends CommonGLPI {
 	}
 
    static function removeRightsFromSession() {
-      if (isset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigswMenu'])) {
-         unset($_SESSION['glpimenu']['config']['types']['PluginArchiswConfigswMenu']); 
+      if (isset($_SESSION['glpimenu']['configsw']['types']['PluginArchiswConfigswMenu'])) {
+         unset($_SESSION['glpimenu']['configsw']['types']['PluginArchiswConfigswMenu']); 
       }
-      if (isset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigswmenu'])) {
-         unset($_SESSION['glpimenu']['config']['content']['pluginarchiswconfigswmenu']); 
+      if (isset($_SESSION['glpimenu']['configsw']['content']['pluginarchiswconfigswmenu'])) {
+         unset($_SESSION['glpimenu']['configsw']['content']['pluginarchiswconfigswmenu']); 
       }
    }
 }
