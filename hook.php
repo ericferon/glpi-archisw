@@ -466,7 +466,7 @@ function hook_pre_item_add_archisw_configswlink(CommonDBTM $item) {
    $newistreedropdown = $item->input['is_tree_dropdown'];
    $newisentitylimited = $item->input['is_entity_limited'];
    $newasviewon = $item->input['as_view_on'];
-   $newviewlimit = $item->input['viewlimit'];
+   $newviewlimit = str_replace("\'", "'", $item->input['viewlimit']); // unescape single quotes
   if (substr($newclassname, 0, 13) == 'PluginArchisw') {
       $rootname = strtolower(substr($newclassname, 13));
       $tablename = 'glpi_plugin_archisw_'.getPlural($rootname);
@@ -474,8 +474,15 @@ function hook_pre_item_add_archisw_configswlink(CommonDBTM $item) {
       if (!empty($newasviewon)) {
          $entities = ($newisentitylimited?" `entities_id`,":"");
          $name = ($newistreedropdown?" `completename`,":" `name`,");
-         $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
+         if (!$newistreedropdown) {
+            // new simple dropdown view
+            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
                   SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+         } 
+         else { // new treedropdon view
+            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                  SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+         }
          $result = $DB->query($query);
       }
       else {
@@ -519,7 +526,7 @@ function hook_pre_item_update_archisw_configswlink(CommonDBTM $item) {
    $newclassname = $item->input['name'];
    $newistreedropdown = $item->input['is_tree_dropdown'];
    $newasviewon = $item->input['as_view_on'];
-   $newviewlimit = $item->input['viewlimit'];
+   $newviewlimit = str_replace("\'", "'", $item->input['viewlimit']); // unescape single quotes
    $oldclassname = $item->fields['name'];
    $oldistreedropdown = $item->fields['is_tree_dropdown'];
    $oldasviewon = $item->fields['as_view_on'];
@@ -547,8 +554,15 @@ function hook_pre_item_update_archisw_configswlink(CommonDBTM $item) {
             if (!empty($newasviewon)) {
                $entities = ($newisentitylimited?" `entities_id`,":"");
                $name = ($newistreedropdown?" `completename`,":" `name`,");
-               $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`) AS 
+               if (!$newistreedropdown) {
+                  // new simple dropdown view
+                  $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`) AS 
                         SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+               } 
+               else { // new treedropdon view
+                  $query = "CREATE OR REPLACE VIEW `$newtablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                        SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+               }
                $result = $DB->query($query);
             }
             else {
@@ -593,8 +607,15 @@ function hook_pre_item_update_archisw_configswlink(CommonDBTM $item) {
          if (!empty($newasviewon)) {
             $entities = ($newisentitylimited?" `entities_id`,":"");
             $name = ($newistreedropdown?" `completename`,":" `name`,");
-            $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
+            if (!$newistreedropdown) {
+               // new simple dropdown view
+               $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`) AS 
                   SELECT `id`,$entities `name`, `comment` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+            } 
+            else { // new treedropdon view
+               $query = "CREATE VIEW `$tablename` (`id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive`) AS 
+                  SELECT `id`,$entities `name`, `comment`, `completename`, `level`, `is_recursive` FROM $newasviewon".(empty($newviewlimit)?"":" WHERE $newviewlimit");
+            }
             $result = $DB->query($query);
          }
          else {
@@ -657,12 +678,19 @@ function hook_pre_item_purge_archisw_configswlink(CommonDBTM $item) {
    global $DB;
    $dir = Plugin::getPhpDir("archisw", true);
    $oldclassname = $item->fields['name'];
-   $oldfilename = strtolower(substr($oldclassname, 13));
+   $oldasviewon = $item->fields['as_view_on'];
+   $oldrootname = strtolower(substr($oldclassname, 13));
+   $oldfilename = $oldrootname;
    $oldid = $item->fields['id'];
    // suppress in glpi_plugin_archisw_configsws
    $query = "UPDATE `glpi_plugin_archisw_configsws` SET `plugin_archisw_configswlinks_id` = 0 WHERE `plugin_archisw_configswlinks_id` = '".$oldid."'";
    $result = $DB->query($query);
    if (substr($oldclassname, 0, 13) == 'PluginArchisw') {
+      $oldtablename = 'glpi_plugin_archisw_'.getPlural($oldrootname);
+      $oldfieldname = 'plugin_archisw_'.getPlural($oldrootname).'_id';
+      $tableorview = empty($oldasviewon)?"TABLE":"VIEW";
+      $query = "DROP $tableorview IF EXISTS `".$oldtablename."`";
+      $result = $DB->query($query);
       // delete files in inc and front directories
       if (file_exists($dir.'/inc/'.$oldfilename.'.class.php')) 
          unlink($dir.'/inc/'.$oldfilename.'.class.php');

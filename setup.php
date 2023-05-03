@@ -129,7 +129,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.5',
+      'version' => '3.0.6',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -195,7 +195,7 @@ function hook_pre_item_update_archisw_configsw(CommonDBTM $item) {
    if ($dbfield->getFromDB($item->fields['plugin_archisw_configswdbfieldtypes_id'])) {
       $fieldtype = $dbfield->fields['name'];
       if ($oldfieldname != $newfieldname) {
-         $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` RENAME COLUMN $oldfieldname TO $newfieldname ";
+         $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` CHANGE COLUMN $oldfieldname $newfieldname ";
          $result = $DB->query($query);
       }
       $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` MODIFY $newfieldname $fieldtype";
@@ -207,12 +207,14 @@ function hook_pre_item_update_archisw_configsw(CommonDBTM $item) {
 function hook_pre_item_purge_archisw_configsw(CommonDBTM $item) {
    global $DB;
    $fieldname = $item->fields['name'];
+   $asviewon = $item->fields['as_view_on'];
    $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` DROP COLUMN $fieldname";
    $result = $DB->query($query);
    $rowcount = $DB->numrows($fieldresult);
    $tablename = 'glpi_'.substr($fieldname, 0, -3);
    if ($item->fields['plugin_archisw_configswdatatypes_id'] == 6 && substr($tablename, 0, 20) == 'glpi_plugin_archisw_') { //dropdown->drop table
-         $query = "DROP TABLE IF EXISTS `".$tablename."`";
+         $tableorview = empty($asviewon)?"TABLE":"VIEW";
+         $query = "DROP $tableorview IF EXISTS `".$tablename."`";
          $result = $DB->query($query);
          $classname = 'PluginArchisw'.ucfirst(DbUtils::getSingular(substr($fieldname, 15, -3))); //cut ending '_id' and get singular form of word
          $query = "DELETE FROM `glpi_plugin_archisw_configswlinks` WHERE `name` = '".$classname."'";
