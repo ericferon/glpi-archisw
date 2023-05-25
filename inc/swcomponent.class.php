@@ -711,7 +711,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $fieldname = $fielddata['name'];
       $fielddescription = $fielddata['description'];
       $fieldreadonly = $fielddata['is_readonly']?'true':'false';
-      $fieldtype = $fielddata['plugin_dataflows_configdfhaligns_id'];
+      $fieldtype = $fielddata['plugin_archisw_configswhaligns_id'];
       $fieldhalign = ($fieldtype == '7') ? "class='alignright'":"";
       $params = [];
       $params['value'] = $this->fields[$fieldname];
