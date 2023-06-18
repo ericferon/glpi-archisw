@@ -24,7 +24,7 @@
  --------------------------------------------------------------------------
  */
 class PluginArchiswConfigswMenu extends CommonGLPI {
-   static $rightname = 'plugin_archisw';
+   static $rightname = 'plugin_archisw_configuration';
 
    static function getMenuName() {
       return _n('Apps structure configuration', 'Apps structures configuration', 2, 'archisw');

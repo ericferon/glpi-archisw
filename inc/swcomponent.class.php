@@ -756,6 +756,9 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             if ($linktable[$fielddata['plugin_archisw_configswlinks_id']]['is_entity_limited']) {
                $params['entity'] = $this->fields["entities_id"];
             }
+            if ($linktable[$fielddata['plugin_archisw_configswlinks_id']]['name'] == 'User') {
+               $params['right'] = 'interface';
+            }
             echo "<td $fieldhalign>".__($fielddescription, 'archisw')."</td>";
             echo "<td colspan='".$colspan."'>";
             if ($linktable[$fielddata['plugin_archisw_configswlinks_id']]['has_dropdown']) {

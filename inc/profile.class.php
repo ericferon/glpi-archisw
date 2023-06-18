@@ -150,7 +150,6 @@ class PluginArchiswProfile extends Profile {
                 'itemtype'  => 'PluginArchiswConfigsw',
                 'label'     => __('Configuration', 'archisw'),
                 'field'     => 'plugin_archisw_configuration']
-
       ];
 
       if ($all) {

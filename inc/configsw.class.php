@@ -31,20 +31,12 @@ if (!defined('GLPI_ROOT')) {
 class PluginArchiswConfigsw extends CommonDBTM {
 
    public $dohistory=true;
-   static $rightname = "plugin_archisw";
+   static $rightname = "plugin_archisw_configuration";
    protected $usenotepad         = true;
    
    static function getTypeName($nb=0) {
 
-      return __('Config', 'archisw');
-   }
-
-   public static function canCreate() {
-      return Session::haveRight(static::$rightname, UPDATE);
-   }
-
-   public static function canView() {
-      return Session::haveRight(static::$rightname, READ);
+      return __('Apps Config', 'archisw');
    }
 
    // search fields from GLPI 9.3 on
@@ -179,7 +171,7 @@ class PluginArchiswConfigsw extends CommonDBTM {
       echo "<td>".__('Name')."</td>";
       echo "<td>";
       echo Html::input('name',['value' => $this->fields['name'], 'id' => "name" , 'width' => '100%']);
-      echo Html::showToolTip("A name must be lowercase, start with a letter, contain only letters, numbers or underscores.<br/>If the field is a dropdown, the name must end with '_id', otherwise it may not end with '_id'.<br/>Some words are reserved : name, completename, id, date_mod, is_recursive, entities_id, is_deleted, ancestors_cache, sons_cache.",['applyto' => 'name']);
+      echo Html::showToolTip("A name must be lowercase, start with a letter, contain only letters, numbers or underscores.<br/>If the field is a dropdown, the name must end with 's_id', otherwise it may not end with 's_id'.<br/>Some words are reserved : name, completename, id, date_mod, is_recursive, entities_id, is_deleted, ancestors_cache, sons_cache.",['applyto' => 'name']);
       echo "</td>";
       //skip 2nd column
       echo "<td></td>";

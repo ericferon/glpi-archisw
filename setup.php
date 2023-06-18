@@ -93,7 +93,12 @@ function plugin_init_archisw() {
 
       if (Session::haveRight("plugin_archisw", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archisw'] = ['assets'   => 'PluginArchiswMenu', "config" => 'PluginArchiswConfigswMenu'];
+         $PLUGIN_HOOKS['menu_toadd']['archisw']['assets'] = 'PluginArchiswMenu';
+      }
+
+      if (Session::haveRight("plugin_archisw_configuration", READ)) {
+
+         $PLUGIN_HOOKS['menu_toadd']['archisw']["config"] = 'PluginArchiswConfigswMenu';
       }
 
       if (Session::haveRight("plugin_archisw", READ)
@@ -129,7 +134,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.7',
+      'version' => '3.0.8',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
