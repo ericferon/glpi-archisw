@@ -123,15 +123,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'itemlink_type' => $this->getType()
       ];
 
-      $tab[] = [
-         'id'            => '900',
-         'table'         => $this->getTable(),
-         'field'         => 'date_mod',
-         'massiveaction' => false,
-         'name'          => __('Last update'),
-         'datatype'      => 'datetime'
-      ];
-
 /*      $tab[] = [
          'id'       => '2',
          'table'    => 'glpi_plugin_archisw_swcomponenttypes',
@@ -311,6 +302,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                ];
                break;
             case 6: //Dropdown
+            case 9: //TreeDropdown
                $linktableid = $fielddata['plugin_archisw_configswlinks_id'];
                $itemtype = $linktable[$linktableid]['name'];
                $tablename = $this->getTable($itemtype);
@@ -319,7 +311,9 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
                   'table'    => $tablename,
                   'field'    => 'name',
                   'name'     => __($fielddata['description'],'archisw'),
-                  'datatype' => $datatypetable[$datatypeid]['name']
+                  'datatype' => $datatypetable[$datatypeid]['name'],
+                  'massiveaction' => $fielddata['massiveaction'],
+                  'nosearch' => $fielddata['nosearch']
                ];
                break;
             case 7: //Itemlink
@@ -328,6 +322,15 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       }
 
       $tabid++;
+      $tab[] = [
+         'id'            => $tabid++,
+         'table'         => $this->getTable(),
+         'field'         => 'date_mod',
+         'massiveaction' => false,
+         'name'          => __('Last update'),
+         'datatype'      => 'datetime'
+      ];
+
       $tab[] = [
          'id'            => $tabid++,
          'table'         => 'glpi_plugin_archisw_swcomponents_items',
@@ -752,7 +755,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             echo "</td>";
             break;
          case 6: //Dropdown
-         case 9: //Dropdown
+         case 9: //TreeDropdown
             if ($linktable[$fielddata['plugin_archisw_configswlinks_id']]['is_entity_limited']) {
                $params['entity'] = $this->fields["entities_id"];
             }
