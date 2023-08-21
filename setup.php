@@ -134,7 +134,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.10',
+      'version' => '3.0.11',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -200,10 +200,10 @@ function hook_pre_item_update_archisw_configsw(CommonDBTM $item) {
    if ($dbfield->getFromDB($item->fields['plugin_archisw_configswdbfieldtypes_id'])) {
       $fieldtype = $dbfield->fields['name'];
       if ($oldfieldname != $newfieldname) {
-         $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` CHANGE COLUMN $oldfieldname $newfieldname ";
-         $result = $DB->query($query);
+         $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` CHANGE COLUMN $oldfieldname $newfieldname $fieldtype";
+      } else {
+         $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` MODIFY $newfieldname $fieldtype";
       }
-      $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` MODIFY $newfieldname $fieldtype";
       $result = $DB->query($query);
       return true;
    }
