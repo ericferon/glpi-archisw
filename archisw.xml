@@ -6,11 +6,13 @@
 	<logo>https://raw.githubusercontent.com/ericferon/glpi-archisw/master/swcomponent.png</logo>
 	<description>
 		<short>
+			<pl>Inwentarz twoich aplikacji. Aplikacja może składać się z kilku komponentów oprogramowania.</pl>
 			<cs>Inventář vašich aplikací. Aplikace může být tvořena vícero softwarovými komponentami.</cs>
 			<en>Inventory of your applications. An application can be composed by several software components.</en>
 			<fr>Inventaire de vos applications. Une application peut être formée de plusieurs composants logiciels.</fr>
 		</short>
 		<long>
+			<pl>Inwentarz twoich aplikacji.<br/>Aplikacja może składać się z drzewa z kilkoma poziomami komponentów oprogramowania.<br/>Możesz powiązać te komponenty oprogramowania z innymi zasobami (serwery, bazy danych, przepływy danych, ...). Możesz samodzielnie edytować właściwości poszczególnych elementów (zobacz https://github.com/ericferon/glpi-archisw/wiki/How-to-customize-the-fields)</pl>.
 			<cs>Inventář vašich aplikací.<br/>Aplikace může být tvořena stromem o několika úrovních softwarových komponent.<br/>Tyto softwarové komponenty je možné přiřadit k ostatním prvkům inventáře (servery, databáze, toky dat, …)</cs>
 			<en>Inventory of your applications.<br/>An application can be composed by a tree with several levels of software components.<br/>You can associate these software components with other inventory elements (servers, databases, dataflows, ...). You can add or suppress yourself item characteristics (see https://github.com/ericferon/glpi-archisw/wiki/How-to-customize-the-fields)</en>
 			<fr>Inventaire de vos applications.<br/>Une application peut être formée par une arborescence à plusieurs niveaux de composants logiciels.<br/>Ces composants logiciels peuvent être associés à d'autres éléments d'inventaire (serveurs, bases de données, flux de données, ...). Vous pouvez ajouter ou supprimer vous-même des caractéristiques de l'application (voir https://github.com/ericferon/glpi-archisw/wiki/How-to-customize-the-fields).</fr>
@@ -271,12 +273,19 @@
 		</version>
 	</versions>
 	<langs>
+		<lang>pl_PL</lang>
 		<lang>cs_CZ</lang>
 		<lang>en_GB</lang>
 		<lang>fr_FR</lang>
 	</langs>
 	<license>GPL v2+</license>
 	<tags>
+		<pl>
+			<tag>Inwentarz</tag>
+			<tag>Architektura</tag>
+			<tag>Aplikacje</tag>
+			<tag>Urządzenia</tag>
+		</pl>
 		<cs>
 			<tag>Inventář</tag>
 			<tag>Architektura</tag>
