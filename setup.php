@@ -134,7 +134,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.11',
+      'version' => '3.0.12',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -211,9 +211,13 @@ function hook_pre_item_update_archisw_configsw(CommonDBTM $item) {
 }
 function hook_pre_item_purge_archisw_configsw(CommonDBTM $item) {
    global $DB;
-   $fieldname = $item->fields['name'];
-   $asviewon = $item->fields['as_view_on'];
-   $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` DROP COLUMN IF EXISTS $fieldname";
+   $oldid = $item->fields['id'];
+   $oldfieldname = $item->fields['name'];
+   // suppress in glpi_plugin_archisw_labeltranslations
+   $query = "DELETE FROM `glpi_plugin_archisw_labeltranslations` WHERE `items_id` = '".$oldid."'";
+   $result = $DB->query($query);
+   // suppress column
+   $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` DROP COLUMN IF EXISTS $oldfieldname";
    $result = $DB->query($query);
    return true;
 }

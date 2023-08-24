@@ -1,21 +1,24 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Eric Feron
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Soporte Infraestructura Standby, 2023
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Archisw 2.0.1\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-21 12:03+0200\n"
-"PO-Revision-Date: 2023-08-24 10:58+0200\n"
-"Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
-"Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
-"Language: fr\n"
+"PO-Revision-Date: 2023-08-24 10:43+0200\n"
+"Last-Translator: Soporte Infraestructura Standby, 2023\n"
+"Language-Team: Spanish (Ecuador) (https://app.transifex.com/ericferon/teams/88019/es_EC/)\n"
+"Language: es_EC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #. #users
@@ -23,8 +26,9 @@ msgstr ""
 #: inc/swcomponent.class.php:538 inc/swcomponent.class.php:433
 msgid "# users"
 msgid_plural "# users"
-msgstr[0] "# utilisateurs"
-msgstr[1] "# utilisateurs"
+msgstr[0] "# usuarios"
+msgstr[1] "# usuarios"
+msgstr[2] "# usuarios"
 
 #. TRANS : %1$s is the itemtype name,
 #. %2$s is the name of the item (used for headings of a list)
@@ -36,17 +40,18 @@ msgstr "%1$s = %2$s"
 
 #: inc/swcomponent_item.class.php:234
 msgid "Add an item"
-msgstr "Ajouter un élément"
+msgstr "Añadir un elemento"
 
 #: inc/swcomponent.class.php:556 inc/swcomponent.class.php:767
 msgid "App structure associated"
 msgid_plural "App structures associated"
-msgstr[0] "Structure d'Application associée"
-msgstr[1] "Structures d'Applications associées"
+msgstr[0] "Estructura de aplicación asociada"
+msgstr[1] "Estructuras de aplicaciones asociadas"
+msgstr[2] "Estructuras de aplicaciones asociadas"
 
 #: inc/configsw.class.php:39
 msgid "Apps Config"
-msgstr "Config des Apps"
+msgstr "Configuración de aplicaciones"
 
 #: inc/swcomponent.class.php:41 inc/swcomponent.class.php:190
 #: inc/swcomponent.class.php:63 inc/swcomponent.class.php:219
@@ -55,15 +60,17 @@ msgstr "Config des Apps"
 #: inc/swcomponent.class.php:359
 msgid "Apps Structure"
 msgid_plural "Apps Structures"
-msgstr[0] "Structure d'Application"
-msgstr[1] "Structures d'Applications"
+msgstr[0] "Estructura de las aplicaciones"
+msgstr[1] "Estructuras de aplicaciones"
+msgstr[2] "Estructuras de aplicaciones"
 
 #: setup.php:88 inc/menu.class.php:31 inc/profile.class.php:140
 #: inc/profile.class.php:146
 msgid "Apps structure"
 msgid_plural "Apps structures"
-msgstr[0] "Structure d'Application"
-msgstr[1] "Structures d'Applications"
+msgstr[0] "Estructura de las aplicaciones"
+msgstr[1] "Estructuras de aplicaciones"
+msgstr[2] "Estructuras de aplicaciones"
 
 #. completename of swcomponent
 #. Parent of swcomponent
@@ -71,46 +78,46 @@ msgstr[1] "Structures d'Applications"
 #: inc/swcomponent.class.php:349 inc/swcomponent.class.php:459
 #: inc/swcomponent.class.php:465
 msgid "As child of"
-msgstr "Comme enfant de"
+msgstr "Como hijo de"
 
 #: inc/configswlink.class.php:63 inc/configswlink.class.php:99
 msgid "As view on table"
-msgstr "Comme vue sur une table"
+msgstr "Como se ve en la tabla"
 
 #: inc/profile.class.php:125 inc/profile.class.php:153
 #: inc/profile.class.php:158 inc/profile.class.php:157
 msgid "Associable items to a ticket"
-msgstr "Eléments associés à un ticket"
+msgstr "Elementos asociables a un ticket"
 
 #. is_helpdesk_visible
 #: inc/swcomponent.class.php:225 inc/swcomponent.class.php:524
 msgid "Associable to a ticket"
-msgstr "Associable à un ticket"
+msgstr "Asociable a un ticket"
 
 #: inc/swcomponent_item.class.php:506 inc/swcomponent_item.class.php:500
 msgctxt "button"
 msgid "Associate an "
-msgstr "Associer un "
+msgstr "Asociar un "
 
 #: hook.php:346 hook.php:361 hook.php:401 hook.php:405
 msgid "Associate to the Apps Structure"
-msgstr "Associer à une Structure d'Application"
+msgstr "Asociarse a la estructura de las aplicaciones"
 
 #: hook.php:344
 msgid "Associate to the Functional Area"
-msgstr "Associer à un Domaine Fonctionnel"
+msgstr "Asociado al área funcional"
 
 #. comment about swcomponent
 #: inc/swcomponent.class.php:533 inc/swcomponent_item.class.php:292
 #: inc/swcomponent_item.class.php:537 inc/swcomponent_item.class.php:535
 #: inc/swcomponent_item.class.php:566
 msgid "Comment"
-msgstr "Commentaire"
+msgstr "Comentario"
 
 #: inc/swcomponent.class.php:711 inc/swcomponent.class.php:1133
 #: inc/swcomponent.class.php:1135 inc/swcomponent.class.php:963
 msgid "Comments"
-msgstr "Commentaires"
+msgstr "Comentarios"
 
 #. users
 #: inc/swcomponent.class.php:148 inc/swcomponent.class.php:351
@@ -118,7 +125,7 @@ msgstr "Commentaires"
 #: inc/swcomponent.class.php:562 inc/swcomponent.class.php:206
 #: inc/swcomponent.class.php:462
 msgid "Component Maintainer"
-msgstr "Mainteneur du Composant"
+msgstr "Mantenedor de componentes"
 
 #. groups
 #: inc/swcomponent.class.php:155 inc/swcomponent.class.php:339
@@ -128,77 +135,79 @@ msgstr "Mainteneur du Composant"
 #: inc/swcomponent.class.php:445 inc/swcomponent_item.class.php:533
 #: inc/swcomponent_item.class.php:531 inc/swcomponent_item.class.php:562
 msgid "Component Owner"
-msgstr "Propriétaire du Composant"
+msgstr "Propietario del componente"
 
 #: inc/config.class.php:39 inc/configsw.class.php:39
 msgid "Config"
-msgstr "Config"
+msgstr "Configurar"
 
 #: inc/profile.class.php:151
 msgid "Configuration"
-msgstr "Configuration"
+msgstr "Configuración"
 
 #: inc/profile.class.php:149
 msgid "Create"
-msgstr "Créer"
+msgstr "Crear"
 
 #. db field type
 #: inc/config.class.php:198 inc/configsw.class.php:214
 msgid "DB Field Type"
-msgstr "Type de champ Base de Données"
+msgstr "DB Tipo de campo"
 
 #: inc/swcomponentdb.class.php:38
 msgid "DataBase"
 msgid_plural "DataBases"
-msgstr[0] "Base de Données"
-msgstr[1] "Bases de Données"
+msgstr[0] "Base de datos"
+msgstr[1] "Bases de datos"
+msgstr[2] "Bases de datos"
 
 #: inc/swcomponent.class.php:315 inc/swcomponent.class.php:526
 msgid "DataBases"
-msgstr "Bases de Données"
+msgstr "Bases de datos"
 
 #: inc/swcomponent.class.php:127 inc/swcomponent.class.php:151
 msgid "Database"
-msgstr "Base de Données"
+msgstr "Base de datos"
 
 #. db
 #: inc/swcomponent.class.php:421
 msgid "Databases"
-msgstr "Bases de Données"
+msgstr "Bases de datos"
 
 #: inc/profile.class.php:149
 msgid "Delete permanently"
-msgstr "Supprimer définitivement"
+msgstr "Borrar permanentemente"
 
 #. name
 #: inc/swcomponent.class.php:157 inc/swcomponent.class.php:369
 #: inc/config.class.php:99 inc/config.class.php:172 inc/configsw.class.php:99
 #: inc/configsw.class.php:188 inc/configsw.class.php:91
 msgid "Description"
-msgstr "Description"
+msgstr "Descripción"
 
 #: inc/swcomponenttechnic.class.php:37
 msgid "Development Langage"
 msgid_plural "Development Langages"
-msgstr[0] "Langage de Développement"
-msgstr[1] "Langages de Développement"
+msgstr[0] "Idioma de desarrollo"
+msgstr[1] "Idiomas de desarrollo"
+msgstr[2] "Idiomas de desarrollo"
 
 #. Language of swcomponent
 #: inc/swcomponent.class.php:302 inc/swcomponent.class.php:513
 #: inc/swcomponent.class.php:408
 msgid "Development Language"
-msgstr "Langage de développement"
+msgstr "Lenguaje de desarrollo"
 
 #: inc/swcomponent.class.php:122 inc/swcomponent.class.php:146
 msgid "Development language"
-msgstr "Langage de développement"
+msgstr "Lenguaje de desarrollo"
 
 #. manufacturer of swcomponent
 #: inc/swcomponent.class.php:142 inc/swcomponent.class.php:355
 #: inc/swcomponent.class.php:166 inc/swcomponent.class.php:566
 #: inc/swcomponent.class.php:467
 msgid "Editor"
-msgstr "Editeur"
+msgstr "Editor"
 
 #: inc/swcomponent.class.php:279 inc/swcomponent.class.php:708
 #: inc/swcomponent_item.class.php:294 inc/swcomponent_item.class.php:531
@@ -207,36 +216,36 @@ msgstr "Editeur"
 #: inc/swcomponent.class.php:1132 inc/swcomponent.class.php:367
 #: inc/swcomponent.class.php:960 inc/swcomponent_item.class.php:560
 msgid "Entity"
-msgstr "Entité"
+msgstr "Entidad"
 
 #. field group
 #: inc/config.class.php:180 inc/configsw.class.php:196
 msgid "Field group"
-msgstr "Groupe de champs"
+msgstr "Grupo de campo"
 
 #. forcegroupby
 #: inc/config.class.php:226 inc/configsw.class.php:147
 #: inc/configsw.class.php:242
 msgid "Force group by ?"
-msgstr "Forcer le regroupement ?"
+msgstr "Grupo de fuerza por ?"
 
 #: inc/profile.class.php:118
 msgid "General"
-msgstr "Général"
+msgstr "General"
 
 #: inc/configlink.class.php:45 inc/configlink.class.php:62
 #: inc/configswlink.class.php:45 inc/configswlink.class.php:81
 msgid "Has own dropdown"
-msgstr "A sa propre liste déroulante"
+msgstr "Tiene su propio menú desplegable"
 
 #: inc/profile.class.php:121
 msgid "Helpdesk"
-msgstr "Support"
+msgstr "Servicio de asistencia"
 
 #. horizontal alignment
 #: inc/config.class.php:190 inc/configsw.class.php:206
 msgid "Hor.alignment"
-msgstr "Alignement horizontal"
+msgstr "Hor.alineación"
 
 #: inc/swcomponent.class.php:263 inc/swcomponent.class.php:279
 #: inc/config.class.php:139 inc/swcomponent.class.php:347
@@ -250,58 +259,59 @@ msgstr "ID"
 #: inc/swcomponent.class.php:244 inc/swcomponent.class.php:450
 #: inc/swcomponent.class.php:340
 msgid "In use since year"
-msgstr "En usage depuis l'année"
+msgstr "En uso desde el año"
 
 #: inc/swcomponentinstance.class.php:38
 msgid "Instance"
 msgid_plural "Instances"
-msgstr[0] "Instance"
-msgstr[1] "Instances"
+msgstr[0] "Instancia"
+msgstr[1] "Instancias"
+msgstr[2] "Instancias"
 
 #. instances of swcomponent
 #: inc/swcomponent.class.php:310 inc/swcomponent.class.php:521
 #: inc/swcomponent.class.php:416
 msgid "Instances"
-msgstr "Instances"
+msgstr "Instancias"
 
 #: inc/configswlink.class.php:57 inc/configswlink.class.php:93
 msgid "Is hierarchical dropdown"
-msgstr "Est une liste hiérarchique"
+msgstr "Es un menú desplegable jerárquico"
 
 #: inc/configlink.class.php:51 inc/configlink.class.php:67
 #: inc/configswlink.class.php:51 inc/configswlink.class.php:87
 msgid "Is limited by entity"
-msgstr "Est limité par enité"
+msgstr "Está limitado por entidad"
 
 #: inc/config.class.php:123 inc/configsw.class.php:123
 #: inc/configsw.class.php:115
 msgid "Is linked to another class"
-msgstr "Est lié à une autre classe"
+msgstr "Está vinculado a otra clase"
 
 #. islinked
 #: inc/config.class.php:234 inc/configsw.class.php:250
 msgid "Is linked to another class ?"
-msgstr "Est lié à une autre classe ?"
+msgstr "¿Está vinculado a otra clase?"
 
 #. readonly
 #: inc/config.class.php:208 inc/configsw.class.php:224
 msgid "Is read-only ?"
-msgstr "Est en lecture seule ?"
+msgstr "¿Es de sólo lectura?"
 
 #: inc/configfieldgroup.class.php:52 inc/configfieldgroup.class.php:69
 #: inc/configswfieldgroup.class.php:52 inc/configswfieldgroup.class.php:71
 msgid "Is visible on opening"
-msgstr "Est visible à l'ouverture"
+msgstr "Es visible al abrir"
 
 #. join parameters
 #: inc/config.class.php:252 inc/configsw.class.php:268
 msgid "Join parameters"
-msgstr "Paramètres de jointure"
+msgstr "Parámetros de unión"
 
 #: inc/swcomponent.class.php:234 inc/swcomponent.class.php:131
 #: inc/swcomponent.class.php:330
 msgid "Last update"
-msgstr "Dernière mise à jour"
+msgstr "Última actualización"
 
 #. level of swcomponent
 #: inc/swcomponent.class.php:107 inc/swcomponent.class.php:257
@@ -309,41 +319,43 @@ msgstr "Dernière mise à jour"
 #: inc/swcomponent.class.php:463 inc/swcomponent.class.php:141
 #: inc/swcomponent.class.php:355
 msgid "Level"
-msgstr "Niveau"
+msgstr "Nivel"
 
 #: inc/swcomponent.class.php:331 inc/swcomponentlicense.class.php:38
 #: inc/swcomponent.class.php:542 inc/swcomponent.class.php:437
 msgid "License metric"
 msgid_plural "License metrics"
-msgstr[0] "Métrique de licence"
-msgstr[1] "Métriques de licences"
+msgstr[0] "Métrica de licencia"
+msgstr[1] "Métricas de licencia"
+msgstr[2] "Métricas de licencia"
 
 #: inc/swcomponent_itemrole.class.php:38
 msgid "Link role"
 msgid_plural "Link roles"
-msgstr[0] "Rôle du lien"
-msgstr[1] "Rôles du lien"
+msgstr[0] "Función de enlace"
+msgstr[1] "Funciones de enlace"
+msgstr[2] "Funciones de enlace"
 
 #. link field
 #: inc/config.class.php:244 inc/configsw.class.php:260
 msgid "Linked by field"
-msgstr "Lié par le champ"
+msgstr "Enlazado por campo"
 
 #. linked table
 #: inc/config.class.php:239 inc/configsw.class.php:255
 msgid "Linked class"
-msgstr "Classe liée"
+msgstr "Clase vinculada"
 
 #. location of swcomponent
 #: inc/swcomponent.class.php:518
 msgid "Location"
-msgstr "Emplacement"
+msgstr "ubicación"
 
 #. massiveaction
 #: inc/config.class.php:221 inc/configsw.class.php:139
 #: inc/configsw.class.php:237
 msgid "Massive action allowed ?"
-msgstr "Action en masse permise ?"
+msgstr "¿Acción masiva permitida?"
 
 #. Name of SwComponent
 #. name
@@ -369,116 +381,118 @@ msgstr "Action en masse permise ?"
 #: inc/swcomponent.class.php:459 inc/swcomponent.class.php:958
 #: inc/swcomponent_item.class.php:558
 msgid "Name"
-msgstr "Nom"
+msgstr "Nombre"
 
 #: inc/profile.class.php:149
 msgid "Put in trashbin"
-msgstr "Mettre à la poubelle"
+msgstr "Poner en la papelera"
 
 #: inc/profile.class.php:149
 msgid "Read"
-msgstr "Lecture"
+msgstr "Leer"
 
 #: inc/swcomponent_item.class.php:282 inc/swcomponent_item.class.php:535
 #: inc/swcomponent_item.class.php:284 inc/swcomponent_item.class.php:529
 #: inc/swcomponent_item.class.php:291 inc/swcomponent_item.class.php:536
 #: inc/swcomponent_item.class.php:534 inc/swcomponent_item.class.php:565
 msgid "Role"
-msgstr "Rôle"
+msgstr "Papel"
 
 #. row
 #: inc/config.class.php:107 inc/config.class.php:185 inc/configsw.class.php:107
 #: inc/configsw.class.php:201 inc/configsw.class.php:99
 msgid "Row"
-msgstr "Ligne"
+msgstr "Fila"
 
 #. search datatype
 #: inc/config.class.php:203 inc/configsw.class.php:219
 msgid "Search Data Type"
-msgstr "Type de donnée Recherche"
+msgstr "Buscar tipo de datos"
 
 #. nosearch
 #: inc/config.class.php:216 inc/configsw.class.php:232
 msgid "Search allowed ?"
-msgstr "Recherche permise ?"
+msgstr "Búsqueda permitida?"
 
 #. nosearch
 #: inc/configsw.class.php:131 inc/configsw.class.php:232
 msgid "Search disabled ?"
-msgstr "Recherche désactivée\t ?"
+msgstr "Búsqueda desactivada?"
 
 #: inc/swcomponent_item.class.php:295
 msgid "Serial number"
-msgstr "Numéro de série"
+msgstr "Número de serie"
 
 #. service level agreement
 #: inc/swcomponent.class.php:367 inc/swcomponentsla.class.php:38
 #: inc/swcomponent.class.php:578 inc/swcomponent.class.php:473
 msgid "Service level"
 msgid_plural "Service levels"
-msgstr[0] "Niveau de service"
-msgstr[1] "Niveaux de service"
+msgstr[0] "Nivel de servicio"
+msgstr[1] "Niveles de servicio"
+msgstr[2] "Niveles de servicio"
 
 #. shortname of swcomponent
 #: inc/swcomponent.class.php:262 inc/swcomponent.class.php:468
 #: inc/swcomponent.class.php:361
 msgid "Short code"
-msgstr "Abréviation"
+msgstr "Código corto"
 
 #: inc/configfieldgroup.class.php:46 inc/configfieldgroup.class.php:64
 #: inc/configswfieldgroup.class.php:46 inc/configswfieldgroup.class.php:65
 msgid "Sort order"
-msgstr "Séquence de tri"
+msgstr "Orden de clasificación"
 
 #: inc/swcomponent.class.php:505
 msgid "Source Repository"
-msgstr "Dépôt des sources"
+msgstr "Repositorio de fuentes"
 
 #. status of swcomponent
 #: inc/swcomponent.class.php:209 inc/swcomponent.class.php:499
 #: inc/swcomponent.class.php:393
 msgid "Standardization Status"
-msgstr "Statut de standardisation"
+msgstr "Estado de normalización"
 
 #. status of swcomponent
 #: inc/swcomponent.class.php:381 inc/swcomponent_item.class.php:535
 #: inc/swcomponent_item.class.php:533 inc/swcomponent_item.class.php:564
 msgid "Status"
-msgstr "Statut"
+msgstr "Estado"
 
 #. status date of swcomponent
 #: inc/swcomponent.class.php:288 inc/swcomponent.class.php:494
 #: inc/swcomponent.class.php:387
 msgid "Status Startdate"
-msgstr "A ce statut depuis"
+msgstr "Fecha de inicio del estado"
 
 #. supplier of swcomponent
 #: inc/swcomponent.class.php:343 inc/swcomponent.class.php:554
 #: inc/swcomponent.class.php:454 inc/swcomponent_item.class.php:538
 #: inc/swcomponent_item.class.php:536 inc/swcomponent_item.class.php:567
 msgid "Supplier"
-msgstr "Fournisseur"
+msgstr "Proveedor"
 
 #: inc/swcomponenttarget.class.php:38
 msgid "Target"
 msgid_plural "Targets"
-msgstr[0] "Cible"
-msgstr[1] "Cibles"
+msgstr[0] "Objetivo"
+msgstr[1] "Objetivos"
+msgstr[2] "Objetivos"
 
 #. target
 #: inc/swcomponent.class.php:322 inc/swcomponent.class.php:533
 #: inc/swcomponent.class.php:428
 msgid "Targets"
-msgstr "Cibles"
+msgstr "Objetivos"
 
 #: setup.php:101
 msgid "This plugin requires GLPI >= 9.2 and < 9.3"
-msgstr ""
+msgstr "Este plugin requiere GLPI >= 9.2 y < 9.3"
 
 #: inc/swcomponent.class.php:756 inc/swcomponent.class.php:1178
 #: inc/swcomponent.class.php:1180 inc/swcomponent.class.php:1008
 msgid "Transfer"
-msgstr "Transfert"
+msgstr "Transferencia"
 
 #. Type of swcomponent
 #: inc/swcomponent_itemrole.class.php:49 inc/swcomponent.class.php:401
@@ -488,7 +502,7 @@ msgstr "Transfert"
 #: inc/swcomponent.class.php:1134 inc/swcomponent.class.php:962
 #: inc/swcomponent_item.class.php:563
 msgid "Type"
-msgstr "Type"
+msgstr "Tipo"
 
 #: inc/swcomponent.class.php:363 inc/swcomponent.class.php:574
 msgid "URL"
@@ -496,12 +510,12 @@ msgstr "URL"
 
 #: inc/swcomponent.class.php:497
 msgid "URL Health Check"
-msgstr "URL de vérification"
+msgstr "Comprobación del estado de la URL"
 
 #. url of swcomponent
 #: inc/swcomponent.class.php:482
 msgid "URL Production"
-msgstr "URL Production"
+msgstr "Producción de URL"
 
 #: inc/swcomponent.class.php:490
 msgid "URL QA"
@@ -509,14 +523,14 @@ msgstr "URL QA"
 
 #: inc/profile.class.php:149
 msgid "Update"
-msgstr "Mise à jour"
+msgstr "Actualización"
 
 #. Version
 #: inc/swcomponent.class.php:239 inc/swcomponent.class.php:445
 #: inc/swcomponent.class.php:334
 msgid "Version"
-msgstr "Version"
+msgstr "Versión"
 
 #: inc/configswlink.class.php:69
 msgid "View limited by WHERE clause"
-msgstr "Vue limitée par la clause WHERE"
+msgstr "Vista limitada por la cláusula WHERE"

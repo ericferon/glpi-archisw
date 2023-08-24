@@ -164,6 +164,7 @@ class PluginArchiswConfigsw extends CommonDBTM {
 
       $ong = [];
       $this->addDefaultFormTab($ong);
+      $this->addStandardTab('PluginArchiswLabelTranslation', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
 
       return $ong;
@@ -179,13 +180,13 @@ class PluginArchiswConfigsw extends CommonDBTM {
       echo "<td>".__('Name')."</td>";
       echo "<td>";
       echo Html::input('name',['value' => $this->fields['name'], 'id' => "name" , 'width' => '100%']);
-      echo Html::showToolTip("A name must be lowercase, start with a letter, contain only letters, numbers or underscores.<br/>If the field is a dropdown, the name must end with 's_id', otherwise it may not end with 's_id'.<br/>Some words are reserved : name, completename, id, date_mod, is_recursive, entities_id, is_deleted, ancestors_cache, sons_cache.",['applyto' => 'name']);
+      echo Html::showToolTip("A name must be lowercase, start with a letter, contain only letters, numbers or underscores.<br/>If the field is a dropdown, the name must end with 's_id', otherwise it may not end with 's_id'.<br/>Some words are reserved : name, completename, id, date_mod, is_recursive, entities_id, is_deleted, ancestors_cache, sons_cache. See plugin's wiki for more details.",['applyto' => 'name']);
       echo "</td>";
       //skip 2nd column
       echo "<td></td>";
       echo "<td></td>";
      //name
-      echo "<td>".__('Description')."</td>";
+      echo "<td>".__('Description (en_GB)')."</td>";
       echo "<td>";
       echo Html::input('description',['value' => $this->fields['description'], 'id' => "description" , 'width' => '100%']);
       echo "</td>";

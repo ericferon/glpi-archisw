@@ -31,7 +31,7 @@ function plugin_archisw_install() {
 
    $update=false;
    if (!$DB->TableExists("glpi_plugin_archisw_swcomponents")) {
-		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-3.0.2.sql");
+		$DB->runFile(Plugin::getPhpDir("archisw")."/sql/empty-3.0.3.sql");
    }
    else if ($DB->TableExists("glpi_plugin_archisw_swcomponenttypes") && !$DB->FieldExists("glpi_plugin_archisw_swcomponenttypes","plugin_archisw_swcomponenttypes_id")) {
       $update=true;
@@ -65,6 +65,10 @@ function plugin_archisw_install() {
 
    if ($DB->numrows($DB->query("SELECT * from glpi_plugin_archisw_configswhaligns where id = '7'")) == 0) {
       $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-3.0.2.sql");
+   }
+
+   if (!$DB->TableExists("glpi_plugin_archisw_labeltranslations")) {
+      $DB->runFile(Plugin::getPhpDir("archisw")."/sql/update-3.0.3.sql");
    }
 
    // regenerate configured fields
