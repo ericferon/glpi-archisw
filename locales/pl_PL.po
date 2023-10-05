@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Poedit 3.2.2\n"
 
 #. #users
@@ -26,6 +26,7 @@ msgid_plural "# users"
 msgstr[0] "Liczba użytkowników"
 msgstr[1] "Liczba użytkowników"
 msgstr[2] "Liczba użytkowników"
+msgstr[3] "Liczba użytkowników"
 
 #. TRANS : %1$s is the itemtype name,
 #. %2$s is the name of the item (used for headings of a list)
@@ -44,6 +45,7 @@ msgid_plural "App structures associated"
 msgstr[0] "Powiązana struktura aplikacji"
 msgstr[1] "Powiązane struktury aplikacji"
 msgstr[2] "Powiązane struktury aplikacji"
+msgstr[3] "Powiązane struktury aplikacji"
 
 #: inc/swcomponent.class.php:41 inc/swcomponent.class.php:190
 #: inc/swcomponent.class.php:63 inc/swcomponent.class.php:219
@@ -54,6 +56,7 @@ msgid_plural "Apps Structures"
 msgstr[0] "Struktura aplikacji"
 msgstr[1] "Struktury aplikacji"
 msgstr[2] "Struktury aplikacji"
+msgstr[3] "Struktury aplikacji"
 
 #: setup.php:88 inc/menu.class.php:31 inc/profile.class.php:140
 #: inc/profile.class.php:146
@@ -62,6 +65,7 @@ msgid_plural "Apps structures"
 msgstr[0] "Struktura aplikacji"
 msgstr[1] "Struktury aplikacji"
 msgstr[2] "Struktury aplikacji"
+msgstr[3] "Struktury aplikacji"
 
 #. completename of swcomponent
 #. Parent of swcomponent
@@ -149,6 +153,7 @@ msgid_plural "DataBases"
 msgstr[0] "Baza Danych"
 msgstr[1] "Bazy Danych"
 msgstr[2] "Bazy Danych"
+msgstr[3] "Bazy Danych"
 
 #: inc/swcomponent.class.php:315 inc/swcomponent.class.php:526
 msgid "DataBases"
@@ -176,6 +181,7 @@ msgid_plural "Development Langages"
 msgstr[0] "Język programowania"
 msgstr[1] "Języki programowania"
 msgstr[2] "Języki programowania"
+msgstr[3] "Języki programowania"
 
 #. Language of swcomponent
 #: inc/swcomponent.class.php:302 inc/swcomponent.class.php:513
@@ -250,6 +256,7 @@ msgid_plural "Instances"
 msgstr[0] "Instancja"
 msgstr[1] "Instancje"
 msgstr[2] "Instancje"
+msgstr[3] "Instancje"
 
 #. instances of swcomponent
 #: inc/swcomponent.class.php:310 inc/swcomponent.class.php:521
@@ -309,6 +316,7 @@ msgid_plural "License metrics"
 msgstr[0] "Typ licencjonowania"
 msgstr[1] "Typy licencjonowania"
 msgstr[2] "Typy licencjonowania"
+msgstr[3] "Typy licencjonowania"
 
 #: inc/swcomponent_itemrole.class.php:38
 msgid "Link role"
@@ -316,6 +324,7 @@ msgid_plural "Link roles"
 msgstr[0] "Rola łącza"
 msgstr[1] "Role łączy"
 msgstr[2] "Role łączy"
+msgstr[3] "Role łączy"
 
 #. link field
 #: inc/config.class.php:244 inc/configsw.class.php:260
@@ -398,6 +407,7 @@ msgid_plural "Service levels"
 msgstr[0] "Poziom usług"
 msgstr[1] "Poziomy usług"
 msgstr[2] "Poziomy usług"
+msgstr[3] "Poziomy usług"
 
 #. shortname of swcomponent
 #: inc/swcomponent.class.php:262 inc/swcomponent.class.php:468
@@ -445,6 +455,7 @@ msgid_plural "Targets"
 msgstr[0] "Cel"
 msgstr[1] "Cele"
 msgstr[2] "Cele"
+msgstr[3] "Cele"
 
 #. target
 #: inc/swcomponent.class.php:322 inc/swcomponent.class.php:533

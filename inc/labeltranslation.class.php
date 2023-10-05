@@ -122,8 +122,8 @@ class PluginArchiswLabelTranslation extends CommonDBChild
                 echo Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand);
                 echo "</th>";
             }
-            echo "<th>" . __("Language", "fields") . "</th>";
-            echo "<th>" . __("Label", "fields") . "</th>";
+            echo "<th>" . __("Language") . "</th>";
+            echo "<th>" . __("Label") . "</th>";
             foreach ($found as $data) {
                 echo "<tr class='tab_bg_1' " . ($canedit ? "style='cursor:pointer'
                       onClick=\"viewEditTranslation" . $data['id'] . "$rand();\"" : '') . ">";

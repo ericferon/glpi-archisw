@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: Archisw 2.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-21 12:03+0200\n"
-"PO-Revision-Date: 2023-08-24 10:58+0200\n"
+"PO-Revision-Date: 2023-08-24 15:56+0200\n"
 "Last-Translator: Eric Feron <ericferon@scarlet.be>\n"
-"Language-Team: French (https://www.transifex.com/--151/teams/88019/fr/)\n"
-"Language: fr\n"
+"Language-Team: French (https://www.transifex.com/ericferon/teams/88019/"
+"fr_FR/)\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #. #users
@@ -25,6 +26,7 @@ msgid "# users"
 msgid_plural "# users"
 msgstr[0] "# utilisateurs"
 msgstr[1] "# utilisateurs"
+msgstr[2] "# utilisateurs"
 
 #. TRANS : %1$s is the itemtype name,
 #. %2$s is the name of the item (used for headings of a list)
@@ -43,6 +45,7 @@ msgid "App structure associated"
 msgid_plural "App structures associated"
 msgstr[0] "Structure d'Application associée"
 msgstr[1] "Structures d'Applications associées"
+msgstr[2] "Structures d'Applications associées"
 
 #: inc/configsw.class.php:39
 msgid "Apps Config"
@@ -57,6 +60,7 @@ msgid "Apps Structure"
 msgid_plural "Apps Structures"
 msgstr[0] "Structure d'Application"
 msgstr[1] "Structures d'Applications"
+msgstr[2] "Structures d'Applications"
 
 #: setup.php:88 inc/menu.class.php:31 inc/profile.class.php:140
 #: inc/profile.class.php:146
@@ -64,6 +68,7 @@ msgid "Apps structure"
 msgid_plural "Apps structures"
 msgstr[0] "Structure d'Application"
 msgstr[1] "Structures d'Applications"
+msgstr[2] "Structures d'Applications"
 
 #. completename of swcomponent
 #. Parent of swcomponent
@@ -152,6 +157,7 @@ msgid "DataBase"
 msgid_plural "DataBases"
 msgstr[0] "Base de Données"
 msgstr[1] "Bases de Données"
+msgstr[2] "Bases de Données"
 
 #: inc/swcomponent.class.php:315 inc/swcomponent.class.php:526
 msgid "DataBases"
@@ -182,6 +188,7 @@ msgid "Development Langage"
 msgid_plural "Development Langages"
 msgstr[0] "Langage de Développement"
 msgstr[1] "Langages de Développement"
+msgstr[2] "Langages de Développement"
 
 #. Language of swcomponent
 #: inc/swcomponent.class.php:302 inc/swcomponent.class.php:513
@@ -257,6 +264,7 @@ msgid "Instance"
 msgid_plural "Instances"
 msgstr[0] "Instance"
 msgstr[1] "Instances"
+msgstr[2] "Instances"
 
 #. instances of swcomponent
 #: inc/swcomponent.class.php:310 inc/swcomponent.class.php:521
@@ -317,12 +325,14 @@ msgid "License metric"
 msgid_plural "License metrics"
 msgstr[0] "Métrique de licence"
 msgstr[1] "Métriques de licences"
+msgstr[2] "Métriques de licences"
 
 #: inc/swcomponent_itemrole.class.php:38
 msgid "Link role"
 msgid_plural "Link roles"
 msgstr[0] "Rôle du lien"
 msgstr[1] "Rôles du lien"
+msgstr[2] "Rôles du lien"
 
 #. link field
 #: inc/config.class.php:244 inc/configsw.class.php:260
@@ -405,7 +415,7 @@ msgstr "Recherche permise ?"
 #. nosearch
 #: inc/configsw.class.php:131 inc/configsw.class.php:232
 msgid "Search disabled ?"
-msgstr "Recherche désactivée\t ?"
+msgstr "Recherche désactivée ?"
 
 #: inc/swcomponent_item.class.php:295
 msgid "Serial number"
@@ -418,6 +428,7 @@ msgid "Service level"
 msgid_plural "Service levels"
 msgstr[0] "Niveau de service"
 msgstr[1] "Niveaux de service"
+msgstr[2] "Niveaux de service"
 
 #. shortname of swcomponent
 #: inc/swcomponent.class.php:262 inc/swcomponent.class.php:468
@@ -464,6 +475,7 @@ msgid "Target"
 msgid_plural "Targets"
 msgstr[0] "Cible"
 msgstr[1] "Cibles"
+msgstr[2] "Cibles"
 
 #. target
 #: inc/swcomponent.class.php:322 inc/swcomponent.class.php:533

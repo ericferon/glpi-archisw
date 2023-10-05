@@ -13,7 +13,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 "X-Generator: Poedit 2.0.4\n"
 "Last-Translator: \n"
 "Language: cs_CZ\n"
@@ -28,6 +28,7 @@ msgid_plural "Apps structures"
 msgstr[0] "Struktura aplikací"
 msgstr[1] "Struktury aplikací"
 msgstr[2] "Struktur aplikací"
+msgstr[3] "Struktur aplikací"
 
 #: setup.php:102
 msgid "This plugin requires GLPI >= 0.90"
@@ -39,6 +40,7 @@ msgid_plural "Apps Structures"
 msgstr[0] "Struktura aplikací"
 msgstr[1] "Struktury aplikací"
 msgstr[2] "Struktur aplikací"
+msgstr[3] "Struktur aplikací"
 
 #: inc/swcomponent.class.php:107 inc/swcomponent.class.php:254
 msgid "Level"
@@ -107,6 +109,7 @@ msgid_plural "# users"
 msgstr[0] "počet uživatelů"
 msgstr[1] "počty uživatelů"
 msgstr[2] "počtů uživatelů"
+msgstr[3] "počtů uživatelů"
 
 #: inc/swcomponent.class.php:328 inc/swcomponentlicense.class.php:38
 msgid "License metric"
@@ -114,6 +117,7 @@ msgid_plural "License metrics"
 msgstr[0] "Licenční metrika"
 msgstr[1] "Licenční metriky"
 msgstr[2] "Licenčních metrik"
+msgstr[3] "Licenčních metrik"
 
 #: inc/swcomponent.class.php:340
 msgid "Supplier"
@@ -129,6 +133,7 @@ msgid_plural "Service levels"
 msgstr[0] "Úroveň služby"
 msgstr[1] "Úrovně služby"
 msgstr[2] "Úrovní služby"
+msgstr[3] "Úrovní služby"
 
 #: inc/swcomponent.class.php:539
 msgid "App structure associated"
@@ -136,6 +141,7 @@ msgid_plural "App structures associated"
 msgstr[0] "Související struktura aplikací"
 msgstr[1] "Související struktury aplikací"
 msgstr[2] "Souvisejících struktur aplikací"
+msgstr[3] "Souvisejících struktur aplikací"
 
 #: inc/swcomponent.class.php:540
 msgid "Name"
@@ -147,6 +153,7 @@ msgid_plural "DataBases"
 msgstr[0] "Databáze"
 msgstr[1] "Databáze"
 msgstr[2] "Databází"
+msgstr[3] "Databází"
 
 #: inc/swcomponentinstance.class.php:38
 msgid "Instance"
@@ -154,6 +161,7 @@ msgid_plural "Instances"
 msgstr[0] "Instance"
 msgstr[1] "Instance"
 msgstr[2] "Instancí"
+msgstr[3] "Instancí"
 
 #: inc/swcomponent_item.class.php:286 inc/swcomponent_item.class.php:538
 msgid "Role"
@@ -170,6 +178,7 @@ msgid_plural "Link roles"
 msgstr[0] "Role odkazu"
 msgstr[1] "Role odkazu"
 msgstr[2] "Rolí odkazu"
+msgstr[3] "Rolí odkazu"
 
 #: inc/swcomponent_itemrole.class.php:49
 msgid "Type"
@@ -181,6 +190,7 @@ msgid_plural "Targets"
 msgstr[0] "Cíl"
 msgstr[1] "Cíle"
 msgstr[2] "Cílů"
+msgstr[3] "Cílů"
 
 #: inc/swcomponenttechnic.class.php:37
 msgid "Development Langage"
@@ -188,3 +198,4 @@ msgid_plural "Development Langages"
 msgstr[0] "Jazyk vývoje"
 msgstr[1] "Jazyky vývoje"
 msgstr[2] "Jazyků vývoje"
+msgstr[3] "Jazyků vývoje"
