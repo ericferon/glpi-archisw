@@ -134,7 +134,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.14',
+      'version' => '3.0.15',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
@@ -187,7 +187,7 @@ function hook_pre_item_add_archisw_configsw(CommonDBTM $item) {
    if ($dbfield->getFromDB($item->fields['plugin_archisw_configswdbfieldtypes_id'])) {
       $fieldtype = $dbfield->fields['name'];
       $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` ADD COLUMN IF NOT EXISTS $fieldname $fieldtype";
-      if($item->fields['plugin_dataflows_configswdatatypes_id'] == 6) {// if dropdown, add key
+      if($item->fields['plugin_archisw_configswdatatypes_id'] == 6) {// if dropdown, add key
          $query .= ", ADD KEY IF NOT EXISTS $fieldname ($fieldname)";
       }
       $result = $DB->query($query);
@@ -207,7 +207,7 @@ function hook_pre_item_update_archisw_configsw(CommonDBTM $item) {
       } else {
          $query = "ALTER TABLE `glpi_plugin_archisw_swcomponents` MODIFY $newfieldname $fieldtype";
       }
-      if($item->input['plugin_dataflows_configswdatatypes_id'] == 6) {// if dropdown, add key
+      if($item->input['plugin_archisw_configswdatatypes_id'] == 6) {// if dropdown, add key
          $query .= ", ADD KEY IF NOT EXISTS $newfieldname ($newfieldname)";
       }
       $result = $DB->query($query);
