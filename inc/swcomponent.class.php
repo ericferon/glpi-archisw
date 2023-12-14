@@ -123,140 +123,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
          'itemlink_type' => $this->getType()
       ];
 
-/*      $tab[] = [
-         'id'       => '2',
-         'table'    => 'glpi_plugin_archisw_swcomponenttypes',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentType::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '3',
-         'table'    => $this->getTable(),
-         'field'    => 'level',
-         'name'     => __('Level','archisw'),
-         'datatype' => 'text'
-      ];
-
-      $tab[] = [
-         'id'       => '4',
-         'table'    => 'glpi_plugin_archisw_swcomponentstates',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentState::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '5',
-         'table'    => $this->getTable(),
-         'field'    => 'description',
-         'name'     => __('Description'),
-         'datatype' => 'text'
-      ];
-
-      $tab[] = [
-         'id'       => '6',
-         'table'    => 'glpi_plugin_archisw_swcomponenttechnics',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentTechnic::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '7',
-         'table'    => 'glpi_plugin_archisw_swcomponentdbs',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentDb::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '8',
-         'table'    => 'glpi_locations',
-         'field'    => 'completename',
-         'name'     => Location::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '9',
-         'table'    => 'glpi_suppliers',
-         'field'    => 'name',
-         'name'     => Supplier::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'        => '10',
-         'table'     => 'glpi_manufacturers',
-         'field'     => 'name',
-         'name'      => Manufacturer::getTypeName(1),
-         'datatype'  => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'        => '11',
-         'table'     => 'glpi_users',
-         'field'     => 'name',
-         'linkfield' => 'users_id',
-         'name'      => __('Component Maintainer','archisw'),
-         'datatype'  => 'dropdown',
-         'right'     => 'interface'
-      ];
-
-      $tab[] = [
-         'id'        => '12',
-         'table'     => 'glpi_groups',
-         'field'     => 'name',
-         'linkfield' => 'groups_id',
-         'name'      => __('Component Owner','archisw'),
-         'condition' => ['is_assign' => 1],
-         'datatype'  => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'            => '15',
-         'table'         => $this->getTable(),
-         'field'         => 'is_helpdesk_visible',
-         'name'          => __('Associable to a ticket'),
-         'datatype'      => 'bool'
-      ];
-
-      $tab[] = [
-         'id'            => '16',
-         'table'         => $this->getTable(),
-         'field'         => 'date_mod',
-         'massiveaction' => false,
-         'name'          => __('Last update'),
-         'datatype'      => 'datetime'
-      ];
-
-      $tab[] = [
-         'id'       => '17',
-         'table'    => 'glpi_plugin_archisw_standards',
-         'field'    => 'name',
-         'name'     => PluginArchiswStandard::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '20',
-         'table'    => 'glpi_plugin_archisw_swcomponentinstances',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentInstance::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-
-      $tab[] = [
-         'id'       => '21',
-         'table'    => 'glpi_plugin_archisw_swcomponenttargets',
-         'field'    => 'name',
-         'name'     => PluginArchiswSwcomponentTarget::getTypeName(1),
-         'datatype' => 'dropdown'
-      ];
-*/
-
       $linktable = [];
       $tablequery = "SELECT * FROM `glpi_plugin_archisw_configswlinks`";
       $tableresult = $DB->query($tablequery);
@@ -291,30 +157,35 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             case 4: //Date and time
             case 5: //Number
             case 8: //Textarea
-               $tab[] = [
+               $params = [
                   'id'       => $tabid,
                   'table'    => $tabtable,
                   'field'    => $fielddata['name'],
-                  'name'     => __($fielddata['description'],'archisw'),
+                  'name'     => __($fielddata['description'],'dataflows'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
                ];
+               $tab[] = $params;
                break;
             case 6: //Dropdown
             case 9: //TreeDropdown
                $linktableid = $fielddata['plugin_archisw_configswlinks_id'];
                $itemtype = $linktable[$linktableid]['name'];
                $tablename = $this->getTable($itemtype);
-               $tab[] = [
+               $params = [
                   'id'       => $tabid,
                   'table'    => $tablename,
                   'field'    => 'name',
-                  'name'     => __($fielddata['description'],'archisw'),
+                  'name'     => __($fielddata['description'],'dataflows'),
                   'datatype' => $datatypetable[$datatypeid]['name'],
                   'massiveaction' => $fielddata['massiveaction'],
                   'nosearch' => $fielddata['nosearch']
                ];
+               if ($itemtype == 'User') {
+                  $params['right'] = 'interface';
+               }
+               $tab[] = $params;
                break;
             case 7: //Itemlink
                break;
