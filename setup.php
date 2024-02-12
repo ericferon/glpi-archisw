@@ -32,8 +32,8 @@ function plugin_init_archisw() {
    $PLUGIN_HOOKS['change_profile']['archisw'] = ['PluginArchiswProfile', 'initProfile'];
    $PLUGIN_HOOKS['assign_to_ticket']['archisw'] = true;
    
-//   $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
-//   $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
+   $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
+   $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
    
    $CFG_GLPI['impact_asset_types']['PluginArchiswSwcomponent'] = Plugin::getPhpDir("archisw", false)."/swcomponent.png";
 
@@ -65,7 +65,7 @@ function plugin_init_archisw() {
    }
    // Add links to other plugins
    $types = ['PluginArchimapGraph'];
-   $associatedtypes = ['PluginDatabasesDatabase',
+   $associatedtypes = ['PluginAccountsAccount',
                      'PluginArchiswSwcomponent'];
   foreach ($types as $itemtype) {
       if (class_exists($itemtype)) {
@@ -76,10 +76,10 @@ function plugin_init_archisw() {
 // Add other plugin associations
    if (class_exists('PluginArchiswSwcomponent'))
 	  foreach ($associatedtypes as $itemtype) {
-		if (class_exists($itemtype)) {
-			$itemtype::registerType('PluginArchiswSwcomponent');
+//		if (class_exists($itemtype)) {
+//			$itemtype::registerType('PluginArchiswSwcomponent');
             PluginArchiswSwcomponent::registerType($itemtype);
-		}
+//		}
 	  }
 
    if (Session::getLoginUserID()) {
@@ -134,7 +134,7 @@ function plugin_version_archisw() {
 
    return array (
       'name' => _n('Apps structure', 'Apps structures', 2, 'archisw'),
-      'version' => '3.0.17',
+      'version' => '3.0.18',
       'author'  => "Eric Feron",
       'license' => 'GPLv2+',
       'homepage'=> 'https://github.com/ericferon/glpi-archisw',
