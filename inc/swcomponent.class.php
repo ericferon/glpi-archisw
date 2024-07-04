@@ -232,6 +232,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       ];
 
       $tab[] = [
+         'id'       => $tabid++,
+         'table'    => 'glpi_entities',
+         'field'    => 'completename',
+         'name'     => __('Entity'),
+         'datatype' => 'dropdown'
+      ];
+
+      $tab[] = [
          'id'    => $tabid++,
          'table' => 'glpi_entities',
          'field' => 'entities_id',
@@ -835,7 +843,7 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
 
       echo "</tr>";
 
-      while ($data=$DB->fetch_array($result)) {
+      while ($data=$DB->fetchAssoc($result)) {
 
          echo "<tr class='tab_bg_1".($data["is_deleted"]=='1'?"_2":"")."'>";
          if ($withtemplate!=3 && $canread && (in_array($data['entities_id'],$_SESSION['glpiactiveentities']) || $data["is_recursive"])) {
@@ -974,12 +982,6 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
             if ($item->getType() == 'PluginArchiswSwcomponent') {
             foreach ($ids as $key) {
                   $item->getFromDB($key);
-                  $type = PluginArchiswSwcomponentType::transfer($item->fields["plugin_archisw_swcomponenttypes_id"], $input['entities_id']);
-                  if ($type > 0) {
-                     $values["id"] = $key;
-                     $values["plugin_archisw_swcomponenttypes_id"] = $type;
-                     $item->update($values);
-                  }
 
                   unset($values);
                   $values["id"] = $key;
