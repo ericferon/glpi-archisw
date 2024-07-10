@@ -218,6 +218,14 @@ class PluginArchiswSwcomponent extends CommonTreeDropdown {
       $tab[] = [
          'id'            => $tabid++,
          'table'         => $this->getTable(),
+         'field'         => 'plugin_archisw_swcomponents_id',
+         'name'          => __('As child of', 'archisw'),
+         'datatype'      => 'dropdown'
+      ];
+
+      $tab[] = [
+         'id'            => $tabid++,
+         'table'         => $this->getTable(),
          'field'         => 'id',
          'name'          => __('ID'),
          'datatype'      => 'number'

@@ -27,6 +27,12 @@
 	</authors>
 	<versions>
 		<version>
+			<num>3.0.21</num>
+			<compatibility>~10.0.0</compatibility>
+			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v3.0.21/archisw-v3.0.21.tar.gz</download_url>
+		</version>
+	<versions>
+		<version>
 			<num>3.0.20</num>
 			<compatibility>~10.0.0</compatibility>
 			<download_url>https://github.com/ericferon/glpi-archisw/releases/download/v3.0.20/archisw-v3.0.20.tar.gz</download_url>
