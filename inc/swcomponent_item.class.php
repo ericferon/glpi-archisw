@@ -627,6 +627,16 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       }
       echo "</div>";
    }
+
+   public function canCreateItem()
+   {
+      return $this->canRelationItem(
+         'canUpdateItem',
+         'canUpdate',
+         false,
+         static::$checkAlwaysBothItems
+      );
+   }
 }
 
 ?>
