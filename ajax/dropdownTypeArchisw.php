@@ -42,11 +42,14 @@ if (isset($_POST["swcomponenttype"])) {
 
    // Clean used array
    if (isset($_POST['used']) && is_array($_POST['used']) && (count($_POST['used']) > 0)) {
-      $query = "SELECT `id`
-                FROM `glpi_plugin_archisw_swcomponents`
-                WHERE `id` IN (".implode(',',$_POST['used']).")
-                      AND `plugin_archisw_swcomponenttypes_id` = '".$_POST["swcomponenttype"]."'";
-
+      $query = [
+		'SELECT'=> ['id'],
+		'FROM'	=> 'glpi_plugin_archisw_swcomponents',
+		'WHERE'	=> [
+			'id' => array_values($_POST['used']),
+			'plugin_archisw_swcomponenttypes_id' => $_POST['swcomponenttype']
+		],
+      ];
       foreach ($DB->request($query) AS $data) {
          $used[$data['id']] = $data['id'];
       }

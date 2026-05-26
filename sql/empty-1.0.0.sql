@@ -246,7 +246,7 @@ INSERT INTO `glpi_plugin_archisw_swcomponentlicenses` VALUES ('2', 'Concurrent u
 INSERT INTO `glpi_plugin_archisw_swcomponentlicenses` VALUES ('3', 'Server','');
 INSERT INTO `glpi_plugin_archisw_swcomponentlicenses` VALUES ('4', 'Processor','');
 
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswSwcomponent','2','2','0');
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswSwcomponent','6','3','0');
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswSwcomponent','7','4','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswSwcomponent','2','2','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswSwcomponent','6','3','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswSwcomponent','7','4','0');
 	

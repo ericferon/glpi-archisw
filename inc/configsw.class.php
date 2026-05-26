@@ -38,6 +38,12 @@ class PluginArchiswConfigsw extends CommonDBTM {
 
       return __('Apps Config', 'archisw');
    }
+   
+   static function getWebDir(string $plugin_key) {
+	/** @var array $CFG_GLPI */
+	global $CFG_GLPI;
+	return $CFG_GLPI['url_base'] . '/plugins/' . $plugin_key;
+   }
 
    // search fields from GLPI 9.3 on
    function rawSearchOptions() {

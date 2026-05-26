@@ -230,9 +230,9 @@ INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','comment',null);
 INSERT INTO `glpi_plugin_statecheck_ruleactions` (`id`,`plugin_statecheck_rules_id`,`action_type`,`field`,`value`) VALUES (null,@rule_id,'isnotempty','sortorder',null);
 
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',2,1,0);
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',3,2,0);
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',11,3,0);
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',12,4,0);
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',4,5,0);
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchiswConfig',10,6,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',2,1,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',3,2,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',11,3,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',12,4,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',4,5,0);
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchiswConfig',10,6,0);

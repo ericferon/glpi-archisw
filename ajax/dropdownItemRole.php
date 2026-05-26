@@ -24,26 +24,31 @@
  --------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"dropdownItemRole.php")) {
-   $AJAX_INCLUDE=1;
-   if (!defined('GLPI_ROOT')) 
-   include_once ('../../../inc/includes.php');
-else
-   include_once (GLPI_ROOT.'/inc/includes.php');
-   global $DB,$CFG_GLPI,$LANG;
-   header("Content-Type: text/html; charset=UTF-8");
-   Html::header_nocache();
+if (strpos($_SERVER['PHP_SELF'], "dropdownItemRole.php")) {
+	$AJAX_INCLUDE = 1;
+	if (!defined('GLPI_ROOT'))
+		include_once ('../../../inc/includes.php');
+	else
+		include_once (GLPI_ROOT . '/inc/includes.php');
+	header("Content-Type: text/html; charset=UTF-8");
+	Html::header_nocache();
 }
+
+global $DB, $CFG_GLPI, $LANG;
 
 Session::checkCentralAccess();
 
 // Make a select box
 if (isset($_POST["itemtype"])) {
 	$out = "";
-	$query = "SELECT `id`,`name`
-			FROM `glpi_plugin_archisw_swcomponents_itemroles`
-			WHERE `itemtype` = '".$_POST['itemtype']."'" ;
-	foreach ($DB->request($query) AS $data) {
+	$query = [
+		'SELECT'=> ['id','name'],
+		'FROM'	=> 'glpi_plugin_archisw_swcomponents_itemroles',
+		'WHERE'	=> [
+			'itemtype' => $_POST['itemtype']
+		],
+	];
+	foreach ($DB->request($query) as $data) {
 		$out .= "<option value='".$data['id']."'>".$data['name']."</option>";
 	}
 	echo $out;

@@ -305,7 +305,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
          if ($item->canView()) {
             $column="name";
-            $itemTable = $dbu->getTableForItemType($itemType);
+            $itemTable = method_exists($itemType, "getTable") ? $itemType::getTable() : $dbu->getTableForItemType($itemType);
 
              if ($itemType!='Entity') {
                   $query = "SELECT `".$itemTable."`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `glpi_plugin_archisw_swcomponents_items`.`comment` AS table_items_comment, `glpi_entities`.`id` AS entity, `glpi_plugin_archisw_swcomponents_itemroles`.`name` AS role "
@@ -314,7 +314,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 				  .", (`glpi_plugin_archisw_swcomponents_items`"
 				  ." LEFT JOIN `glpi_plugin_archisw_swcomponents_itemroles` ON `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_itemroles_id` = `glpi_plugin_archisw_swcomponents_itemroles`.`id`)"
                   ." WHERE `".$itemTable."`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
-                  AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemType'
+                  AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '".addslashes($itemType)."'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '$instID' "
                   . $dbu->getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
 
@@ -326,7 +326,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
                   $query = "SELECT `".$itemTable."`.*, `glpi_plugin_archisw_swcomponents_items`.`id` AS items_id, `glpi_entities`.`id` AS entity "
                   ." FROM `glpi_plugin_archisw_swcomponents_items`, `".$itemTable
                   ."` WHERE `".$itemTable."`.`id` = `glpi_plugin_archisw_swcomponents_items`.`items_id`
-                  AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '$itemType'
+                  AND `glpi_plugin_archisw_swcomponents_items`.`itemtype` = '".addslashes($itemType)."'
                   AND `glpi_plugin_archisw_swcomponents_items`.`plugin_archisw_swcomponents_id` = '$instID' "
                   . $dbu->getEntitiesRestrictRequest(" AND ",$itemTable,'','',$item->maybeRecursive());
 
@@ -468,7 +468,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
       $query .= " LEFT JOIN `glpi_entities` ON (`glpi_entities`.`id` = `glpi_plugin_archisw_swcomponents`.`entities_id`) ";
       $query .= " WHERE lk.`items_id` = '".$ID."'";
 	  $query .= " AND lk.`plugin_archisw_swcomponents_id`=`glpi_plugin_archisw_swcomponents`.`id` "
-        ." AND lk.`itemtype` = '".$itemtype."'";
+        ." AND lk.`itemtype` = '".addslashes($itemtype)."'";
 
       $query.= " ORDER BY `glpi_plugin_archisw_swcomponents`.`name` ";
 
