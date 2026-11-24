@@ -30,8 +30,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswConfigswDbfieldtype extends CommonDropdown {
 
-   static $rightname = "plugin_archisw_configuration";
-   var $can_be_translated  = true;
+   static string $rightname = "plugin_archisw_configuration";
+    var bool $can_be_translated  = true;
    
    static function getTypeName($nb=0) {
 

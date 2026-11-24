@@ -29,9 +29,9 @@ class PluginArchiswLabelTranslation extends CommonDBChild
 {
     use Glpi\Features\Clonable;
 
-    public static $rightname = 'plugin_archisw_configuration';
-    public static $itemtype  = 'PluginArchiswConfigsw'; //parent class
-    public static $items_id  = 'items_id'; // parent field in current class table (glpi_plugin_archisw_labeltranslation)
+    public static string $rightname = 'plugin_archisw_configuration';
+    public static string $itemtype  = 'PluginArchiswConfigsw'; //parent class
+    public static string $items_id  = 'items_id'; // parent field in current class table (glpi_plugin_archisw_labeltranslation)
 
     public static function getTypeName($nb = 0)
     {
@@ -88,7 +88,7 @@ class PluginArchiswLabelTranslation extends CommonDBChild
             echo Html::scriptBlock('
                 addTranslation' . $item->getID() . $rand . ' = function() {
                     $("#viewtranslation' . $item->getID() . $rand . '").load(
-                        "' . Plugin::getWebDir('archisw') . '/ajax/viewtranslations.php",
+                        "/plugins/archisw/ajax/viewtranslations.php",
                         ' . json_encode($ajax_params) . '
                     );
                 };
@@ -143,7 +143,7 @@ class PluginArchiswLabelTranslation extends CommonDBChild
                     echo Html::scriptBlock('
                         viewEditTranslation' . $data['id'] . $rand . ' = function() {
                             $("#viewtranslation' . $item->getID() . $rand . '").load(
-                                "' . Plugin::getWebDir('archisw') . '/ajax/viewtranslations.php",
+                                "' . $CFG_GLPI['root_doc'] . '/plugins/archisw/ajax/viewtranslations.php",
                                 ' . json_encode($ajax_params) . '
                             );
                         };

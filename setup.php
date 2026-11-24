@@ -24,12 +24,12 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_ARCHISW_VERSION', '3.0.25');
+define('PLUGIN_ARCHISW_VERSION', '3.0.26');
 
 // Minimal GLPI version, inclusive
-define('PLUGIN_ARCHISW_MIN_GLPI', '10.0.0');
+define('PLUGIN_ARCHISW_MIN_GLPI', '12.0.0');
 // Maximum GLPI version, exclusive
-define('PLUGIN_ARCHISW_MAX_GLPI', '11.0.99');
+define('PLUGIN_ARCHISW_MAX_GLPI', '12.0.99');
 
 // Init the hooks of the plugins -Needed
 function plugin_init_archisw() {
@@ -42,7 +42,7 @@ function plugin_init_archisw() {
    $PLUGIN_HOOKS['assign_to_ticket_dropdown']['archisw'] = true;
    $PLUGIN_HOOKS['assign_to_ticket_itemtype']['archisw'] = ['PluginArchiswSwcomponent_Item'];
    
-   $CFG_GLPI['impact_asset_types']['PluginArchiswSwcomponent'] = Plugin::getWebDir("archisw", false)."/swcomponent.png";
+   $CFG_GLPI['impact_asset_types']['PluginArchiswSwcomponent'] = $CFG_GLPI['root_doc'] . "/plugins/archisw/swcomponent.png";
 
    Plugin::registerClass('PluginArchiswSwcomponent', [
          'linkgroup_tech_types'   => true,

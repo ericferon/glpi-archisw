@@ -25,7 +25,7 @@
  */
  
 class PluginArchiswMenu extends CommonGLPI {
-   static $rightname = 'plugin_archisw';
+   static string $rightname = 'plugin_archisw';
 
    static function getMenuName() {
       return _n('Apps structure', 'Apps structures', 2, 'archisw');
@@ -36,7 +36,7 @@ class PluginArchiswMenu extends CommonGLPI {
 
       $menu                                           = [];
       $menu['title']                                  = self::getMenuName();
-      $menu['page']                                   = "/".Plugin::getWebDir('archisw', false)."/front/swcomponent.php";
+      $menu['page']                                   = $CFG_GLPI['root_doc'] . "/plugins/archisw/front/swcomponent.php";
       $menu['links']['search']                        = PluginArchiswSwcomponent::getSearchURL(false);
       if (PluginArchiswSwcomponent::canCreate()) {
          $menu['links']['add']                        = PluginArchiswSwcomponent::getFormURL(false);

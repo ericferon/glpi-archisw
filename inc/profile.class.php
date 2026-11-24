@@ -29,7 +29,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswProfile extends Profile {
 
-   static $rightname = "profile";
+   static string $rightname = "profile";
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 

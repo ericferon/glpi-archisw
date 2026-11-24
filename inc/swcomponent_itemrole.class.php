@@ -30,8 +30,8 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswSwcomponent_Itemrole extends CommonDropdown {
 
-   static $rightname = "plugin_archisw";
-   var $can_be_translated  = true;
+   static string $rightname = "plugin_archisw";
+    var bool $can_be_translated  = true;
    
    static function getTypeName($nb=0) {
 

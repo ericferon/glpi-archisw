@@ -31,15 +31,15 @@ if (!defined('GLPI_ROOT')) {
 class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 
    // From CommonDBRelation
-   static public $itemtype_1 = "PluginArchiswSwcomponent";
-   static public $items_id_1 = 'plugin_archisw_swcomponents_id';
-   static public $take_entity_1 = false ;
+   static public ?string $itemtype_1 = "PluginArchiswSwcomponent";
+   static public ?string $items_id_1 = 'plugin_archisw_swcomponents_id';
+   static public bool $take_entity_1 = false ;
     
-   static public $itemtype_2 = 'itemtype';
-   static public $items_id_2 = 'items_id';
-   static public $take_entity_2 = true ;
+   static public ?string $itemtype_2 = 'itemtype';
+   static public ?string $items_id_2 = 'items_id';
+   static public bool $take_entity_2 = true ;
    
-   static $rightname = "plugin_archisw";
+   static string $rightname = "plugin_archisw";
 
    
    /*static function getTypeName($nb=0) {
@@ -259,7 +259,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 		 ];
 		 $field_id = Html::cleanId("dropdown_itemtype".$randitemtype);
 		 Ajax::updateItemOnSelectEvent($field_id,"dropdown_plugin_archisw_swcomponents_itemroles_id".$randitemtype,
-                                            Plugin::getWebDir('archisw')."/ajax/dropdownItemRole.php",
+                                            $CFG_GLPI['root_doc'] . "/plugins/archisw/ajax/dropdownItemRole.php",
                                             $params, true);
 		 echo "</td>";
 		 echo "<td>";
@@ -608,7 +608,7 @@ class PluginArchiswSwcomponent_Item extends CommonDBRelation {
 			echo "<td class='center'>".((isset($data["items_itemroles_id"]) && $data["items_itemroles_id"] != 0)? Dropdown::getDropdownName("glpi_plugin_archisw_swcomponents_itemroles",$data["items_itemroles_id"]) :"-")."</td>";
 			echo "<td class='center'>".((isset($data["items_comment"]) && $data["items_comment"] != '')? "".$data["items_comment"]."" :"-")."</td>";
             echo "<td>";
-            echo "<a href=\"".Plugin::getWebDir('archisw')."/front/supplier.form.php?id=".$data["suppliers_id"]."\">";
+            echo "<a href=\"".$CFG_GLPI['root_doc'] . "/plugins/archisw/front/supplier.form.php?id=".$data["suppliers_id"]."\">";
             echo Dropdown::getDropdownName("glpi_suppliers",$data["suppliers_id"]);
             if ($_SESSION["glpiis_ids_visible"] == 1 )
                echo " (".$data["suppliers_id"].")";

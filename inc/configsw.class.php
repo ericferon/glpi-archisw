@@ -30,9 +30,9 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginArchiswConfigsw extends CommonDBTM {
 
-   public $dohistory=true;
-   static $rightname = "plugin_archisw_configuration";
-   protected $usenotepad         = true;
+   public bool $dohistory=true;
+   static string $rightname = "plugin_archisw_configuration";
+   protected bool $usenotepad         = true;
    
    static function getTypeName($nb=0) {
 
