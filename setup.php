@@ -24,7 +24,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_ARCHISW_VERSION', '3.0.26');
+define('PLUGIN_ARCHISW_VERSION', '3.0.27');
 
 // Minimal GLPI version, inclusive
 define('PLUGIN_ARCHISW_MIN_GLPI', '12.0.0');
