@@ -40,9 +40,16 @@ Session::checkCentralAccess();
 // Make a select box
 if (isset($_POST["itemtype"])) {
 	$out = "";
-	$query = "SELECT `id`,`name`
+/*	$query = "SELECT `id`,`name`
 			FROM `glpi_plugin_archisw_swcomponents_itemroles`
 			WHERE `itemtype` = '".$_POST['itemtype']."'" ;
+*/	$query = [
+            'SELECT' => ['glpi_plugin_archisw_swcomponents_itemroles' => ['id', 'name']
+						 ],
+            'FROM' => 'glpi_plugin_archisw_swcomponents_itemroles',
+            'WHERE' => ['itemtype' => $_POST["itemtype"]
+						]
+			];
 	foreach ($DB->request($query) AS $data) {
 		$out .= "<option value='".$data['id']."'>".$data['name']."</option>";
 	}
